@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.report.TurnoverInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.report.TurnoverInf" >
+    <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <id column="date" property="date" jdbcType="VARCHAR" />
+    <id column="pay_tp" property="payTp" jdbcType="VARCHAR" />
+    <result column="turnover" property="turnover" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mchnt_cd, date, pay_tp, turnover
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.centerm.model.report.TurnoverInf" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_report_turnover
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=VARCHAR}
+      and pay_tp = #{payTp,jdbcType=VARCHAR}
+  </select>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_report_turnover
+	<where>
+	<if test="productName != null and productName != ''">
+		 product_name = #{productName}
+	</if>
+	<if test="sales != null and sales != ''">
+		AND sales = #{sales}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="date != null and date != ''">
+		AND date = #{date}
+	</if>
+	<if test="productId != null and productId != ''">
+		AND product_id = #{productId}
+	</if>
+	<if test="startDate != null and startDate != ''">
+	    AND date >= #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+	    AND date &lt;= #{endDate}
+    </if>
+	</where>
+</select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.centerm.model.report.TurnoverInf" >
+    delete from tbl_bkms_report_turnover
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=VARCHAR}
+      and pay_tp = #{payTp,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.report.TurnoverInf" >
+    insert into tbl_bkms_report_turnover (mchnt_cd, date, pay_tp, 
+      turnover)
+    values (#{mchntCd,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{payTp,jdbcType=VARCHAR}, 
+      #{turnover,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.report.TurnoverInf" >
+    insert into tbl_bkms_report_turnover
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="payTp != null" >
+        pay_tp,
+      </if>
+      <if test="turnover != null" >
+        turnover,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="payTp != null" >
+        #{payTp,jdbcType=VARCHAR},
+      </if>
+      <if test="turnover != null" >
+        #{turnover,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.report.TurnoverInf" >
+    update tbl_bkms_report_turnover
+    <set >
+      <if test="turnover != null" >
+        turnover = #{turnover,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=VARCHAR}
+      and pay_tp = #{payTp,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.report.TurnoverInf" >
+    update tbl_bkms_report_turnover
+    set turnover = #{turnover,jdbcType=DECIMAL}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and date = #{date,jdbcType=VARCHAR}
+      and pay_tp = #{payTp,jdbcType=VARCHAR}
+  </update>
+</mapper>

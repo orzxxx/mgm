@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.2.xsd
+			http://www.springframework.org/schema/cache
+        	http://www.springframework.org/schema/cache/spring-cache.xsd
+        	http://www.springframework.org/schema/aop 
+        	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        	">
+        	
+    <!-- <context:annotation-config /> -->
+    <!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.centerm.service" />
+	<!--<context:component-scan base-package="com.centerm.controller" />
+	--><!-- 统一信息封装 -->
+	<bean id="invokeHandler" class="com.centerm.interceptor.InvokeHandler" />
+	
+	<!-- 激活自动代理功能 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- 事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 统一异常处理 -->
+	<!--<bean id="exceptionHandler" class="com.centerm.interceptor.ExceptionHandler" />
+
+	--><!-- ehcache缓存的配置 -->
+	<!-- 启用缓存注解功能(请将其配置在Spring主配置文件中) -->
+    <!--<cache:annotation-driven cache-manager="cacheManager" />
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">  
+        <property name="configLocation" value="classpath:ehcache.xml" />  
+        <property name="shared" value="true"></property>
+    </bean>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcache"/>
+	</bean>
+	
+	--><!-- 注册springUtil bean -->
+	<!--<bean id="springUtil" class="com.centerm.utils.SpringUtil" />
+	
+	
+	--><!-- 引入数据库配置 -->
+	<import resource="classpath:spring-mybatis.xml"/>
+	<!-- 引入定时器任务 -->
+	<!--<import resource="classpath:spring-task.xml"/>
+	
+--></beans>

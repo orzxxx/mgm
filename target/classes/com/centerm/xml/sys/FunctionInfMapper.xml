@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.sys.FunctionInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.sys.FunctionInf" >
+    <id column="func_id" property="funcId" jdbcType="VARCHAR" />
+    <result column="menu_id" property="menuId" jdbcType="VARCHAR" />
+    <result column="func_name" property="funcName" jdbcType="VARCHAR" />
+    <result column="func_url" property="funcUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    func_id, menu_id, func_name, func_url
+  </sql>
+  <sql id="Base_Column_List_A" >
+    a.func_id, a.menu_id, a.func_name, a.func_url
+  </sql>
+  <select id="selectByMenus" resultType="ArrayList">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_sys_function_inf
+     <foreach item="menuId" index="menuId" collection="list" open="(" separator="," close=")">  
+	  #{menuId}  
+	 </foreach>  
+  </select>
+  <select id="selectByRole" resultMap="BaseResultMap" parameterType="com.centerm.model.sys.RoleInf" >
+    select 
+    <include refid="Base_Column_List_A" />
+    from tbl_bkms_sys_function_inf a
+    join tbl_bkms_sys_role_function b
+    on a.func_id = b.func_id
+    where b.role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_sys_function_inf
+    where func_id = #{funcId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.sys.FunctionInf" >
+    insert into tbl_bkms_sys_function_inf (func_id, menu_id, func_name, 
+      func_url)
+    values (#{funcId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, #{funcName,jdbcType=VARCHAR}, 
+      #{funcUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.sys.FunctionInf" >
+    insert into tbl_bkms_sys_function_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        func_id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="funcName != null" >
+        func_name,
+      </if>
+      <if test="funcUrl != null" >
+        func_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        #{funcId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcName != null" >
+        #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcUrl != null" >
+        #{funcUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.sys.FunctionInf" >
+    update tbl_bkms_sys_function_inf
+    <set >
+      <if test="menuId != null" >
+        menu_id = #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="funcName != null" >
+        func_name = #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="funcUrl != null" >
+        func_url = #{funcUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where func_id = #{funcId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.sys.FunctionInf" >
+    update tbl_bkms_sys_function_inf
+    set menu_id = #{menuId,jdbcType=VARCHAR},
+      func_name = #{funcName,jdbcType=VARCHAR},
+      func_url = #{funcUrl,jdbcType=VARCHAR}
+    where func_id = #{funcId,jdbcType=VARCHAR}
+  </update>
+</mapper>

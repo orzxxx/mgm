@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.centerm.dao.mchnt.MchntInfMapper">
+  <resultMap id="BaseResultMap" type="com.centerm.model.mchnt.MchntInf">
+    <id column="mchnt_cd" jdbcType="VARCHAR" property="mchntCd" />
+    <result column="mchnt_name" jdbcType="VARCHAR" property="mchntName" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="ID_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mchnt_addr" jdbcType="VARCHAR" property="mchntAddr" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="in_acct" jdbcType="VARCHAR" property="inAcct" />
+    <result column="alipay_no" jdbcType="VARCHAR" property="alipayNo" />
+    <result column="wechat_no" jdbcType="VARCHAR" property="wechatNo" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="detailed_address" jdbcType="VARCHAR" property="detailedAddress" />
+    <result column="mchnt_logo" property="mchntLogo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mchnt_cd, mchnt_name, user_id, user_name, ID_card, mobile, email, mchnt_addr, status, 
+    in_acct, alipay_no, wechat_no, district, detailed_address,mchnt_logo
+  </sql>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_mchnt_inf
+	<where>
+	<if test="mchntCd != null and mchntCd != ''">
+		 mchnt_cd like #{mchntCd}
+	</if>
+	<if test="mchntName != null and mchntName != ''">
+		AND mchnt_name like #{mchntName}
+	</if>
+	<if test="userId != null and userId != ''">
+		AND user_id = #{userId}
+	</if>
+	<if test="userName != null and userName != ''">
+		AND user_name = #{userName}
+	</if>
+	<if test="idCard != null and idCard != ''">
+		AND id_card = #{idCard}
+	</if>
+	<if test="mobile != null and mobile != ''">
+		AND mobile = #{mobile}
+	</if>
+	<if test="email != null and email != ''">
+		AND email = #{email}
+	</if>
+	<if test="mchntAddr != null and mchntAddr != ''">
+		AND mchnt_addr = #{mchntAddr}
+	</if>
+	<if test="status != null and status != '' or status == 0">
+		AND status = #{status}
+	</if>
+	<if test="inAcct != null and inAcct != ''">
+		AND in_acct = #{inAcct}
+	</if>
+	<if test="alipayNo != null and alipayNo != ''">
+		AND alipay_no = #{alipayNo}
+	</if>
+	<if test="wechatNo != null and wechatNo != ''">
+		AND wechat_no = #{wechatNo}
+	</if>
+	<if test="district != null and district != ''">
+		AND district = #{district}
+	</if>
+	<if test="detailedAddress != null and detailedAddress != ''">
+		AND detailed_address = #{detailedAddress}
+	</if>
+	</where>
+</select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_mchnt_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_bkms_mchnt_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </delete>
+   <select id="isUserIdExisted" resultType="int" parameterType="com.centerm.model.mchnt.MchntInf">
+	select count(*)
+	from tbl_bkms_mchnt_inf
+	where user_id = #{userId}
+</select>
+<select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_mchnt_inf
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.centerm.model.mchnt.MchntInf">
+    insert into tbl_bkms_mchnt_inf (mchnt_cd, mchnt_name, user_id, 
+      user_name, ID_card, mobile, 
+      email, mchnt_addr, status, 
+      in_acct, alipay_no, wechat_no, 
+      district, detailed_address)
+    values (#{mchntCd,jdbcType=VARCHAR}, #{mchntName,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{mchntAddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{inAcct,jdbcType=VARCHAR}, #{alipayNo,jdbcType=VARCHAR}, #{wechatNo,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.mchnt.MchntInf">
+    insert into tbl_bkms_mchnt_inf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mchntCd != null">
+        mchnt_cd,
+      </if>
+      <if test="mchntName != null">
+        mchnt_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="idCard != null">
+        ID_card,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mchntAddr != null">
+        mchnt_addr,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="inAcct != null">
+        in_acct,
+      </if>
+      <if test="alipayNo != null">
+        alipay_no,
+      </if>
+      <if test="wechatNo != null">
+        wechat_no,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="detailedAddress != null">
+        detailed_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mchntCd != null">
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntName != null">
+        #{mchntName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntAddr != null">
+        #{mchntAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="inAcct != null">
+        #{inAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayNo != null">
+        #{alipayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNo != null">
+        #{wechatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null">
+        #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.mchnt.MchntInf">
+    update tbl_bkms_mchnt_inf
+    <set>
+      <if test="mchntName != null">
+        mchnt_name = #{mchntName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        ID_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntAddr != null">
+        mchnt_addr = #{mchntAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="inAcct != null">
+        in_acct = #{inAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayNo != null">
+        alipay_no = #{alipayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNo != null">
+        wechat_no = #{wechatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null">
+        detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntLogo != null" >
+        mchnt_logo = #{mchntLogo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.mchnt.MchntInf">
+    update tbl_bkms_mchnt_inf
+    set mchnt_name = #{mchntName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      ID_card = #{idCard,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mchnt_addr = #{mchntAddr,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      in_acct = #{inAcct,jdbcType=VARCHAR},
+      alipay_no = #{alipayNo,jdbcType=VARCHAR},
+      wechat_no = #{wechatNo,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      detailed_address = #{detailedAddress,jdbcType=VARCHAR}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </update>
+</mapper>

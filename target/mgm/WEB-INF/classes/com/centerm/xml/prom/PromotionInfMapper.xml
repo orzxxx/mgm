@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.prom.PromotionInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.prom.PromotionInf" >
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="picture_link" property="pictureLink" jdbcType="VARCHAR" />
+    <result column="promotion_inf" property="promotionInf" jdbcType="VARCHAR" />
+    <association property="product" javaType="com.centerm.model.prom.PromotionProduct">
+	    <id column="p_product_id" property="productId" jdbcType="VARCHAR" />
+	    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+	    <result column="menutp_id" property="menutpId" jdbcType="VARCHAR" />
+	    <result column="p_mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+	    <result column="price" property="price" jdbcType="DECIMAL" />
+	    <result column="p_picture_link" property="pictureLink" jdbcType="VARCHAR" />
+	    <result column="product_detail" property="productDetail" jdbcType="VARCHAR" />
+	    <result column="taste" property="taste" jdbcType="VARCHAR" />
+	    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="priority" property="priority" jdbcType="INTEGER" />
+	    <result column="inventory" property="inventory" jdbcType="INTEGER" />
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    product_id, mchnt_cd, picture_link,promotion_inf
+  </sql>
+  <sql id="Modal_Column_List" >
+    a.product_id, a.mchnt_cd, a.picture_link,a.promotion_inf,
+    b.product_id as p_product_id, b.product_name, b.menutp_id, b.mchnt_cd as p_mchnt_cd, 
+    b.price, b.picture_link as p_picture_link, b.product_detail, b.taste, b.status, b.priority,b.specifications,
+    c.inventory
+  </sql>
+  <select id="findPromotionProducts" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Modal_Column_List" />
+    from tbl_bkms_promotion_inf a
+    inner join tbl_bkms_menu_inf b
+    on a.product_id = b.product_id
+    left join tbl_bkms_product_inventory c
+	on b.product_id = c.product_id
+    where a.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+    union 
+    select 
+    <include refid="Modal_Column_List" />
+    from tbl_bkms_promotion_inf a
+    inner join tbl_bkms_menu_combo_inf b
+    on a.product_id = b.product_id
+    left join tbl_bkms_product_inventory c
+	on b.product_id = c.product_id
+    where a.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_promotion_inf
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_promotion_inf
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.prom.PromotionInf" >
+    insert into tbl_bkms_promotion_inf (product_id, mchnt_cd, picture_link,promotion_inf
+      )
+    values (#{productId,jdbcType=VARCHAR}, #{mchntCd,jdbcType=VARCHAR}, #{pictureLink,jdbcType=VARCHAR}, #{promotionInf,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.prom.PromotionInf" >
+    insert into tbl_bkms_promotion_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="pictureLink != null" >
+        picture_link,
+      </if>
+      <if test="promotionInf != null" >
+        promotion_inf,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureLink != null" >
+        #{pictureLink,jdbcType=VARCHAR},
+      </if>
+       <if test="promotionInf != null" >
+         #{promotionInf,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.prom.PromotionInf" >
+    update tbl_bkms_promotion_inf
+    <set >
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureLink != null" >
+        picture_link = #{pictureLink,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionInf != null" >
+        promotion_inf =  #{promotionInf,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.prom.PromotionInf" >
+    update tbl_bkms_promotion_inf
+    set mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      picture_link = #{pictureLink,jdbcType=VARCHAR},
+      promotion_inf =  #{promotionInf,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+</mapper>

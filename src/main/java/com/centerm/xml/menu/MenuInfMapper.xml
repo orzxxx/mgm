@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.menu.MenuInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.menu.MenuInf" >
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="menutp_id" property="menutpId" jdbcType="VARCHAR" />
+    <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="picture_link" property="pictureLink" jdbcType="VARCHAR" />
+    <result column="product_detail" property="productDetail" jdbcType="VARCHAR" />
+    <result column="taste" property="taste" jdbcType="VARCHAR" />
+    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <association property="inventory" javaType="com.centerm.model.menu.InventoryInf">
+	    <id property="productId" column="product_id"/>
+	    <result property="inventory" column="inventory"/>
+	</association>
+  </resultMap>
+  <resultMap id="ComboResultMap" type="com.centerm.model.menu.ComboInf" >
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Model_Column_List" />
+	from tbl_bkms_menu_inf a
+	join tbl_bkms_product_inventory b
+	on a.product_id = b.product_id
+	<where>
+	<if test="productId != null and productId != ''">
+		a.product_id = #{productId}
+	</if>
+	<if test="productName != null and productName != ''">
+		AND product_name like '%${productName}%'
+	</if>
+	<if test="menutpId != null and menutpId != ''">
+		AND menutp_id = #{menutpId}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="price != null and price != ''">
+		AND price = #{price}
+	</if>
+	<if test="pictureLink != null and pictureLink != ''">
+		AND picture_link = #{pictureLink}
+	</if>
+	<if test="productDetail != null and productDetail != ''">
+		AND product_detail = #{productDetail}
+	</if>
+	<if test="taste != null and taste != ''">
+		AND taste = #{taste}
+	</if>
+	<if test="status != null and status != '' or status == 0">
+		AND status = #{status}
+	</if>
+	<if test="priority != null and priority != ''">
+		AND priority = #{priority}
+	</if>
+	<if test="specifications != null and specifications != ''">
+		AND specifications = #{specifications}
+	</if>
+	</where>
+	order by priority
+</select>
+<select id="queryMaxPriority" resultType="int" parameterType="java.util.Map">
+	select IFNULL(MAX(priority),0)
+	from tbl_bkms_menu_inf
+	where mchnt_cd = #{mchntCd}
+	and status = 0
+</select>
+ <select id="isNameExisted" resultType="int" parameterType="com.centerm.model.menu.MenuInf">
+	select count(*)
+	from tbl_bkms_menu_inf
+	where mchnt_cd = #{mchntCd}
+	and menutp_id = #{menutpId}
+	and product_name = #{productName}
+	and status = 0
+    <if test="productId != null and productId != ''">
+		and product_id != #{productId}
+	</if>
+</select>
+ <select id="isUsedByCombo" resultMap="ComboResultMap" parameterType="java.lang.String">
+	select b.product_name
+	from tbl_bkms_menu_combo_inf b
+	where b.product_id in 
+	(select a.combo_id
+	from tbl_bkms_menu_combo_detail_inf a
+	where a.product_id = #{productId})
+</select>
+<select id="isNamesExisted" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select product_name,product_id
+	from tbl_bkms_menu_inf
+	where mchnt_cd = #{mchntCd}
+	and menutp_id = #{menutpId}
+	and product_name in 
+	<foreach item="item" index="index" collection="list"
+      open="(" separator="," close=")">
+        #{item.productName}
+  	</foreach>
+	and status = 0
+</select>
+<sql id="Model_Column_List" >
+    a.product_id, a.product_name, a.menutp_id, a.mchnt_cd, a.price, a.picture_link, 
+    a.product_detail, a.taste, a.status, a.priority,a.specifications,b.inventory
+  </sql>
+  <sql id="Base_Column_List" >
+    product_id, product_name, menutp_id, mchnt_cd, price, picture_link, product_detail, 
+    taste, status, priority,specifications
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_menu_inf
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_menu_inf
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.menu.MenuInf" >
+    insert into tbl_bkms_menu_inf (product_id, product_name, menutp_id, 
+      mchnt_cd, price, picture_link, 
+      product_detail, taste, status, 
+      priority,specifications)
+    values (#{productId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{menutpId,jdbcType=VARCHAR}, 
+      #{mchntCd,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{pictureLink,jdbcType=VARCHAR}, 
+      #{productDetail,jdbcType=VARCHAR}, #{taste,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{priority,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertbatch" parameterType="java.util.List" >
+    insert into tbl_bkms_menu_inf (product_id, product_name, menutp_id, 
+      mchnt_cd, price, picture_link, 
+      product_detail, taste, status, 
+      priority,specifications)
+    values
+     <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.productId},#{item.productName},#{item.menutpId},#{item.mchntCd},#{item.price},
+        #{item.pictureLink},#{item.productDetail},#{item.taste},#{item.status},
+        #{item.priority},#{item.specifications})
+    </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.menu.MenuInf" >
+    insert into tbl_bkms_menu_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="menutpId != null" >
+        menutp_id,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="pictureLink != null" >
+        picture_link,
+      </if>
+      <if test="productDetail != null" >
+        product_detail,
+      </if>
+      <if test="taste != null" >
+        taste,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="specifications != null" >
+        specifications,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="menutpId != null" >
+        #{menutpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pictureLink != null" >
+        #{pictureLink,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null" >
+        #{productDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="taste != null" >
+        #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.MenuInf" >
+    update tbl_bkms_menu_inf
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="menutpId != null" >
+        menutp_id = #{menutpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pictureLink != null" >
+        picture_link = #{pictureLink,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null" >
+        product_detail = #{productDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="taste != null" >
+        taste = #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+      <if test="specifications != null" >
+        specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.menu.MenuInf" >
+    update tbl_bkms_menu_inf
+    set product_name = #{productName,jdbcType=VARCHAR},
+      menutp_id = #{menutpId,jdbcType=VARCHAR},
+      mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      picture_link = #{pictureLink,jdbcType=VARCHAR},
+      product_detail = #{productDetail,jdbcType=VARCHAR},
+      taste = #{taste,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      priority = #{priority,jdbcType=INTEGER},
+      specifications = #{specifications,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+</mapper>

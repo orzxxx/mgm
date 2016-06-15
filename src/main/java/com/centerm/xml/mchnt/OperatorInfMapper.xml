@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.mchnt.OperatorInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.mchnt.OperatorInf" >
+    <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <id column="oper_id" property="operId" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mchnt_cd, oper_id, passwd, status
+  </sql>
+   <select id="isIdExisted" resultType="int" parameterType="com.centerm.model.mchnt.OperatorInf">
+	select count(*)
+	from tbl_bkms_oper_inf
+	where mchnt_cd = #{mchntCd}
+	and oper_id = #{operId}
+</select>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_oper_inf
+	<where>
+	<if test="passwd != null and passwd != ''">
+		 passwd = #{passwd}
+	</if>
+	<if test="status != null and status != '' or status == 0">
+		AND status = #{status}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="operId != null and operId != ''">
+		AND oper_id = #{operId}
+	</if>
+	</where>
+</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_oper_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and oper_id = #{operId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    delete from tbl_bkms_oper_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and oper_id = #{operId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    insert into tbl_bkms_oper_inf (mchnt_cd, oper_id, passwd, 
+      status)
+    values (#{mchntCd,jdbcType=VARCHAR}, #{operId,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    insert into tbl_bkms_oper_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="operId != null" >
+        oper_id,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="operId != null" >
+        #{operId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    update tbl_bkms_oper_inf
+    <set >
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and oper_id = #{operId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.mchnt.OperatorInf" >
+    update tbl_bkms_oper_inf
+    set passwd = #{passwd,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+      and oper_id = #{operId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.trade.OrderJourInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.trade.OrderJourInf" >
+    <id column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="pseq" property="pseq" jdbcType="VARCHAR" />
+    <result column="term_trans_trc" property="termTransTrc" jdbcType="VARCHAR" />
+    <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="terminal_cd" property="terminalCd" jdbcType="VARCHAR" />
+    <result column="oper_id" property="operId" jdbcType="VARCHAR" />
+    <result column="term_datetime" property="termDatetime" jdbcType="VARCHAR" />
+    <result column="transtime" property="transtime" jdbcType="VARCHAR" />
+    <result column="transdate" property="transdate" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="VARCHAR" />
+    <result column="stdtrnsamt" property="stdtrnsamt" jdbcType="DECIMAL" />
+    <result column="totalnum" property="totalnum" jdbcType="INTEGER" />
+    <result column="order_detail" property="orderDetail" jdbcType="VARCHAR" />
+    <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
+    <result column="pay_tp" property="payTp" jdbcType="CHAR" />
+    <result column="chnl_seq" property="chnlSeq" jdbcType="VARCHAR" />
+    <result column="trnsflag" property="trnsflag" jdbcType="INTEGER" />
+    <result column="setdate" property="setdate" jdbcType="VARCHAR" />
+    <result column="trnsdatetime" property="trnsdatetime" jdbcType="VARCHAR" />
+    <result column="stdrspcod" property="stdrspcod" jdbcType="VARCHAR" />
+    <result column="print_info" property="printInfo" jdbcType="VARCHAR" />
+    <result column="chnl_mchntcd" property="chnlMchntcd" jdbcType="VARCHAR" />
+    <result column="chnl_termcd" property="chnlTermcd" jdbcType="VARCHAR" />
+    <result column="batchno" property="batchno" jdbcType="VARCHAR" />
+    <result column="chnl_systraceno" property="chnlSystraceno" jdbcType="VARCHAR" />
+    <result column="authcode" property="authcode" jdbcType="VARCHAR" />
+    <result column="orderid_scan" property="orderidScan" jdbcType="VARCHAR" />
+    <!--<collection property="details" ofType="com.centerm.model.trade.OrderDetailInf">
+	    <id column="d_uuid" property="uuid" jdbcType="VARCHAR" />
+	    <result column="d_order_no" property="orderNo" jdbcType="VARCHAR" />
+	    <result column="d_product_id" property="productId" jdbcType="VARCHAR" />
+	    <result column="d_product_name" property="productName" jdbcType="VARCHAR" />
+	    <result column="d_price" property="price" jdbcType="DECIMAL" />
+	    <result column="d_taste" property="taste" jdbcType="VARCHAR" />
+	    <result column="d_num" property="num" jdbcType="INTEGER" />
+	    <result column="d_transtime" property="transtime" jdbcType="VARCHAR" />
+	    <result column="d_transdate" property="transdate" jdbcType="VARCHAR" />
+	    <result column="d_specifications" property="specifications" jdbcType="VARCHAR" />
+	</collection>
+  --></resultMap>
+  <sql id="Base_Column_List" >
+    order_no, pseq, term_trans_trc, mchnt_cd, terminal_cd, oper_id, term_datetime, transtime, 
+    transdate, datetime, stdtrnsamt, totalnum, order_detail, pay_no, pay_tp, chnl_seq, 
+    trnsflag, setdate, trnsdatetime, stdrspcod, print_info, chnl_mchntcd, chnl_termcd, 
+    batchno, chnl_systraceno, authcode, orderid_scan
+  </sql>
+  <sql id="Model_Column_List" >
+    a.order_no, a.pseq, a.term_trans_trc, a.mchnt_cd, a.terminal_cd, a.oper_id, a.term_datetime, a.transtime, 
+    a.transdate, a.datetime, a.stdtrnsamt, a.totalnum, a.order_detail, a.pay_no, a.pay_tp, a.chnl_seq, 
+    a.trnsflag, a.setdate, a.trnsdatetime, a.stdrspcod, a.print_info, a.chnl_mchntcd, a.chnl_termcd, 
+    a.batchno, a.chnl_systraceno, a.authcode, a.orderid_scan,
+    b.uuid as d_uuid, b.order_no as d_order_no, b.product_id as d_product_id, b.product_name as d_product_name,
+    b.price as d_price, b.taste as d_taste, b.num as d_num, b.transtime as d_transtime, 
+    b.transdate as d_transdate, b.specifications as d_specifications
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_order_oldjour
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_order_oldjour
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </delete>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_order_oldjour
+	<where>
+	<if test="orderNo != null and orderNo != ''">
+		 order_no like #{orderNo}
+	</if>
+	<if test="pseq != null and pseq != ''">
+		AND pseq like #{pseq}
+	</if>
+	<if test="termTransTrc != null and termTransTrc != ''">
+		AND term_trans_trc = #{termTransTrc}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd like #{mchntCd}
+	</if>
+	<if test="terminalCd != null and terminalCd != ''">
+		AND terminal_cd = #{terminalCd}
+	</if>
+	<if test="operId != null and operId != ''">
+		AND oper_id = #{operId}
+	</if>
+	<if test="termDatetime != null and termDatetime != ''">
+		AND term_datetime = #{termDatetime}
+	</if>
+	<if test="transtime != null and transtime != ''">
+		AND transtime = #{transtime}
+	</if>
+	<if test="transdate != null and transdate != ''">
+		AND transdate = #{transdate}
+	</if>
+	<if test="datetime != null and datetime != ''">
+		AND datetime = #{datetime}
+	</if>
+	<if test="stdtrnsamt != null and stdtrnsamt != ''">
+		AND stdtrnsamt = #{stdtrnsamt}
+	</if>
+	<if test="totalnum != null and totalnum != ''">
+		AND totalnum = #{totalnum}
+	</if>
+	<if test="orderDetail != null and orderDetail != ''">
+		AND order_detail = #{orderDetail}
+	</if>
+	<if test="payNo != null and payNo != ''">
+		AND pay_no = #{payNo}
+	</if>
+	<if test="payTp != null and payTp != ''">
+		AND pay_tp = #{payTp}
+	</if>
+	<if test="chnlSeq != null and chnlSeq != ''">
+		AND chnl_seq = #{chnlSeq}
+	</if>
+	<if test="trnsflag != null and trnsflag != '' or trnsflag == 0">
+		AND trnsflag = #{trnsflag}
+	</if>
+	<if test="setdate != null and setdate != ''">
+		AND setdate = #{setdate}
+	</if>
+	<if test="trnsdatetime != null and trnsdatetime != ''">
+		AND trnsdatetime = #{trnsdatetime}
+	</if>
+	<if test="stdrspcod != null and stdrspcod != ''">
+		AND stdrspcod = #{stdrspcod}
+	</if>
+	<if test="printInfo != null and printInfo != ''">
+		AND print_info = #{printInfo}
+	</if>
+	<if test="chnlMchntcd != null and chnlMchntcd != ''">
+		AND chnl_mchntcd = #{chnlMchntcd}
+	</if>
+	<if test="chnlTermcd != null and chnlTermcd != ''">
+		AND chnl_termcd = #{chnlTermcd}
+	</if>
+	<if test="batchno != null and batchno != ''">
+		AND batchno = #{batchno}
+	</if>
+	<if test="chnlSystraceno != null and chnlSystraceno != ''">
+		AND chnl_systraceno = #{chnlSystraceno}
+	</if>
+	<if test="authcode != null and authcode != ''">
+		AND authcode = #{authcode}
+	</if>
+	<if test="orderidScan != null and orderidScan != ''">
+		AND orderid_scan = #{orderidScan}
+	</if>
+	<if test="minTransdate != null and minTransdate != ''">
+	    AND transdate >= #{minTransdate}
+	</if>
+	<if test="maxTransdate != null and maxTransdate != ''">
+	    AND transdate &lt;= #{maxTransdate}
+    </if>
+	</where>
+	order by datetime desc 
+</select>
+ <!-- <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Model_Column_List" />
+	from tbl_bkms_order_oldjour a
+	left join tbl_bkms_order_detail_old_inf b
+	on a.order_no = b.order_no
+	<where>
+	<if test="orderNo != null and orderNo != ''">
+		 order_no = #{orderNo}
+	</if>
+	<if test="pseq != null and pseq != ''">
+		AND pseq = #{pseq}
+	</if>
+	<if test="termTransTrc != null and termTransTrc != ''">
+		AND term_trans_trc = #{termTransTrc}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="terminalCd != null and terminalCd != ''">
+		AND terminal_cd = #{terminalCd}
+	</if>
+	<if test="operId != null and operId != ''">
+		AND oper_id = #{operId}
+	</if>
+	<if test="termDatetime != null and termDatetime != ''">
+		AND term_datetime = #{termDatetime}
+	</if>
+	<if test="transtime != null and transtime != ''">
+		AND transtime = #{transtime}
+	</if>
+	<if test="transdate != null and transdate != ''">
+		AND transdate = #{transdate}
+	</if>
+	<if test="datetime != null and datetime != ''">
+		AND datetime = #{datetime}
+	</if>
+	<if test="stdtrnsamt != null and stdtrnsamt != ''">
+		AND stdtrnsamt = #{stdtrnsamt}
+	</if>
+	<if test="totalnum != null and totalnum != ''">
+		AND totalnum = #{totalnum}
+	</if>
+	<if test="orderDetail != null and orderDetail != ''">
+		AND order_detail = #{orderDetail}
+	</if>
+	<if test="payNo != null and payNo != ''">
+		AND pay_no = #{payNo}
+	</if>
+	<if test="payTp != null and payTp != ''">
+		AND pay_tp = #{payTp}
+	</if>
+	<if test="chnlSeq != null and chnlSeq != ''">
+		AND chnl_seq = #{chnlSeq}
+	</if>
+	<if test="trnsflag != null and trnsflag != ''">
+		AND trnsflag = #{trnsflag}
+	</if>
+	<if test="setdate != null and setdate != ''">
+		AND setdate = #{setdate}
+	</if>
+	<if test="trnsdatetime != null and trnsdatetime != ''">
+		AND trnsdatetime = #{trnsdatetime}
+	</if>
+	<if test="stdrspcod != null and stdrspcod != ''">
+		AND stdrspcod = #{stdrspcod}
+	</if>
+	<if test="printInfo != null and printInfo != ''">
+		AND print_info = #{printInfo}
+	</if>
+	<if test="chnlMchntcd != null and chnlMchntcd != ''">
+		AND chnl_mchntcd = #{chnlMchntcd}
+	</if>
+	<if test="chnlTermcd != null and chnlTermcd != ''">
+		AND chnl_termcd = #{chnlTermcd}
+	</if>
+	<if test="batchno != null and batchno != ''">
+		AND batchno = #{batchno}
+	</if>
+	<if test="chnlSystraceno != null and chnlSystraceno != ''">
+		AND chnl_systraceno = #{chnlSystraceno}
+	</if>
+	<if test="authcode != null and authcode != ''">
+		AND authcode = #{authcode}
+	</if>
+	<if test="orderidScan != null and orderidScan != ''">
+		AND orderid_scan = #{orderidScan}
+	</if>
+	<if test="minTransdate != null and minTransdate != ''">
+	    AND a.transdate >= #{minTransdate}
+	</if>
+	<if test="maxTransdate != null and maxTransdate != ''">
+	    AND a.transdate &lt;= #{maxTransdate}
+    </if>
+	</where>
+</select>-->
+  <insert id="insert" parameterType="com.centerm.model.trade.OrderJourInf" >
+    insert into tbl_bkms_order_oldjour (order_no, pseq, term_trans_trc, 
+      mchnt_cd, terminal_cd, oper_id, 
+      term_datetime, transtime, transdate, 
+      datetime, stdtrnsamt, totalnum, 
+      order_detail, pay_no, pay_tp, 
+      chnl_seq, trnsflag, setdate, 
+      trnsdatetime, stdrspcod, print_info, 
+      chnl_mchntcd, chnl_termcd, batchno, 
+      chnl_systraceno, authcode, orderid_scan
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{pseq,jdbcType=VARCHAR}, #{termTransTrc,jdbcType=VARCHAR}, 
+      #{mchntCd,jdbcType=VARCHAR}, #{terminalCd,jdbcType=VARCHAR}, #{operId,jdbcType=VARCHAR}, 
+      #{termDatetime,jdbcType=VARCHAR}, #{transtime,jdbcType=VARCHAR}, #{transdate,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=VARCHAR}, #{stdtrnsamt,jdbcType=DECIMAL}, #{totalnum,jdbcType=INTEGER}, 
+      #{orderDetail,jdbcType=VARCHAR}, #{payNo,jdbcType=VARCHAR}, #{payTp,jdbcType=CHAR}, 
+      #{chnlSeq,jdbcType=VARCHAR}, #{trnsflag,jdbcType=INTEGER}, #{setdate,jdbcType=VARCHAR}, 
+      #{trnsdatetime,jdbcType=VARCHAR}, #{stdrspcod,jdbcType=VARCHAR}, #{printInfo,jdbcType=VARCHAR}, 
+      #{chnlMchntcd,jdbcType=VARCHAR}, #{chnlTermcd,jdbcType=VARCHAR}, #{batchno,jdbcType=VARCHAR}, 
+      #{chnlSystraceno,jdbcType=VARCHAR}, #{authcode,jdbcType=VARCHAR}, #{orderidScan,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.trade.OrderJourInf" >
+    insert into tbl_bkms_order_oldjour
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="pseq != null" >
+        pseq,
+      </if>
+      <if test="termTransTrc != null" >
+        term_trans_trc,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="terminalCd != null" >
+        terminal_cd,
+      </if>
+      <if test="operId != null" >
+        oper_id,
+      </if>
+      <if test="termDatetime != null" >
+        term_datetime,
+      </if>
+      <if test="transtime != null" >
+        transtime,
+      </if>
+      <if test="transdate != null" >
+        transdate,
+      </if>
+      <if test="datetime != null" >
+        datetime,
+      </if>
+      <if test="stdtrnsamt != null" >
+        stdtrnsamt,
+      </if>
+      <if test="totalnum != null" >
+        totalnum,
+      </if>
+      <if test="orderDetail != null" >
+        order_detail,
+      </if>
+      <if test="payNo != null" >
+        pay_no,
+      </if>
+      <if test="payTp != null" >
+        pay_tp,
+      </if>
+      <if test="chnlSeq != null" >
+        chnl_seq,
+      </if>
+      <if test="trnsflag != null" >
+        trnsflag,
+      </if>
+      <if test="setdate != null" >
+        setdate,
+      </if>
+      <if test="trnsdatetime != null" >
+        trnsdatetime,
+      </if>
+      <if test="stdrspcod != null" >
+        stdrspcod,
+      </if>
+      <if test="printInfo != null" >
+        print_info,
+      </if>
+      <if test="chnlMchntcd != null" >
+        chnl_mchntcd,
+      </if>
+      <if test="chnlTermcd != null" >
+        chnl_termcd,
+      </if>
+      <if test="batchno != null" >
+        batchno,
+      </if>
+      <if test="chnlSystraceno != null" >
+        chnl_systraceno,
+      </if>
+      <if test="authcode != null" >
+        authcode,
+      </if>
+      <if test="orderidScan != null" >
+        orderid_scan,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pseq != null" >
+        #{pseq,jdbcType=VARCHAR},
+      </if>
+      <if test="termTransTrc != null" >
+        #{termTransTrc,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalCd != null" >
+        #{terminalCd,jdbcType=VARCHAR},
+      </if>
+      <if test="operId != null" >
+        #{operId,jdbcType=VARCHAR},
+      </if>
+      <if test="termDatetime != null" >
+        #{termDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="transtime != null" >
+        #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stdtrnsamt != null" >
+        #{stdtrnsamt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalnum != null" >
+        #{totalnum,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetail != null" >
+        #{orderDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payNo != null" >
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTp != null" >
+        #{payTp,jdbcType=CHAR},
+      </if>
+      <if test="chnlSeq != null" >
+        #{chnlSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="trnsflag != null" >
+        #{trnsflag,jdbcType=INTEGER},
+      </if>
+      <if test="setdate != null" >
+        #{setdate,jdbcType=VARCHAR},
+      </if>
+      <if test="trnsdatetime != null" >
+        #{trnsdatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stdrspcod != null" >
+        #{stdrspcod,jdbcType=VARCHAR},
+      </if>
+      <if test="printInfo != null" >
+        #{printInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlMchntcd != null" >
+        #{chnlMchntcd,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlTermcd != null" >
+        #{chnlTermcd,jdbcType=VARCHAR},
+      </if>
+      <if test="batchno != null" >
+        #{batchno,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlSystraceno != null" >
+        #{chnlSystraceno,jdbcType=VARCHAR},
+      </if>
+      <if test="authcode != null" >
+        #{authcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderidScan != null" >
+        #{orderidScan,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.trade.OrderJourInf" >
+    update tbl_bkms_order_oldjour
+    <set >
+      <if test="pseq != null" >
+        pseq = #{pseq,jdbcType=VARCHAR},
+      </if>
+      <if test="termTransTrc != null" >
+        term_trans_trc = #{termTransTrc,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalCd != null" >
+        terminal_cd = #{terminalCd,jdbcType=VARCHAR},
+      </if>
+      <if test="operId != null" >
+        oper_id = #{operId,jdbcType=VARCHAR},
+      </if>
+      <if test="termDatetime != null" >
+        term_datetime = #{termDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="transtime != null" >
+        transtime = #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        transdate = #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        datetime = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stdtrnsamt != null" >
+        stdtrnsamt = #{stdtrnsamt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalnum != null" >
+        totalnum = #{totalnum,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetail != null" >
+        order_detail = #{orderDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payNo != null" >
+        pay_no = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTp != null" >
+        pay_tp = #{payTp,jdbcType=CHAR},
+      </if>
+      <if test="chnlSeq != null" >
+        chnl_seq = #{chnlSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="trnsflag != null" >
+        trnsflag = #{trnsflag,jdbcType=INTEGER},
+      </if>
+      <if test="setdate != null" >
+        setdate = #{setdate,jdbcType=VARCHAR},
+      </if>
+      <if test="trnsdatetime != null" >
+        trnsdatetime = #{trnsdatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="stdrspcod != null" >
+        stdrspcod = #{stdrspcod,jdbcType=VARCHAR},
+      </if>
+      <if test="printInfo != null" >
+        print_info = #{printInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlMchntcd != null" >
+        chnl_mchntcd = #{chnlMchntcd,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlTermcd != null" >
+        chnl_termcd = #{chnlTermcd,jdbcType=VARCHAR},
+      </if>
+      <if test="batchno != null" >
+        batchno = #{batchno,jdbcType=VARCHAR},
+      </if>
+      <if test="chnlSystraceno != null" >
+        chnl_systraceno = #{chnlSystraceno,jdbcType=VARCHAR},
+      </if>
+      <if test="authcode != null" >
+        authcode = #{authcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderidScan != null" >
+        orderid_scan = #{orderidScan,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.trade.OrderJourInf" >
+    update tbl_bkms_order_oldjour
+    set pseq = #{pseq,jdbcType=VARCHAR},
+      term_trans_trc = #{termTransTrc,jdbcType=VARCHAR},
+      mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      terminal_cd = #{terminalCd,jdbcType=VARCHAR},
+      oper_id = #{operId,jdbcType=VARCHAR},
+      term_datetime = #{termDatetime,jdbcType=VARCHAR},
+      transtime = #{transtime,jdbcType=VARCHAR},
+      transdate = #{transdate,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=VARCHAR},
+      stdtrnsamt = #{stdtrnsamt,jdbcType=DECIMAL},
+      totalnum = #{totalnum,jdbcType=INTEGER},
+      order_detail = #{orderDetail,jdbcType=VARCHAR},
+      pay_no = #{payNo,jdbcType=VARCHAR},
+      pay_tp = #{payTp,jdbcType=CHAR},
+      chnl_seq = #{chnlSeq,jdbcType=VARCHAR},
+      trnsflag = #{trnsflag,jdbcType=INTEGER},
+      setdate = #{setdate,jdbcType=VARCHAR},
+      trnsdatetime = #{trnsdatetime,jdbcType=VARCHAR},
+      stdrspcod = #{stdrspcod,jdbcType=VARCHAR},
+      print_info = #{printInfo,jdbcType=VARCHAR},
+      chnl_mchntcd = #{chnlMchntcd,jdbcType=VARCHAR},
+      chnl_termcd = #{chnlTermcd,jdbcType=VARCHAR},
+      batchno = #{batchno,jdbcType=VARCHAR},
+      chnl_systraceno = #{chnlSystraceno,jdbcType=VARCHAR},
+      authcode = #{authcode,jdbcType=VARCHAR},
+      orderid_scan = #{orderidScan,jdbcType=VARCHAR}
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

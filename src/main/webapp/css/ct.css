@@ -1,0 +1,109 @@
+.ct-qry-btn {
+  margin-right: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  background: -webkit-linear-gradient(to bottom,#60ccf9 0,#26b5f2 100%);
+  background: -moz-linear-gradient(to bottom,#60ccf9 0,#26b5f2 100%);
+  background: -o-linear-gradient(to bottom,#60ccf9 0,#26b5f2 100%);
+  background: -ms-linear-gradient(to bottom,#60ccf9 0,#26b5f2 100%);
+  background: linear-gradient(to bottom,#60ccf9 0,#26b5f2 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = #60ccf9, endColorstr = #26b5f2); 
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  border: 1px solid #0072bc;
+  width: 83px;
+  height: 25px;
+}
+.ct-rst-btn {
+  font-size: 14px;
+  color: #444444;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border-radius: 2px 2px 2px 2px;
+  width: 58px;
+  height: 25px;
+}
+.ct-menu-from{
+	padding-top: 18px;
+}
+.ct-menu-from table{
+	padding: 0px;
+}
+.ct-menu-from table tr{
+	height:35px;
+	margin:11px 11px 11px 11px;
+	border-collapse:collapse;  
+	border-spacing:0; 
+}
+.ct-menu-from table td{
+	vertical-align:middle;
+	padding:0;
+}
+.ct-menu-from table td.tdspace{
+	width: 61px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+#combo_form table td.tdspace{
+	width: 23px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+.ct-menu-from table .hintspace tt{
+	margin-left:6px; 
+}
+.ct-menu-from table td{
+	text-align:right;
+}
+.ct-menu-from table .hintspace{
+	text-align:left;
+}
+.ct-menu-from table input[type="text"]{
+	height:24px;
+	padding-bottom: 4px;
+}
+.ct-menu-from table select{
+	height:24px;
+}
+.ct-menu-from textarea{
+	width:180px;
+	height:74px;
+}
+.ct-menu-from img{
+	width:180px;
+	height:135px;
+}
+.ct-menu-from table tr td:first-child{
+	width: 216px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+.ct-menu-from table div.tagsinput{
+	padding: 0px;
+}
+.tr11{
+	height:11px;
+}
+.ct-menu-from .ct-rst-btn{
+	border: 1px solid #bbb;
+	padding:0px;
+   background: -webkit-linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background: -moz-linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background: -o-linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background: -ms-linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr = #ffffff, endColorstr = #eeeeee); 
+    width: 54px;
+    height: 24px;
+}
+.ct-total{
+	
+}
+.ct-total0{
+	color: red;
+}

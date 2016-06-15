@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.sys.UserInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.sys.UserInf" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, passwd, role, status
+  </sql>
+  <sql id="Base_Column_List_A" >
+    a.user_id, a.passwd, a.role, a.status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_user_inf
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByMchntCd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List_A" />
+    from tbl_bkms_user_inf a
+    inner join tbl_bkms_mchnt_inf b
+    on a.user_id = b.user_id
+    where b.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_user_inf
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.sys.UserInf" >
+    insert into tbl_bkms_user_inf (user_id, passwd, role, 
+      status)
+    values (#{userId,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.sys.UserInf" >
+    insert into tbl_bkms_user_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.sys.UserInf" >
+    update tbl_bkms_user_inf
+    <set >
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.sys.UserInf" >
+    update tbl_bkms_user_inf
+    set passwd = #{passwd,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

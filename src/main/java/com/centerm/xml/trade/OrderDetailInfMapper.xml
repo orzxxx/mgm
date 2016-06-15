@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.trade.OrderDetailInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.trade.OrderDetailInf" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="taste" property="taste" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="transtime" property="transtime" jdbcType="VARCHAR" />
+    <result column="transdate" property="transdate" jdbcType="VARCHAR" />
+    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, order_no, product_id, product_name, price, taste, num, transtime, transdate, 
+    specifications
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_order_detail_old_inf
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_order_detail_old_inf
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <select id="findByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_order_detail_old_inf
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_order_detail_old_inf
+	<where>
+	<if test="uuid != null and uuid != ''">
+		 uuid = #{uuid}
+	</if>
+	<if test="orderNo != null and orderNo != ''">
+		AND order_no = #{orderNo}
+	</if>
+	<if test="productId != null and productId != ''">
+		AND product_id = #{productId}
+	</if>
+	<if test="productName != null and productName != ''">
+		AND product_name = #{productName}
+	</if>
+	<if test="price != null and price != ''">
+		AND price = #{price}
+	</if>
+	<if test="taste != null and taste != ''">
+		AND taste = #{taste}
+	</if>
+	<if test="num != null and num != ''">
+		AND num = #{num}
+	</if>
+	<if test="transtime != null and transtime != ''">
+		AND transtime = #{transtime}
+	</if>
+	<if test="transdate != null and transdate != ''">
+		AND transdate = #{transdate}
+	</if>
+	<if test="specifications != null and specifications != ''">
+		AND specifications = #{specifications}
+	</if>
+	</where>
+</select>
+  
+  <insert id="insert" parameterType="com.centerm.model.trade.OrderDetailInf" >
+    insert into tbl_bkms_order_detail_old_inf (uuid, order_no, product_id, 
+      product_name, price, taste, 
+      num, transtime, transdate, 
+      specifications)
+    values (#{uuid,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{productName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{taste,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{transtime,jdbcType=VARCHAR}, #{transdate,jdbcType=VARCHAR}, 
+      #{specifications,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.trade.OrderDetailInf" >
+    insert into tbl_bkms_order_detail_old_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="taste != null" >
+        taste,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="transtime != null" >
+        transtime,
+      </if>
+      <if test="transdate != null" >
+        transdate,
+      </if>
+      <if test="specifications != null" >
+        specifications,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="taste != null" >
+        #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="transtime != null" >
+        #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.trade.OrderDetailInf" >
+    update tbl_bkms_order_detail_old_inf
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="taste != null" >
+        taste = #{taste,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="transtime != null" >
+        transtime = #{transtime,jdbcType=VARCHAR},
+      </if>
+      <if test="transdate != null" >
+        transdate = #{transdate,jdbcType=VARCHAR},
+      </if>
+      <if test="specifications != null" >
+        specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.trade.OrderDetailInf" >
+    update tbl_bkms_order_detail_old_inf
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      taste = #{taste,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      transtime = #{transtime,jdbcType=VARCHAR},
+      transdate = #{transdate,jdbcType=VARCHAR},
+      specifications = #{specifications,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>
