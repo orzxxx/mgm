@@ -64,7 +64,7 @@ define(function () {
 	}
 	
 	function initList(){
-		//载入资料
+		//载入资料t
 		$.post("mchnt/mchnt/get",{mchntCd: currentMchntCd},function(result){
 			if (result.code == 0) {
 				auditInfo = result.data;
