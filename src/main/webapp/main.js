@@ -230,7 +230,7 @@ function logout(){
 
 function doPwdReset(){
 	var dlg = $('<div/>').dialog({    
-	    title: '修改密码',    
+	    title: '管理员密码修改',    
 	    width: 500,    
 	    height: 200,    
 	    closable: false,    

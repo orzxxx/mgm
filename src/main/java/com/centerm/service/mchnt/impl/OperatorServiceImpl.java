@@ -52,14 +52,14 @@ public class OperatorServiceImpl implements IOperatorServiceImpl{
 		return operatorMapper.updateByPrimaryKeySelective(operator);
 	}
 	@Override
-	public void resetPwd(OperatorInf operator, String oldPwd, String newPwd) {
-		OperatorInf oper = operatorMapper.selectByPrimaryKey(operator);
+	public void resetPwd(OperatorInf operator, String newPwd) {
+		/*OperatorInf oper = operatorMapper.selectByPrimaryKey(operator);
 		if(!(new MD5().getMD5Str(oldPwd)).equals(oper.getPasswd())) {
 			throw new BusinessException("旧密码不正确");
 		}
 		if(oldPwd.equals(newPwd)) {
 			throw new BusinessException("新旧密码不能相同");
-		}
+		}*/
 		operator.setPasswd(new MD5().getMD5Str(newPwd));
 		operatorMapper.updateByPrimaryKeySelective(operator);
 	}

@@ -14,5 +14,5 @@ public interface IOperatorServiceImpl {
 	
 	public int update(OperatorInf operator);
 
-	public void resetPwd(OperatorInf operator, String oldPwd, String newPwd);
+	public void resetPwd(OperatorInf operator, String newPwd);
 }

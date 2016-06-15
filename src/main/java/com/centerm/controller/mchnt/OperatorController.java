@@ -72,9 +72,8 @@ public class OperatorController {
 	@RequestMapping("/resetPwd")
 	@ResponseBody()
 	public Object resetPwd(@ModelAttribute("operatorInf") OperatorInf operator, 
-			@RequestParam("oldPwd")String oldPwd, 
 			@RequestParam("newPwd")String newPwd) throws Exception {
-		operatorServiceImpl.resetPwd(operator, oldPwd, newPwd);
+		operatorServiceImpl.resetPwd(operator, newPwd);
 		return null;
 	}
 }

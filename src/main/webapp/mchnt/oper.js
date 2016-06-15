@@ -15,12 +15,12 @@ define(function () {
 	}
 	function doPwdReset(operId){
 		var dlg = $('<div/>').dialog({    
-		    title: '密码重置',    
+		    title: '操作员密码重置',    
 		    width: 500,    
 		    height: 200,    
 		    closable: false,    
 		    cache: false,    
-		    href: 'sys/pwd_reset.jsp',    
+		    href: 'mchnt/oper_pwd_reset.jsp',    
 		    modal: true,
 		    buttons : [ {
 				text : '保存',
