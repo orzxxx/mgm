@@ -1,8 +1,10 @@
 package com.centerm.service.mchnt.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +18,13 @@ import com.centerm.model.mchnt.MchntInf;
 import com.centerm.model.sys.UserInf;
 import com.centerm.service.mchnt.IMchntAuditServiceImpl;
 import com.centerm.utils.BeanUtil;
+import com.centerm.utils.HttpClientUtil;
 
 @Service("mchntAuditService")
 @Transactional
 public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
+	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	private MchntAuditInfMapper mchntAuditMapper;
 	private MchntInfMapper mchntMapper;
@@ -79,6 +84,25 @@ public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
 			MchntInf mchnt = mchntMapper.selectByUserId(user.getUserId());
 			mchnt.setStatus(0);
 			mchntMapper.updateByPrimaryKey(mchnt);
+			//短信提醒
+			String result = sendSms("15394538563", "您的验证码为:123456");
+			System.out.println(result);
 		}
+	}
+	//发送短信
+	private String sendSms(String phoneNum, String content){
+		logger.info("【send sms phone】"+phoneNum+" content="+content);
+		Map<String,String> paraMap=new HashMap<String,String>();
+		paraMap.put("SpCode", "103906");
+		paraMap.put("LoginName", "fj_st");
+		paraMap.put("Password", "cpay2016");
+		paraMap.put("MessageContent",content );
+		paraMap.put("UserNumber", phoneNum);
+		paraMap.put("SerialNumber", System.currentTimeMillis()+"");
+		paraMap.put("ScheduleTime", "");
+		paraMap.put("f", 1+"");
+		String result=HttpClientUtil.doPost("https://smsapi.ums86.com:9600/sms/Api/Send.do", paraMap,"GBK");
+		logger.info("【sms result】"+result);
+		return result;
 	}
 }
