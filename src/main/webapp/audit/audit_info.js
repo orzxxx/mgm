@@ -79,7 +79,8 @@ define(function () {
 		$.post("mchnt/audit/get",{mchntCd: currentMchntCd},function(result){
 			if (result.code == 0) {
 				if (parseInt(result.data.auditStatus) == -1 ) {
-					$('#audit_edit').linkbutton('enable');
+					//$('#audit_edit').linkbutton('enable');
+					$('#audit_edit').show();
 					$("#audit_edit").click(edit);
 				}
 			} else {

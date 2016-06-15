@@ -144,7 +144,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<a id="audit_edit" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn" style="width:100px;" data-options="disabled:true">进行修改</a>
+				<a id="audit_edit" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn" style="width:100px;display: none;">进行修改</a>
 			</td>
 			<td class="hintspace">
 			</td>
