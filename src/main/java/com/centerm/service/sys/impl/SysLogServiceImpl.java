@@ -19,6 +19,7 @@ import com.centerm.model.sys.LoginUser;
 import com.centerm.model.sys.SysLogInf;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.DateUtils;
+import com.google.gson.Gson;
 
 @Service("sysLogService")
 @Transactional
@@ -38,18 +39,22 @@ public class SysLogServiceImpl{
 		return sysLogMapper.insert(sysLog);
 	}
 	
-	public void add(String userId, String func){
+	public void add(String userId, String func, String table, Object param){
+		//add(userId, func, new String[]{table});
+	}
+	
+	public void add(String userId, String func, String[] tables, Object param){
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder
 				.getRequestAttributes()).getRequest(); 
 		HttpSession session = request.getSession();
 		LoginUser loginUser = (LoginUser) session.getAttribute(Constant.LOGIN_USER);
 		loginUser.getUserInfo().getUserId();
+		String jsonParam = new Gson().toJson(param);
 		SysLogInf sysLog = new SysLogInf();
 		sysLog.setUserId(userId);
 		sysLog.setOperFunc(func);
 		//sysLog.setUuid();
 		sysLog.setOperDt(DateUtils.getCurrentDate("yyyy-DD-mm HH:mm:ss"));
-		
 	}
 	
 }
