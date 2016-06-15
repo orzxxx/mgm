@@ -1,0 +1,8 @@
+
+
+# My configurations:
+/target/
+/.settings/
+/.svn/
+*.properties
+changelog.txt

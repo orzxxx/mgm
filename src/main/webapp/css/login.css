@@ -1,0 +1,127 @@
+@charset "utf-8";
+
+/*
+ * 全局样式 （请勿修改）
+ */
+
+body, div, h1, h2, h3, h4, h5, h6, p, blockquote, dl, dt, dd, ul, ol, li, fieldset, form, tr, th, td, center{ padding:0;margin:0 }
+img { border: 0; }
+button,input,select,textarea{ font-size:16px; outline:none;}
+li{ list-style:none; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+button:focus, input:focus{outline:none;}
+
+/* 基础设置 */
+body{ font:16px "微软雅黑","宋体",Arial,verdana; line-height:2; color:#333; background:#fff; }
+.left, .center{ float:left; }
+.right { float:right; }
+
+.container { margin:0 auto; text-align:left;}
+
+.clearfix:after{ content:""; height:0; visibility:hidden; display:block; clear:both;}
+.clearfix{ zoom:1;}
+.clear { clear:both; }
+
+
+A:link,A:visited {text-decoration:none; outline:none;}
+A:hover {text-decoration:none; color:#009def;}
+
+
+/* 登录 */
+
+.header { background:#f3f7fc; height:100px;min-width:1200px;}
+.header .logo { background:url(../images/login_logo.png) no-repeat 140px center; height:100px; width:1160px; margin:0 auto;}
+.header .logo2 { background:url(../images/login_logo_yy.png) no-repeat 140px center; height:100px; width:1160px; margin:0 auto;}
+.wrapper { background: url(../images/login_bg.png) no-repeat center top; background-color:#2192D9; margin:0 auto;min-width:1440px;height:780px;position: relative;}
+.login {margin-left: 55%;margin-top: 178px;padding: 0;width: 324px;height: 406px;background-color: white;z-index: 9;position: absolute;text-align: center;
+	-moz-border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+}
+.login .title { text-align:center; height:60px; line-height:60px; color:#fff; font-size:20px;}
+/*.login ul { padding:200px 39px 0 742px; width: 324px;height: 456px;background-color: white;z-index: 9999;position: absolute;}*/
+.login li { position:relative;}
+.login li img { position:absolute; top:2px; right:4px; width:92px; height:36px; overflow:hidden;}
+
+.textbox-user {background:url(../images/login_user.png) no-repeat left center; height: 42px; line-height:40px; width:203px;  padding:0 0px 0 42px; margin-bottom:18px;  background-color: #fff; border:1px solid #a8d7f1;  border-radius: 3px;  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); }
+.textbox-password {background:url(../images/login_password.png) no-repeat left center; height: 42px; line-height:40px; width:203px;  padding:0 0px 0 42px; margin-bottom:48px;  background-color: #fff; border:1px solid #a8d7f1;  border-radius: 3px;  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); }
+.textbox-yzm-area { height: 40px; line-height:40px; width:136px;  padding:0 100px 0 10px; margin-bottom:18px;background-color: #fff; border:none;  border-radius: 4px;  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075); }
+
+.login li a.btn { display:inline-block; background:#26a6e8; color:#fff; height:48px; line-height:48px; text-align:center; width:247px; border-radius: 4px;}
+.login li a.btn:hover {background:#1c7cad; color:#fff;} 
+
+.footer { background:#f3f7fc; height:80px; line-height:80px; color:#999; font-size:14px; text-align:center;min-width:1200px;}
+.code{float:left; top:0px; margin-left: 344px;padding: 0;height: 456px;z-index: 9;position: absolute;text-align: center;
+}
+.code img{width: 140px;height: 140px;}
+.code span{color: #ffffff;font-size: 14px;}
+ 
+ 
+ 
+ 
+ 
+ .validatebox-tip {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  display: none;
+  z-index: 9900000;
+}
+.validatebox-tip-content {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 8px;
+  width: 150px;
+  border-width: 1px;
+  border-style: solid;
+  padding: 3px 5px;
+  z-index: 9900001;
+  font-size: 12px;
+}
+.validatebox-tip-pointer {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  position: absolute;
+  left: 1px;
+  top: 0px;
+  z-index: 9900002;
+}
+.validatebox-tip-left .validatebox-tip-content {
+  left: auto;
+  right: 8px;
+}
+.validatebox-tip-left .validatebox-tip-pointer {
+  background-position: -20px center;
+  left: auto;
+  right: 1px;
+}
+.validatebox-invalid {
+  background-image: url('images/validatebox_warning.png');
+  background-repeat: no-repeat;
+  background-position: right center;
+  border-color: #ffa8a8;
+  background-color: #fff3f3;
+  color: #000;
+}
+.validatebox-tip-pointer {
+  background: url('images/validatebox_arrows.png') no-repeat -4px center;
+}
+.validatebox-tip-content {
+  border-color: #CC9933;
+  background-color: #FFFFCC;
+  color: #000;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

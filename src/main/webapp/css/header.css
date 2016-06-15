@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+body{ font-family:"微软雅黑"; background:#f7fcff; margin:0; padding:0; font-size:12px; }
+img{ border:none;}
+ul{ list-style:none; padding:0; margin:0 }
+li{ list-style:none;}
+a{ text-decoration:none;}
+a:hover{ text-decoration:underline;}
+.clearboth{ width:100%; height:0px; float:none; clear:both; overflow:hidden;}
+p{ line-height:20px;}
+
+/*------------------------   登陆界面   ------------------------------*/
+#top{ width:100%; height:60px; margin-top:50px;}
+#login{width: 100%; height:446px; background: url(../images/bg.png) repeat-x; margin-top:10px; }
+#loginbg{ width:100%; height:466px; background:url(../images/left.png) no-repeat; }
+#w1024{ width:1024px; margin:0 auto;}
+#login_form{float: left;display: inline;width: 500px; height:255px; background:url(../images/formbg.png) no-repeat; margin: 80px 0 0 450px;overflow: hidden; padding:70px 0 0 90px;}
+#usename{ background:none; width:200px; padding-left:25px; border:none; height:28px; line-height:26px;}
+#password{ background:none; width:200px; padding-left:25px; border:none; height:28px; line-height:26px;}
+#code{ background:none; width:150px; padding-left:5px; border:none; height:28px; line-height:26px;}
+#table_login{ border-top:1px solid #eee; padding-top:15px; width:400px; overflow:hidden;}
+#table_login .name{ float:left; display:inline; width:60px; overflow:hidden;}
+#table_login .name ul{ }
+#table_login .name ul li{ color:#333; height:28px; width:60px; display:block; text-align:right; line-height:40px; margin-top:6px; overflow:hidden;}
+#table_login .box { float:left; margin-right:6px; display:inline; width:230px; margin-top:7px; }
+#table_login .box ul{ }
+#table_login .box ul li{ float:none; width:230px; height:28px; display:block; overflow:hidden; margin:6px 0; }
+#table_login .box ul li.name{  background:url(../images/login_name.png) no-repeat;}
+#table_login .box ul li.password{ background:url(../images/login_password.png) no-repeat; _margin-top:0px; }
+#table_login .box ul li.code{ width:150px; height:28px; background:#ececec}
+#login_button{ width:101px; height:100px;float:left; overflow:hidden; margin-top:6px;}
+#login_button a{ display:block; width:101px; height:100px; background:url(../images/login_button.png) no-repeat;}
+#login_button a:hover{ display:block; width:101px; height:100px; background:url(../images/login_button_pre.png) no-repeat;}
+
+
+
+/*------------------------   操作界面   ------------------------------*/
+.top{ width:100%; height:60px; background:url(../images/top.png) no-repeat #0045b7; overflow:hidden;}
+.logo{ float:left; width:40%; display:inline; margin:10px;}
+.welcome{ float:right; width:400px; text-align:right; padding-top:30px; display:inline; margin-right:20px;}
+.top_button{ float:right; width:180px; display:inline; margin-right:10px; padding-top:30px;}
+.top_button a{ color:#fff;}
+.modify_button{ float:left; width:70px; background:url(../images/modify.png) no-repeat; padding-left:20px;}
+.exit_button{ float:left; width:70px;  background:url(../images/exit.png) no-repeat; padding-left:20px;}
+.content{ height:654px; background:#fff; width:100%;}
+.footer{ height:28px; line-height:28px; width:100%; text-align:center; background:#1b69cc; }
+.footer a{ color:#fff; }
