@@ -8,7 +8,7 @@
     <result column="turnover" property="turnover" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    mchnt_cd, date, pay_tp, sum(turnover) as turnover
+    mchnt_cd, date, pay_tp, turnover
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.centerm.model.report.TurnoverInf" >
     select 
@@ -18,7 +18,36 @@
       and date = #{date,jdbcType=VARCHAR}
       and pay_tp = #{payTp,jdbcType=VARCHAR}
   </select>
-  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+  <select id="querySummary" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	mchnt_cd, date, pay_tp, sum(turnover) as turnover
+	from tbl_bkms_report_turnover
+	<where>
+	<if test="productName != null and productName != ''">
+		 product_name = #{productName}
+	</if>
+	<if test="sales != null and sales != ''">
+		AND sales = #{sales}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="date != null and date != ''">
+		AND date = #{date}
+	</if>
+	<if test="productId != null and productId != ''">
+		AND product_id = #{productId}
+	</if>
+	<if test="startDate != null and startDate != ''">
+	    AND date >= #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+	    AND date &lt;= #{endDate}
+    </if>
+	</where>
+	group by pay_tp
+</select>
+  <select id="queryByDay" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Base_Column_List" />
 	from tbl_bkms_report_turnover
@@ -45,7 +74,38 @@
 	    AND date &lt;= #{endDate}
     </if>
 	</where>
-	group by pay_tp
+	order by date
+</select>
+
+  <select id="queryByMonth" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	mchnt_cd, left(date, 6) as date, pay_tp, sum(turnover) as turnover
+	from tbl_bkms_report_turnover
+	<where>
+	<if test="productName != null and productName != ''">
+		 product_name = #{productName}
+	</if>
+	<if test="sales != null and sales != ''">
+		AND sales = #{sales}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND mchnt_cd = #{mchntCd}
+	</if>
+	<if test="date != null and date != ''">
+		AND date = #{date}
+	</if>
+	<if test="productId != null and productId != ''">
+		AND product_id = #{productId}
+	</if>
+	<if test="startDate != null and startDate != ''">
+	    AND date >= #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+	    AND date &lt;= #{endDate}
+    </if>
+	</where>
+	group by LEFT (date, 6), pay_tp
+	order by date
 </select>
   
   <delete id="deleteByPrimaryKey" parameterType="com.centerm.model.report.TurnoverInf" >

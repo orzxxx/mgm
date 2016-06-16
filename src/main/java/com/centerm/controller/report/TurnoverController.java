@@ -36,4 +36,28 @@ public class TurnoverController {
 		}
 		return turnoverServiceImpl.list(turnover, null);
 	}
+	
+	@RequestMapping("/listday")
+	@ResponseBody()
+	public Object listDay(@ModelAttribute("turnoverInf") TurnoverInf turnover) throws Exception {
+		if (!StringUtils.isNull(turnover.getStartDate())) {
+			turnover.setStartDate(turnover.getStartDate().replace("-", ""));
+		}
+		if (!StringUtils.isNull(turnover.getEndDate())) {
+			turnover.setEndDate(turnover.getEndDate().replace("-", ""));
+		}
+		return turnoverServiceImpl.listDay(turnover, null);
+	}
+	
+	@RequestMapping("/listmonth")
+	@ResponseBody()
+	public Object listMonth(@ModelAttribute("turnoverInf") TurnoverInf turnover) throws Exception {
+		if (!StringUtils.isNull(turnover.getStartDate())) {
+			turnover.setStartDate(turnover.getStartDate().replace("-", ""));
+		}
+		if (!StringUtils.isNull(turnover.getEndDate())) {
+			turnover.setEndDate(turnover.getEndDate().replace("-", ""));
+		}
+		return turnoverServiceImpl.listMonth(turnover, null);
+	}
 }

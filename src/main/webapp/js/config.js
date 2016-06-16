@@ -15,6 +15,8 @@ requirejs.config({
         'prom': 'prom/prom',
         'discount': 'prom/discount',
         'turnover': 'report/turnover',
+        'turnover-day': 'report/turnover_day',
+        'turnover-month': 'report/turnover_month',
         'sales': 'report/sales',
         'terminal': 'mchnt/terminal',
         'mchnt-logo': 'mchnt/mchnt_logo',

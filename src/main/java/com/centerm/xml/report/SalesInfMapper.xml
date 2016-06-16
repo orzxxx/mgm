@@ -31,7 +31,8 @@
       and product_id = #{productId,jdbcType=VARCHAR}
   </delete>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
-	select
+  	select  mchnt_cd, date, product_id, product_name, sum(sales) as sales, menutp_name from
+	(select
 	<include refid="Model_Column_List" />,c.menutp_name
 	from tbl_bkms_report_sales a
 	join tbl_bkms_menu_inf b
@@ -98,7 +99,9 @@
 		AND c.menutp_id = #{menutpId}
 	</if>
 	</where>
-	order by sales desc
+	) as t
+	group by product_id
+	order by menutp_name, sales desc
 </select>
   
   <insert id="insert" parameterType="com.centerm.model.report.SalesInf" >

@@ -30,7 +30,21 @@ public class TurnoverServiceImpl implements ITurnoverServiceImpl{
 	public List<TurnoverInf> list(TurnoverInf turnover, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(turnover);
 		map.put("page", page);
-		return turnoverMapper.query(map);
+		return turnoverMapper.querySummary(map);
+	}
+	
+	public List<TurnoverInf> listDay(TurnoverInf turnover, Page page) throws Exception{
+		Map<String,Object> map = BeanUtil.bean2Map(turnover);
+		map.put("page", page);
+		return turnoverMapper.queryByDay(map);
+	}
+	
+	@Override
+	public List<TurnoverInf> listMonth(TurnoverInf turnover, Page page)
+			throws Exception {
+		Map<String,Object> map = BeanUtil.bean2Map(turnover);
+		map.put("page", page);
+		return turnoverMapper.queryByMonth(map);
 	}
 	
 	public int del(int id){

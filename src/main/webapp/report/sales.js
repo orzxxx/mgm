@@ -77,8 +77,8 @@ define(function () {
 				remoteSort : false,
 				pageList : [ 10, 20, 30 ],
 				columns:[[
+				   {field:'menutpName',title:'分类',width:150,sortable:true,align:'center'},
 				   {field:'productName',title:'商品名',width:150,sortable:true,align:'center'},
-					{field:'menutpName',title:'分类',width:150,sortable:true,align:'center'},
 					{field:'sales',title:'销量',width:150,sortable:true,align:'center'}
 				]],
 				toolbar:"#sales_toolbar"

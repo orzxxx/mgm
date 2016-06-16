@@ -13,4 +13,8 @@ public interface ITurnoverServiceImpl {
 	public int add(TurnoverInf turnover);
 	
 	public int update(TurnoverInf turnover);
+
+	public List<TurnoverInf> listDay(TurnoverInf turnover, Page page) throws Exception;
+
+	public List<TurnoverInf> listMonth(TurnoverInf turnover, Page page) throws Exception;
 }
