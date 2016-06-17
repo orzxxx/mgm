@@ -1,13 +1,10 @@
 package com.centerm.service.sys.impl;
 
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,43 +12,49 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.centerm.base.Constant;
-import com.centerm.base.Page;
 import com.centerm.dao.sys.SysLogInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.sys.LoginUser;
 import com.centerm.model.sys.SysLogInf;
-import com.centerm.utils.BeanUtil;
 import com.centerm.utils.DateUtils;
 import com.centerm.utils.StringUtils;
 import com.google.gson.Gson;
 
 @Service("sysLogService")
 @Transactional
-public class SysLogServiceImpl{
-	private final int INSERT = 0;
-	private final int UPDATE = 1;
-	private final int DELETE = 2;
-	private final int SELECT = 3;
+public class SysLogService{
+	public static final int INSERT = 0;
+	public static final int UPDATE = 1;
+	public static final int DELETE = 2;
+	public static final int SELECT = 3;
 	
 	private SysLogInfMapper sysLogMapper;
 
-	public SysLogInfMapper getSysLogMapper() {
+	private SysLogInfMapper getSysLogMapper() {
 		return sysLogMapper;
 	}
 	@Autowired
-	public void setSysLogMapper(SysLogInfMapper sysLogMapper) {
+	private void setSysLogMapper(SysLogInfMapper sysLogMapper) {
 		this.sysLogMapper = sysLogMapper;
 	}
 	
-	public int add(SysLogInf sysLog){
+	private int add(SysLogInf sysLog){
 		return sysLogMapper.insert(sysLog);
 	}
 	
 	public void add(String func, String table, Object param, int type){
-		add(func, new String[]{table}, param, type);
+		add(func, new String[]{table}, param, type, null);
+	}
+	
+	public void add(String func, String table, Object param, int type, String remark){
+		add(func, new String[]{table}, param, type, remark);
 	}
 	
 	public void add(String func, String[] tables, Object param, int type){
+		add(func, tables, param, type, null);
+	}
+	
+	public void add(String func, String[] tables, Object param, int type, String remark){
 		//从session中获取UserId
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder
 				.getRequestAttributes()).getRequest(); 
@@ -59,19 +62,27 @@ public class SysLogServiceImpl{
 		LoginUser loginUser = (LoginUser) session.getAttribute(Constant.LOGIN_USER);
 		String userId = loginUser.getUserInfo().getUserId();
 		
-		add(userId, func, tables, param, type);
+		add(userId, func, tables, param, type, remark);
 	}
 	
 	public void add(String userId, String func, String table, Object param, int type){
-		add(userId, func, new String[]{table}, param, type);
+		add(userId, func, new String[]{table}, param, type, null);
+	}
+	
+	public void add(String userId, String func, String table, Object param, int type, String remark){
+		add(userId, func, new String[]{table}, param, type, remark);
 	}
 	
 	public void add(String userId, String func, String[] tables, Object param, int type){
+		add(userId, func, tables, param, type, null);
+	}
+	
+	public void add(String userId, String func, String[] tables, Object param, int type, String remark){
 		SysLogInf sysLog = new SysLogInf();
 		sysLog.setUuid(UUID.randomUUID().toString());
 		sysLog.setUserId(userId);
 		sysLog.setOperFunc(func);
-		sysLog.setOperDt(DateUtils.getCurrentDate("yyyy-DD-mm HH:mm:ss"));
+		sysLog.setOperDt(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
 		//详细信息
 		StringBuffer desc =  new StringBuffer();
 		String operType = "";
@@ -89,7 +100,15 @@ public class SysLogServiceImpl{
 		String table = StringUtils.join(tables, ',');
 		String jsonParam = new Gson().toJson(param);
 		
-		desc.append("");
+		if (!StringUtils.isNull(remark)){
+			desc.append("备注:"+remark);
+		}
+		desc.append(operType+" "+table+"\r\n");
+		desc.append("参数:"+jsonParam);
+		
+		sysLog.setOperDesc(desc.toString());
+		
+		sysLogMapper.insert(sysLog);
 	}
 	
 }
