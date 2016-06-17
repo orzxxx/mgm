@@ -141,7 +141,7 @@ $.ajaxSetup({
 	},error : function(XMLHttpRequest, textStatus, errorThrown) {
 		try{
 			//$.messager.progress('close');
-			$('#loading').dialog('close');
+			hideLoading();
 			$.messager.alert("错误", "连接超时,请等待一段时间后重试");
 		}catch(e){}
 	}
@@ -152,22 +152,11 @@ var ajaxBack = $.ajax;
 			title:'请稍后', 
 			msg:'正在处理...'
 			});*/
-			$('#loading').dialog({    
-				title: '正在处理...',
-			    width: 100,    
-			    height: 110,    
-			    closable: false,    
-			    cache: false,    
-			    content: "<img width='64px' height='64px'"+ 
-			    	"style='position:absolute;"+
-			    	"left:0; right:0; top:0; bottom:0;"+
-			    	"margin: auto;' src='images/loading.gif'/>",    
-			    modal: true
-			});  
+			showLoading();
 		var s = setting.success;
 		setting.success = function(){
 			try {
-				$('#loading').dialog('close');
+				hideLoading();
 				//$.messager.progress('close');
 				if($.isFunction(s)){s.apply(setting.context,arguments);}
 			}catch(e){
@@ -176,7 +165,28 @@ var ajaxBack = $.ajax;
 		};
 		ajaxBack(setting);
 	};
+function showLoading(){
+	$('#loading').dialog({    
+		title: '正在处理...',
+	    width: 100,    
+	    height: 110,    
+	    closable: false,    
+	    cache: false,    
+	    border:false,
+	    shadow:false,
+	    content: "<img width='64px' height='64px'"+ 
+	    	"style='position:absolute;"+
+	    	"left:0; right:0; top:0; bottom:0;"+
+	    	"margin: auto;' src='images/loading.gif'/>",    
+	    modal: true
+	});
+	$("#loading").prev("div").hide();
+	$("#loading").parent("div").css("padding", "0px");
+}
 
+function hideLoading(){
+	$('#loading').dialog('close');
+}
 </script>
 </head>
 
