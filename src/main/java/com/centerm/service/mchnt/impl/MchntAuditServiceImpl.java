@@ -85,7 +85,7 @@ public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
 			mchnt.setStatus(0);
 			mchntMapper.updateByPrimaryKey(mchnt);
 			//短信提醒
-			String result = sendSms("15394538563", "您的验证码为:123456");
+			String result = sendSms(mchnt.getUserId(), "您的验证码为:123456");
 			System.out.println(result);
 		}
 	}

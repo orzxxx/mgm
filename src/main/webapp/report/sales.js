@@ -120,6 +120,33 @@ define(function () {
 		            		$('#sales_pageList').datagrid('loadData',data);  
 		            		if (data.rows == null || data.rows.length == 0) {
 		            			$.messager.alert("提示", "没有符合条件的记录!");
+		            			return;
+							}
+		            		//按照分类合并行
+		            		var data = data.rows;
+		            		var start = 0;
+		            		var rowspan = 1;
+		            		var curType = data[0].menutpName;
+		            		for ( var i = 1; i < data.length; i++) {
+								if (data[i].menutpName == curType) {
+									rowspan++;
+									if(i == data.length-1){
+										$('#sales_pageList').datagrid('mergeCells',{
+					    					index: start,
+					    					field: 'menutpName',
+					    					rowspan: rowspan
+					    				});
+									}
+								}else{
+									$('#sales_pageList').datagrid('mergeCells',{
+				    					index: start,
+				    					field: 'menutpName',
+				    					rowspan: rowspan
+				    				});
+									curType = data[i].menutpName;
+									rowspan = 1;
+									start = i;
+								}
 							}
 						} else {
 							$.messager.alert("提示", result.message);
