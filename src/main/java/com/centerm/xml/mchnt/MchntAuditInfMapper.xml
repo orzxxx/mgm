@@ -3,6 +3,7 @@
 <mapper namespace="com.centerm.dao.mchnt.MchntAuditInfMapper" >
   <resultMap id="BaseResultMap" type="com.centerm.model.mchnt.MchntAuditInf" >
     <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="store_photo" property="storePhoto" jdbcType="VARCHAR" />
     <result column="license_front" property="licenseFront" jdbcType="VARCHAR" />
     <result column="license_back" property="licenseBack" jdbcType="VARCHAR" />
     <result column="id_card_front" property="idCardFront" jdbcType="VARCHAR" />
@@ -31,12 +32,12 @@
 	</association>
   </resultMap>
   <sql id="Base_Column_List" >
-    mchnt_cd, license_front, license_back, id_card_front, id_card_back, audit_status, 
-    audit_role, audit_inf, audit_time, submit_time
+    mchnt_cd, store_photo, license_front, license_back, id_card_front, id_card_back, 
+    audit_status, audit_role, audit_inf, audit_time, submit_time
   </sql>
   <sql id="Model_Column_List" >
     a.mchnt_cd, a.license_front, a.license_back, a.id_card_front, a.id_card_back, a.audit_status, 
-    a.audit_role, a.audit_inf, a.audit_time, a.submit_time,
+    a.audit_role, a.audit_inf, a.audit_time, a.submit_time, a.store_photo,
     b.mchnt_name, b.user_id, b.user_name, b.ID_card, b.mobile, b.email, b.mchnt_addr,
     b.in_acct, b.alipay_no, b.wechat_no, b.district, b.detailed_address
   </sql>
@@ -64,20 +65,23 @@
     where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.centerm.model.mchnt.MchntAuditInf" >
-    insert into tbl_bkms_mchnt_audit_inf (mchnt_cd, license_front, license_back, 
-      id_card_front, id_card_back, audit_status, 
-      audit_role, audit_inf, audit_time, 
-      submit_time)
-    values (#{mchntCd,jdbcType=VARCHAR}, #{licenseFront,jdbcType=VARCHAR}, #{licenseBack,jdbcType=VARCHAR}, 
-      #{idCardFront,jdbcType=VARCHAR}, #{idCardBack,jdbcType=VARCHAR}, #{auditStatus,jdbcType=INTEGER}, 
-      #{auditRole,jdbcType=VARCHAR}, #{auditInf,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR}, 
-      #{submitTime,jdbcType=VARCHAR})
+    insert into tbl_bkms_mchnt_audit_inf (mchnt_cd, store_photo, license_front, 
+      license_back, id_card_front, id_card_back, 
+      audit_status, audit_role, audit_inf, 
+      audit_time, submit_time)
+    values (#{mchntCd,jdbcType=VARCHAR}, #{storePhoto,jdbcType=VARCHAR}, #{licenseFront,jdbcType=VARCHAR}, 
+      #{licenseBack,jdbcType=VARCHAR}, #{idCardFront,jdbcType=VARCHAR}, #{idCardBack,jdbcType=VARCHAR}, 
+      #{auditStatus,jdbcType=INTEGER}, #{auditRole,jdbcType=VARCHAR}, #{auditInf,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.mchnt.MchntAuditInf" >
     insert into tbl_bkms_mchnt_audit_inf
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="mchntCd != null" >
         mchnt_cd,
+      </if>
+      <if test="storePhoto != null" >
+        store_photo,
       </if>
       <if test="licenseFront != null" >
         license_front,
@@ -111,6 +115,9 @@
       <if test="mchntCd != null" >
         #{mchntCd,jdbcType=VARCHAR},
       </if>
+      <if test="storePhoto != null" >
+        #{storePhoto,jdbcType=VARCHAR},
+      </if>
       <if test="licenseFront != null" >
         #{licenseFront,jdbcType=VARCHAR},
       </if>
@@ -143,6 +150,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.mchnt.MchntAuditInf" >
     update tbl_bkms_mchnt_audit_inf
     <set >
+      <if test="storePhoto != null" >
+        store_photo = #{storePhoto,jdbcType=VARCHAR},
+      </if>
       <if test="licenseFront != null" >
         license_front = #{licenseFront,jdbcType=VARCHAR},
       </if>
@@ -175,7 +185,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.centerm.model.mchnt.MchntAuditInf" >
     update tbl_bkms_mchnt_audit_inf
-    set license_front = #{licenseFront,jdbcType=VARCHAR},
+    set store_photo = #{storePhoto,jdbcType=VARCHAR},
+      license_front = #{licenseFront,jdbcType=VARCHAR},
       license_back = #{licenseBack,jdbcType=VARCHAR},
       id_card_front = #{idCardFront,jdbcType=VARCHAR},
       id_card_back = #{idCardBack,jdbcType=VARCHAR},

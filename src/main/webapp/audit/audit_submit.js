@@ -25,15 +25,15 @@ define(function () {
 				if (data.licenseFront != "") {
 					$("#auditSubmit_licenseFrontImg").attr("src", data.licenseFront).css('visibility','visible');
 				}
-				if (data.licenseBack != "") {
-					$("#auditSubmit_licenseBackImg").attr("src", data.licenseBack).css('visibility','visible');
+				if (data.storePhoto != "") {
+					$("#auditSubmit_storePhotoImg").attr("src", data.storePhoto).css('visibility','visible');
 				}
 				
 				if (parseInt(result.data.auditStatus) == 2 ) {
 					$('#auditSubmit_submit').linkbutton('disable');
 					$("#auditSubmit_submit").unbind("click");
 					$('#auditSubmit_licenseFront').attr("disabled", "disabled");
-					$('#auditSubmit_licenseBack').attr("disabled", "disabled");
+					$('#auditSubmit_storePhoto').attr("disabled", "disabled");
 					$('#auditSubmit_idCardFront').attr("disabled", "disabled");
 					$('#auditSubmit_idCardBack').attr("disabled", "disabled");
 				}
@@ -47,7 +47,7 @@ define(function () {
 		$("#auditSubmit_submit").click(submit);
 		
 		$("#auditSubmit_idCardFrontImg, #auditSubmit_idCardBackImg," +
-				" #auditSubmit_licenseFrontImg, #auditSubmit_licenseBackImg").dblclick(function(){
+				" #auditSubmit_licenseFrontImg, #auditSubmit_storePhoto").dblclick(function(){
 			var src = $(this).attr("src");
 			if (src == "" || src == null) {
 				$.messager.alert("提示", "图片还未上传, 请上传图片");
@@ -74,7 +74,7 @@ define(function () {
 			}); 
 		});
 		
-		$("#auditSubmit_idCardFront, #auditSubmit_idCardBack, #auditSubmit_licenseFront, #auditSubmit_licenseBack").change(function(){
+		$("#auditSubmit_idCardFront, #auditSubmit_idCardBack, #auditSubmit_licenseFront, #auditSubmit_storePhoto").change(function(){
 			var propertyName = $(this).attr("name");
 			upload(propertyName);
 		});
@@ -105,11 +105,11 @@ define(function () {
 	function submit(){
 		$.post("mchnt/audit/submit",{mchntCd: currentMchntCd},function(result){
 			if (result.code == 0) {
-				$.messager.alert("提示", "提交申请成功, 请耐心等待审核结果");
+				$.messager.alert("提示", "提交申请成功,将在24小时内告知审批结果,请耐心等待");
 				$('#auditSubmit_submit').linkbutton('disable');
 				$("#auditSubmit_submit").unbind("click");
 				$('#auditSubmit_licenseFront').attr("disabled", "disabled");
-				$('#auditSubmit_licenseBack').attr("disabled", "disabled");
+				$('#auditSubmit_storePhoto').attr("disabled", "disabled");
 				$('#auditSubmit_idCardFront').attr("disabled", "disabled");
 				$('#auditSubmit_idCardBack').attr("disabled", "disabled");
 			} else {

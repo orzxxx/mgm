@@ -74,7 +74,7 @@ requirejs(['audit-submit'],function  (audit) {
 				<td class="tdspace">
 				</td>
 				<td>
-					<img id="auditSubmit_licenseBackImg" class="licenseimg" style="visibility:hidden;">
+					<img id="auditSubmit_storePhotoImg" class="licenseimg" style="visibility:hidden;">
 				</td>
 				<td class="hintspace">
 				</td>							
@@ -82,7 +82,7 @@ requirejs(['audit-submit'],function  (audit) {
 			<tr>
 				<td>
 					<label>
-						上传营业执照正面
+						上传营业执照
 					</label>
 				</td>
 				<td class="tdspace">
@@ -95,13 +95,13 @@ requirejs(['audit-submit'],function  (audit) {
 				</td>
 				<td>
 					<label>
-						上传营业执照背面
+						上传店铺照片
 					</label>
 				</td>
 				<td class="tdspace">
 				</td>
 				<td>
-					<input id="auditSubmit_licenseBack" type="file" name="licenseBack" maxlength="30" class="easyui-validatebox"  validType="image" style="width:180px;"/>
+					<input id="auditSubmit_storePhoto" type="file" name="storePhoto" maxlength="30" class="easyui-validatebox"  validType="image" style="width:180px;"/>
 					<tt>双击查看原图</tt>
 				</td>
 				<td class="hintspace">

@@ -61,7 +61,7 @@ public class MchntAuditController {
 			mchntAuditInf.setIdCardFront(serverAddress+mchntAuditInf.getIdCardFront());
 			mchntAuditInf.setIdCardBack(serverAddress+mchntAuditInf.getIdCardBack());
 			mchntAuditInf.setLicenseFront(serverAddress+mchntAuditInf.getLicenseFront());
-			mchntAuditInf.setLicenseBack(serverAddress+mchntAuditInf.getLicenseBack());
+			mchntAuditInf.setStorePhoto(serverAddress+mchntAuditInf.getStorePhoto());
 		}
 		page.setRows(mchntAudits);
 		return page;
@@ -104,10 +104,10 @@ public class MchntAuditController {
 			throw new BusinessException("未提交身份证背面照");
 		}
 		if (StringUtils.isNull(mchntAudit.getLicenseFront())) {
-			throw new BusinessException("未提交营业执照正面照");
+			throw new BusinessException("未提交营业执照");
 		}
-		if (StringUtils.isNull(mchntAudit.getLicenseBack())) {
-			throw new BusinessException("未提交营业执照背面照");
+		if (StringUtils.isNull(mchntAudit.getStorePhoto())) {
+			throw new BusinessException("未提交店铺照片");
 		}
 		mchntAudit.setAuditStatus(2);
 		mchntAudit.setSubmitTime(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
@@ -129,8 +129,8 @@ public class MchntAuditController {
 		if (!StringUtils.isNull(mchnt.getLicenseFront())) {
 			mchnt.setLicenseFront(serverAddress+mchnt.getLicenseFront());
 		}
-		if (!StringUtils.isNull(mchnt.getLicenseBack())) {
-			mchnt.setLicenseBack(serverAddress+mchnt.getLicenseBack());
+		if (!StringUtils.isNull(mchnt.getStorePhoto())) {
+			mchnt.setStorePhoto(serverAddress+mchnt.getStorePhoto());
 		}
 		
 		return mchnt;

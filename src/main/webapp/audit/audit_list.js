@@ -94,7 +94,8 @@ define(function () {
 					$("#doaudit_idCardFrontImg").attr("src", row.idCardFront);
 					$("#doaudit_idCardBackImg").attr("src", row.idCardBack);
 					$("#doaudit_licenseFrontImg").attr("src", row.licenseFront);
-					$("#doaudit_licenseBackImg").attr("src", row.licenseBack);
+					//$("#doaudit_licenseBackImg").attr("src", row.licenseBack);
+					$("#doaudit_storePhotoImg").attr("src", row.storePhoto);
 					
 					$("#doaudit_doaudit").click(function(){
 						doAudit(dlg);
@@ -102,7 +103,7 @@ define(function () {
 					});
 					
 					$("#doaudit_idCardFrontImg, #doaudit_idCardBackImg," +
-					" #doaudit_licenseFrontImg, #doaudit_licenseBackImg").dblclick(function(){
+					" #doaudit_licenseFrontImg, #doaudit_storePhotoImg").dblclick(function(){
 						var src = $(this).attr("src");
 						var dlg = $('<div/>').dialog({    
 							title: "原图",

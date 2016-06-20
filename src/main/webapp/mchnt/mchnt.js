@@ -13,6 +13,14 @@ define(function () {
 		$("#mchnt_query").click(query);
 		$("#mchnt_clear").click(clearForm);
 	}
+	function setValidType(type){
+		//更改校验方式
+		$('#register_xxx').validatebox({    
+		    validType: type   
+		});  
+		//校验当前数据
+		$('#register_xxx').validatebox('validate'); 
+	}
 	function initDatagrid(){
 		$('#mchnt_pageList').datagrid({
 				fit:true,
@@ -99,7 +107,7 @@ define(function () {
 		var dlg = $('<div/>').dialog({    
 		    title: '添加商户',    
 		    width: 500,    
-		    height: 400,    
+		    height: 470,    
 		    closable: false,    
 		    cache: false,    
 		    href: 'mchnt/mchnt_form.jsp',    
@@ -146,7 +154,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '编辑商户',    
 			    width: 500,    
-			    height: 350,    
+			    height: 400,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'mchnt/mchnt_form.jsp',    
@@ -229,6 +237,16 @@ define(function () {
 		//表单赋值
 		$("#mchnt_frchseCd").val(userInfo.mchntCd);
 		$("#mchnt_mchntCd").val(userInfo.mchntCd);
+		//按钮
+		$("#mchnt_license").change(function(){
+			setValidType('license');
+		});
+		$("#mchnt_taxCard").change(function(){
+			setValidType('taxCard');
+		});
+		$("#mchnt_orgCode").change(function(){
+			setValidType('orgCode');
+		});
 	}
 
     return {

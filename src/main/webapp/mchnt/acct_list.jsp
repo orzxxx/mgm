@@ -97,6 +97,20 @@ requirejs(['acct'],function  (acct) {
 		</tr>
 		<tr>
 			<td>
+				<label id="a_name">
+					证件号:
+				</label>
+			</td>
+			<td class="tdspace">
+			</td>
+			<td>
+				<input type="text" name="a" style="width:320px;" disabled="disabled"/>
+			</td>
+			<td class="hintspace">
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<label>
 					收款卡号:
 				</label>

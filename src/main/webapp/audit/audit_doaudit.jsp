@@ -172,19 +172,19 @@
 					<img id="doaudit_licenseFrontImg" class="iccardimg" >
 				</td>
 				<td>
-					<img  id="doaudit_licenseBackImg"  class="iccardimg" >
+					<img  id="doaudit_storePhotoImg"  class="iccardimg" >
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<label>
-						营业执照正面
+						营业执照
 					</label>
 					<tt>双击查看原图</tt>
 				</td>
 				<td>
 					<label>
-						营业执照背面
+						店铺照片
 					</label>
 					<tt>双击查看原图</tt>
 				</td>

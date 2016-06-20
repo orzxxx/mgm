@@ -10,8 +10,10 @@ public class MchntAuditInf {
     private String idCardFront;
 
     private String idCardBack;
+    
+    private String storePhoto;
 
-    private Integer auditStatus;
+	private Integer auditStatus;
 
     private String auditRole;
 
@@ -22,6 +24,14 @@ public class MchntAuditInf {
     private String submitTime;
     
     private MchntInf mchnt;
+    
+    public String getStorePhoto() {
+		return storePhoto;
+	}
+
+	public void setStorePhoto(String storePhoto) {
+		this.storePhoto = storePhoto;
+	}
 
     public MchntInf getMchnt() {
 		return mchnt;

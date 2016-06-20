@@ -18,7 +18,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '修改个人信息',    
 			    width: 500,    
-			    height: 460,    
+			    height: 500,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'audit/audit_form.jsp',    
@@ -58,9 +58,28 @@ define(function () {
 					$("#audit_form").form('load', auditInfo);
 					$("#audit_userId").numberbox('disable');
 					$("#audit_district").citypicker();
+					//
+					$("#audit_license").change(function(){
+						setValidType('license');
+					});
+					$("#audit_taxCard").change(function(){
+						setValidType('taxCard');
+					});
+					$("#audit_orgCode").change(function(){
+						setValidType('orgCode');
+					});
 				}
 			}); 
 		
+	}
+	
+	function setValidType(type){
+		//更改校验方式
+		$('#register_xxx').validatebox({    
+		    validType: type   
+		});  
+		//校验当前数据
+		$('#register_xxx').validatebox('validate'); 
 	}
 	
 	function initList(){

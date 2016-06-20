@@ -69,5 +69,24 @@ $.extend($.fn.validatebox.defaults.rules, {
         	return value.replace(/[^\x00-\xff]/g,"aa").length <= length;
         },
         message: '长度不得超过{0}个字符'
-    }
+    },
+	taxCard: {
+    	validator: function (value, param) {
+    		var length = value.replace(/[^\x00-\xff]/g,"aa").length;
+    		return (length == 15 || length == 18 || length == 20);
+    	},
+    	message: '税务登记证格式不正确'
+	},
+	license: {
+    	validator: function (value, param) {
+    		return value.replace(/[^\x00-\xff]/g,"aa").length == 15;
+	    },
+    	message: '营业执照格式不正确'
+	},
+	orgCode: {
+    	validator: function (value, param) {
+    		return value.replace(/[^\x00-\xff]/g,"aa").length == 10;
+    	},
+    	message: '组织机构代码证格式不正确'
+	}
 });

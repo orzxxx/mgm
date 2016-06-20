@@ -144,6 +144,39 @@
 				<tt>*</tt>
 			</td>
 		</tr>
+		<tr >
+				<td>
+					<label>
+						证件类型
+					</label>
+				</td>
+				<td class="tdspace">
+				</td>
+				<td>
+					<input id="mchnt_license" type="radio" checked name="a" value="1"/><span>营业执照</span>
+					<span style="float:right;"><input id="mchnt_taxCard" type="radio" name="a" value="2"/><span>税务登记证</span></span>
+					<br/>
+					<input id="mchnt_orgCode" type="radio" name="a" value="3"/><span>组织机构代码证</span>
+				</td>
+				<td class="hintspace">
+					<tt>*</tt> 
+				</td>				
+			</tr>
+		<tr>
+			<td>
+				<label>
+					证件号:
+				</label>
+			</td>
+			<td class="tdspace">
+			</td>
+			<td>
+				<input id="register_xxx" type="text" name="" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="license" style="width:220px;"/>
+			</td>
+			<td class="hintspace">
+				<tt>*</tt>
+			</td>
+		</tr>
 		</table>
 	</form>
 </div>
