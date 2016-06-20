@@ -78,7 +78,12 @@ define(function () {
 				pageList : [ 10, 20, 30 ],
 				columns:[[
 				   {field:'menutpName',title:'分类',width:150,sortable:true,align:'center'},
-				   {field:'productName',title:'商品名',width:150,sortable:true,align:'center'},
+				   {field:'productName',title:'商品名',width:150,sortable:true,align:'center',formatter:function(value, rec){
+						if (rec.status == "-1") {
+							return "<span style=\"color:red;\">"+value+"(已删除)</span>";
+						}
+						return value;
+					}},
 					{field:'sales',title:'销量',width:150,sortable:true,align:'center'}
 				]],
 				toolbar:"#sales_toolbar"
@@ -123,9 +128,9 @@ define(function () {
 		            			return;
 							}
 		            		//按照分类合并行
-		            		var data = data.rows;
 		            		var start = 0;
 		            		var rowspan = 1;
+		            		data = data.rows;
 		            		var curType = data[0].menutpName;
 		            		for ( var i = 1; i < data.length; i++) {
 								if (data[i].menutpName == curType) {
