@@ -77,7 +77,12 @@ define(function () {
 				remoteSort : false,
 				pageList : [ 10, 20, 30 ],
 				columns:[[
-				   {field:'productName',title:'商品名',width:150,sortable:true,align:'center'},
+				   {field:'productName',title:'商品名',width:150,sortable:true,align:'center',formatter:function(value, rec){
+						if (rec.status == "-1") {
+							return "<span style=\"color:red;\">"+value+"(已删除)</span>";
+						}
+						return value;
+					}},
 					{field:'menutpName',title:'分类',width:150,sortable:true,align:'center'},
 					{field:'sales',title:'销量',width:150,sortable:true,align:'center'}
 				]],
