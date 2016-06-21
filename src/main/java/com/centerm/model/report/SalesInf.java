@@ -5,6 +5,8 @@ public class SalesInf{
     
     private String menutpName;
     
+    private Integer status;
+    
     private String menutpId;
 
 	private Integer sales;
@@ -19,7 +21,15 @@ public class SalesInf{
     
     private String endDate;
     
-    public String getMenutpName() {
+    public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getMenutpName() {
 		return menutpName;
 	}
 

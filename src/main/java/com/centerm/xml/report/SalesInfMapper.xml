@@ -31,9 +31,9 @@
       and product_id = #{productId,jdbcType=VARCHAR}
   </delete>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
-  	select  mchnt_cd, date, product_id, product_name, sum(sales) as sales, menutp_name from
+  	select  mchnt_cd, date, product_id, product_name, sum(sales) as sales, menutp_name, status from
 	(select
-	<include refid="Model_Column_List" />,c.menutp_name
+	<include refid="Model_Column_List" />,c.menutp_name, b.status
 	from tbl_bkms_report_sales a
 	join tbl_bkms_menu_inf b
 	on a.product_id = b.product_id
@@ -67,7 +67,7 @@
 	</where>
 	union
 	select
-	<include refid="Model_Column_List" />,c.menutp_name
+	<include refid="Model_Column_List" />,c.menutp_name, b.status
 	from tbl_bkms_report_sales a
 	join tbl_bkms_menu_combo_inf b
 	on a.product_id = b.product_id

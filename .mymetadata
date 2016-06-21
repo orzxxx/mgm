@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="mgm"
+  name="mgm_test"
   id="myeclipse.1465720588879"
   context-root="/mgm"
   j2ee-spec="1.7"
-  archive="mgm.war">
+  archive="mgm_test.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
