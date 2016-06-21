@@ -8,6 +8,19 @@ define(function () {
 		initButton();
 		
 		$('#audit_addr').citypicker();
+		
+		//查询审核状态
+		$.post("mchnt/audit/get",{mchntCd: currentMchntCd},function(result){
+			if (result.code == 0) {
+				if (parseInt(result.data.auditStatus) == -1 ) {
+					//$('#audit_edit').linkbutton('enable');
+					$('#audit_edit').show();
+					$("#audit_edit").click(edit);
+				}
+			} else {
+				$.messager.alert("提示", result.message);
+			}
+		}, "json");
 	}
 	function initButton(){
 		//$("#audit_edit").click(edit);
@@ -39,7 +52,6 @@ define(function () {
 			                		//关闭对话框
 			                		dlg.dialog('close');
 			    	        		dlg.remove();
-			                		
 			    				} else {
 			    					$.messager.alert("提示", result.message);
 			    				}
@@ -68,6 +80,16 @@ define(function () {
 					$("#audit_orgCode").change(function(){
 						setValidType('orgCode');
 					});
+					//设置当前校验方式
+					var type = "";
+					if (auditInfo.licenseType == "1") {
+						type = "license";
+					}else if(auditInfo.licenseType == "2"){
+						type = "taxCard";
+					}else if(auditInfo.licenseType == "3"){
+						type = "orgCode";
+					}
+					setValidType(type);
 				}
 			}); 
 		
@@ -75,11 +97,11 @@ define(function () {
 	
 	function setValidType(type){
 		//更改校验方式
-		$('#register_xxx').validatebox({    
+		$('#audit_licenseNumber').validatebox({    
 		    validType: type   
 		});  
 		//校验当前数据
-		$('#register_xxx').validatebox('validate'); 
+		$('#audit_licenseNumber').validatebox('validate'); 
 	}
 	
 	function initList(){
@@ -90,24 +112,25 @@ define(function () {
         		$("#auditInfo").form('load', auditInfo);
         		$("#auditInfo_mchntCd").val(currentMchntCd);
         		//$('#audit_userId').numberbox('disable');
-			} else {
-				$.messager.alert("提示", result.message);
-			}
-		}, "json");
-		//查询审核状态
-		$.post("mchnt/audit/get",{mchntCd: currentMchntCd},function(result){
-			if (result.code == 0) {
-				if (parseInt(result.data.auditStatus) == -1 ) {
-					//$('#audit_edit').linkbutton('enable');
-					$('#audit_edit').show();
-					$("#audit_edit").click(edit);
-				}
+        		//显示证件号
+        		changeLicenseView(auditInfo.licenseType);
 			} else {
 				$.messager.alert("提示", result.message);
 			}
 		}, "json");
 	}
-
+	
+	//更改显示的证件号名称
+	function changeLicenseView(licenseType){
+		if (licenseType == "1") {
+			$("#audit_license_label").text("营业执照:");
+		} else if(licenseType == "2"){
+			$("#audit_license_label").text("税务登记证:");
+		} else if(licenseType == "3"){
+			$("#audit_license_label").text("组织机构代码证:");
+		} 
+	}
+	
     return {
         init : init
     }

@@ -85,6 +85,9 @@ define(function () {
 					}
 				}],
 				onLoad : function(){
+					//显示证件号
+	        		changeLicenseView(row.licenseType);
+					
 					$('#doaudit_tab').tabs({    
 					    border:false, 
 					   fit:true
@@ -132,6 +135,17 @@ define(function () {
 		}
 	}
 
+	//更改显示的证件号名称
+	function changeLicenseView(licenseType){
+		if (licenseType == "1") {
+			$("#doaudit_license_label").text("营业执照:");
+		} else if(licenseType == "2"){
+			$("#doaudit_license_label").text("税务登记证:");
+		} else if(licenseType == "3"){
+			$("#doaudit_license_label").text("组织机构代码证:");
+		} 
+	}
+	
 	function doAudit(dlg){
 		if($('#doaudit_auditForm').form("validate")){
     		$('#doaudit_auditForm').ajaxSubmit( {

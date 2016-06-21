@@ -2,25 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.centerm.dao.mchnt.MchntInfMapper">
   <resultMap id="BaseResultMap" type="com.centerm.model.mchnt.MchntInf">
-    <id column="mchnt_cd" jdbcType="VARCHAR" property="mchntCd" />
-    <result column="mchnt_name" jdbcType="VARCHAR" property="mchntName" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="ID_card" jdbcType="VARCHAR" property="idCard" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="mchnt_addr" jdbcType="VARCHAR" property="mchntAddr" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="in_acct" jdbcType="VARCHAR" property="inAcct" />
-    <result column="alipay_no" jdbcType="VARCHAR" property="alipayNo" />
-    <result column="wechat_no" jdbcType="VARCHAR" property="wechatNo" />
-    <result column="district" jdbcType="VARCHAR" property="district" />
-    <result column="detailed_address" jdbcType="VARCHAR" property="detailedAddress" />
+      <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="mchnt_name" property="mchntName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="ID_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mchnt_addr" property="mchntAddr" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="in_acct" property="inAcct" jdbcType="VARCHAR" />
+    <result column="alipay_no" property="alipayNo" jdbcType="VARCHAR" />
+    <result column="wechat_no" property="wechatNo" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
     <result column="mchnt_logo" property="mchntLogo" jdbcType="VARCHAR" />
+    <result column="license" property="license" jdbcType="VARCHAR" />
+    <result column="license_type" property="licenseType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     mchnt_cd, mchnt_name, user_id, user_name, ID_card, mobile, email, mchnt_addr, status, 
-    in_acct, alipay_no, wechat_no, district, detailed_address,mchnt_logo
+    in_acct, alipay_no, wechat_no, district, detailed_address, mchnt_logo, license, license_type
   </sql>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
@@ -69,6 +71,15 @@
 	<if test="detailedAddress != null and detailedAddress != ''">
 		AND detailed_address = #{detailedAddress}
 	</if>
+	<if test="mchnt_logo != null and mchnt_logo != ''">
+		AND mchnt_logo = #{mchntLogo}
+	</if>
+	<if test="license != null and license != ''">
+		AND license = #{license}
+	</if>
+	<if test="licenseType != null and licenseType != ''">
+		AND license_type = #{licenseType}
+	</if>
 	</where>
 </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -97,12 +108,14 @@
       user_name, ID_card, mobile, 
       email, mchnt_addr, status, 
       in_acct, alipay_no, wechat_no, 
-      district, detailed_address)
+      district, detailed_address, mchnt_logo, 
+      license, license_type)
     values (#{mchntCd,jdbcType=VARCHAR}, #{mchntName,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{mchntAddr,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{inAcct,jdbcType=VARCHAR}, #{alipayNo,jdbcType=VARCHAR}, #{wechatNo,jdbcType=VARCHAR}, 
-      #{district,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR})
+      #{district,jdbcType=VARCHAR}, #{detailedAddress,jdbcType=VARCHAR}, #{mchntLogo,jdbcType=VARCHAR}, 
+      #{license,jdbcType=VARCHAR}, #{licenseType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.mchnt.MchntInf">
     insert into tbl_bkms_mchnt_inf
@@ -149,6 +162,15 @@
       <if test="detailedAddress != null">
         detailed_address,
       </if>
+      <if test="mchntLogo != null" >
+        mchnt_logo,
+      </if>
+      <if test="license != null" >
+        license,
+      </if>
+      <if test="licenseType != null" >
+        license_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="mchntCd != null">
@@ -192,6 +214,15 @@
       </if>
       <if test="detailedAddress != null">
         #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntLogo != null" >
+        #{mchntLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="license != null" >
+        #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseType != null" >
+        #{licenseType,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -240,6 +271,12 @@
       <if test="mchntLogo != null" >
         mchnt_logo = #{mchntLogo,jdbcType=VARCHAR},
       </if>
+      <if test="license != null" >
+        license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseType != null" >
+        license_type = #{licenseType,jdbcType=VARCHAR},
+      </if>
     </set>
     where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
   </update>
@@ -257,7 +294,10 @@
       alipay_no = #{alipayNo,jdbcType=VARCHAR},
       wechat_no = #{wechatNo,jdbcType=VARCHAR},
       district = #{district,jdbcType=VARCHAR},
-      detailed_address = #{detailedAddress,jdbcType=VARCHAR}
+      detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      mchnt_logo = #{mchntLogo,jdbcType=VARCHAR},
+      license = #{license,jdbcType=VARCHAR},
+      license_type = #{licenseType,jdbcType=VARCHAR}
     where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
   </update>
 </mapper>

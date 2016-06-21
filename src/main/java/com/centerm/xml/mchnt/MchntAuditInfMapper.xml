@@ -29,6 +29,8 @@
 	    <result column="district" jdbcType="VARCHAR" property="district" />
 	    <result column="detailed_address" jdbcType="VARCHAR" property="detailedAddress" />
 	    <result column="mchnt_logo" property="taste" jdbcType="VARCHAR" />
+	    <result column="license" property="license" jdbcType="VARCHAR" />
+   		<result column="license_type" property="licenseType" jdbcType="VARCHAR" />
 	</association>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -39,7 +41,7 @@
     a.mchnt_cd, a.license_front, a.license_back, a.id_card_front, a.id_card_back, a.audit_status, 
     a.audit_role, a.audit_inf, a.audit_time, a.submit_time, a.store_photo,
     b.mchnt_name, b.user_id, b.user_name, b.ID_card, b.mobile, b.email, b.mchnt_addr,
-    b.in_acct, b.alipay_no, b.wechat_no, b.district, b.detailed_address
+    b.in_acct, b.alipay_no, b.wechat_no, b.district, b.detailed_address, b.license, b.license_type
   </sql>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select

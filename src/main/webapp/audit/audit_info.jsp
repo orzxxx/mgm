@@ -97,6 +97,20 @@ requirejs(['audit-info'],function  (audit) {
 		</tr>
 		<tr>
 			<td>
+				<label id="audit_license_label">
+					证件号:
+				</label>
+			</td>
+			<td class="tdspace">
+			</td>
+			<td>
+				<input type="text" name="license" style="width:320px;" disabled="disabled"/>
+			</td>
+			<td class="hintspace">
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<label>
 					收款卡号:
 				</label>

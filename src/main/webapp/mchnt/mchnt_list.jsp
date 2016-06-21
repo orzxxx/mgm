@@ -66,7 +66,7 @@
 				<table id="mchnt_pageList"></table>
 		</div>
 		<div id="mchnt_toolbar">        
-			<a id="mchnt_edit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">修改</a>
-			<a id="mchnt_add" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"">添加</a>
+			<%--<a id="mchnt_edit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">修改</a>
+			--%><a id="mchnt_add" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"">添加</a>
 		</div>
 </div>

@@ -97,14 +97,14 @@ requirejs(['acct'],function  (acct) {
 		</tr>
 		<tr>
 			<td>
-				<label id="a_name">
+				<label id="acct_license_label">
 					证件号:
 				</label>
 			</td>
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="a" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="license" style="width:320px;" disabled="disabled"/>
 			</td>
 			<td class="hintspace">
 			</td>

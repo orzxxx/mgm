@@ -57,7 +57,7 @@ define(function () {
 					$("#acct_form").form('load', acctInfo);
 					$("#acct_userId").numberbox('disable');
 					$("#acct_district").citypicker();
-					
+					//证件号
 					$("#acct_license").change(function(){
 						setValidType('license');
 					});
@@ -67,17 +67,27 @@ define(function () {
 					$("#acct_orgCode").change(function(){
 						setValidType('orgCode');
 					});
+					//设置当前校验方式
+					var type = "";
+					if (acctInfo.licenseType == "1") {
+						type = "license";
+					}else if(acctInfo.licenseType == "2"){
+						type = "taxCard";
+					}else if(acctInfo.licenseType == "3"){
+						type = "orgCode";
+					}
+					setValidType(type);
 				}
 			}); 
 		
 	}
 	function setValidType(type){
 		//更改校验方式
-		$('#register_xxx').validatebox({    
+		$('#acct_licenseNumber').validatebox({    
 		    validType: type   
 		});  
 		//校验当前数据
-		$('#register_xxx').validatebox('validate'); 
+		$('#acct_licenseNumber').validatebox('validate'); 
 	}
 	function initList(){
 		$.post("mchnt/mchnt/get",{mchntCd: currentMchntCd},function(result){
@@ -87,19 +97,23 @@ define(function () {
         		$("#acctInfo_mchntCd").val(currentMchntCd);
         		//$('#acct_userId').numberbox('disable');
         		//显示证件号
-        		if (acctInfo.a == "1") {
-					$("#a_name").text("12");
-				} else if(acctInfo.a == "2"){
-					$("#a_name").text("12");
-				} else if(acctInfo.a == "2"){
-					$("#a_name").text("12");
-				} 
+        		changeLicenseView(acctInfo.licenseType);
 			} else {
 				$.messager.alert("提示", result.message);
 			}
 		}, "json");
 	}
-
+	//更改显示的证件号名称
+	function changeLicenseView(licenseType){
+		if (licenseType == "1") {
+			$("#acct_license_label").text("营业执照:");
+		} else if(licenseType == "2"){
+			$("#acct_license_label").text("税务登记证:");
+		} else if(licenseType == "3"){
+			$("#acct_license_label").text("组织机构代码证:");
+		} 
+	}
+	
     return {
         init : init
     }

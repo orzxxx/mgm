@@ -30,12 +30,7 @@ define(function () {
 				}
 				
 				if (parseInt(result.data.auditStatus) == 2 ) {
-					$('#auditSubmit_submit').linkbutton('disable');
-					$("#auditSubmit_submit").unbind("click");
-					$('#auditSubmit_licenseFront').attr("disabled", "disabled");
-					$('#auditSubmit_storePhoto').attr("disabled", "disabled");
-					$('#auditSubmit_idCardFront').attr("disabled", "disabled");
-					$('#auditSubmit_idCardBack').attr("disabled", "disabled");
+					buttionDisabled();
 				}
 			} else {
 				$.messager.alert("提示", result.message);
@@ -101,17 +96,21 @@ define(function () {
             })
 		}
 	}
-
+	//禁止按钮事件
+	function buttionDisabled(){
+		$('#auditSubmit_submit').linkbutton('disable');
+		$("#auditSubmit_submit").unbind("click");
+		$('#auditSubmit_licenseFront').attr("disabled", "disabled");
+		$('#auditSubmit_storePhoto').attr("disabled", "disabled");
+		$('#auditSubmit_idCardFront').attr("disabled", "disabled");
+		$('#auditSubmit_idCardBack').attr("disabled", "disabled");
+	}
+	
 	function submit(){
 		$.post("mchnt/audit/submit",{mchntCd: currentMchntCd},function(result){
 			if (result.code == 0) {
 				$.messager.alert("提示", "提交申请成功,将在24小时内告知审批结果,请耐心等待");
-				$('#auditSubmit_submit').linkbutton('disable');
-				$("#auditSubmit_submit").unbind("click");
-				$('#auditSubmit_licenseFront').attr("disabled", "disabled");
-				$('#auditSubmit_storePhoto').attr("disabled", "disabled");
-				$('#auditSubmit_idCardFront').attr("disabled", "disabled");
-				$('#auditSubmit_idCardBack').attr("disabled", "disabled");
+				buttionDisabled();
 			} else {
 				$.messager.alert("提示", result.message);
 			}

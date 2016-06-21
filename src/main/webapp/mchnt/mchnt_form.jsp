@@ -153,10 +153,10 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input id="mchnt_license" type="radio" checked name="a" value="1"/><span>营业执照</span>
-					<span style="float:right;"><input id="mchnt_taxCard" type="radio" name="a" value="2"/><span>税务登记证</span></span>
+					<input id="mchnt_license" type="radio" checked name="licenseType" value="1"/><span>营业执照</span>
+					<span style="float:right;"><input id="mchnt_taxCard" type="radio" name="licenseType" value="2"/><span>税务登记证</span></span>
 					<br/>
-					<input id="mchnt_orgCode" type="radio" name="a" value="3"/><span>组织机构代码证</span>
+					<input id="mchnt_orgCode" type="radio" name="licenseType" value="3"/><span>组织机构代码证</span>
 				</td>
 				<td class="hintspace">
 					<tt>*</tt> 
@@ -171,7 +171,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="register_xxx" type="text" name="" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="license" style="width:220px;"/>
+				<input id="mchnt_licenseNumber" type="text" name="license" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="license" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>

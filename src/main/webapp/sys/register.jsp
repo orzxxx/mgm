@@ -153,10 +153,10 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input id="register_license" type="radio" checked name="a" value="1" onchange="setValidType('license')"/><span>营业执照</span>
-					<span style="float:right;"><input id="register_taxCard" type="radio" name="a" value="2" onchange="setValidType('taxCard')"/><span>税务登记证</span></span>
+					<input id="register_license" type="radio" checked name="licenseType" value="1" onchange="setValidType('license')"/><span>营业执照</span>
+					<span style="float:right;"><input id="register_taxCard" type="radio" name="licenseType" value="2" onchange="setValidType('taxCard')"/><span>税务登记证</span></span>
 					<br/>
-					<input id="register_orgCode" type="radio" name="a" value="3" onchange="setValidType('orgCode')"/><span>组织机构代码证</span>
+					<input id="register_orgCode" type="radio" name="licenseType" value="3" onchange="setValidType('orgCode')"/><span>组织机构代码证</span>
 				</td>
 				<td class="hintspace">
 					<tt>*</tt> 
@@ -171,7 +171,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="register_xxx" type="text" name="" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="license" style="width:220px;"/>
+				<input id="register_licenseNumber" type="text" name="license" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="license" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>

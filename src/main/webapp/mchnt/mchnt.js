@@ -15,11 +15,11 @@ define(function () {
 	}
 	function setValidType(type){
 		//更改校验方式
-		$('#register_xxx').validatebox({    
+		$('#mchnt_licenseNumber').validatebox({    
 		    validType: type   
 		});  
 		//校验当前数据
-		$('#register_xxx').validatebox('validate'); 
+		$('#mchnt_licenseNumber').validatebox('validate'); 
 	}
 	function initDatagrid(){
 		$('#mchnt_pageList').datagrid({
@@ -42,10 +42,10 @@ define(function () {
 					{field:'email',title:'邮箱',width:150,sortable:true,align:'center'},
 					{field:'mchntAddr',title:'商户地址',width:200,sortable:true,align:'center'}
 				]],
-				toolbar:"#mchnt_toolbar",
+				toolbar:"#mchnt_toolbar"/*,
 				onDblClickRow:function(index, row){
 					edit();
-				}
+				}*/
 			});
 			//重写翻页事件
 			var pageOpts = $('#mchnt_pageList').datagrid('getPager').data("pagination").options;
@@ -198,6 +198,16 @@ define(function () {
 					$("#mchnt_passwd").parents("tr").remove();
 					$("#mchnt_userId").attr("disabled", true);
 					//$("#acct_userId").numberbox('disable');
+					//设置当前校验方式
+					var type = "";
+					if (row.licenseType == "1") {
+						type = "license";
+					}else if(row.licenseType == "2"){
+						type = "taxCard";
+					}else if(row.licenseType == "3"){
+						type = "orgCode";
+					}
+					setValidType(type);
 				}
 			}); 
 		}else{

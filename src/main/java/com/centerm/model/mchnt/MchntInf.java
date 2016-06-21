@@ -31,7 +31,27 @@ public class MchntInf {
     
     private String mchntLogo;
     
-    public String getMchntLogo() {
+    private String license;
+    
+    private Integer licenseType;
+    
+    public String getLicense() {
+		return license;
+	}
+
+	public void setLicense(String license) {
+		this.license = license;
+	}
+
+	public Integer getLicenseType() {
+		return licenseType;
+	}
+
+	public void setLicenseType(Integer licenseType) {
+		this.licenseType = licenseType;
+	}
+
+	public String getMchntLogo() {
 		return mchntLogo;
 	}
 

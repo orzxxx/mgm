@@ -8,7 +8,7 @@
 	    	<form id="doaudit_form" method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
 				<table class="table_info" border="0" style="width:500px;">
 				<tr>
-					<td width="100px;">
+					<td width="120px;">
 						<label>
 							手机号:
 						</label>
@@ -89,6 +89,20 @@
 					</td>
 					<td>
 						<input type="text" name="mchntAddr" style="width:320px;" disabled="disabled"/>
+					</td>
+					<td class="hintspace">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label id="doaudit_license_label">
+							证件号:
+						</label>
+					</td>
+					<td class="tdspace">
+					</td>
+					<td>
+						<input type="text" name="license" style="width:320px;" disabled="disabled"/>
 					</td>
 					<td class="hintspace">
 					</td>

@@ -74,11 +74,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 //	
 function setValidType(type){
 	//更改校验方式
-	$('#register_xxx').validatebox({    
+	$('#register_licenseNumber').validatebox({    
 	    validType: type   
 	});  
 	//校验当前数据
-	$('#register_xxx').validatebox('validate'); 
+	$('#register_licenseNumber').validatebox('validate'); 
 }
 
 function doRegister() {
