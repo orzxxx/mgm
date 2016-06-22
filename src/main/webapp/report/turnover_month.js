@@ -24,6 +24,9 @@ define(function () {
 		var curMonth = new Date().getMonth()+1;
 		resetStartMonth(curMonth);
 		resetEndMonth(curMonth);
+		//选中当前日期
+		$("#turnoverMonth_endYear option:last").attr("selected", "selected");
+		$("#turnoverMonth_endMonth option:last").attr("selected", "selected");
 	}
 	
 	function initButton(){
