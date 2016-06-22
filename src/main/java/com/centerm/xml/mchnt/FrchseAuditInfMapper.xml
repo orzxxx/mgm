@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.mchnt.FrchseAuditInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.mchnt.FrchseAuditInf" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="frchse_cd" property="frchseCd" jdbcType="VARCHAR" />
+    <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="INTEGER" />
+    <result column="audit_role" property="auditRole" jdbcType="VARCHAR" />
+    <result column="audit_inf" property="auditInf" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="VARCHAR" />
+    <result column="submit_time" property="submitTime" jdbcType="VARCHAR" />
+    <association property="mchnt" javaType="com.centerm.model.mchnt.MchntInf">
+    	<result column="mchntCd" property="mchntCd" jdbcType="VARCHAR" />
+	    <result column="mchntName" property="mchntName" jdbcType="VARCHAR" />
+	    <result column="mchntUserId" property="userId" jdbcType="VARCHAR" />
+	    <result column="mchntUserName" property="userName" jdbcType="VARCHAR" />
+	    <result column="mchntIdCard" property="idCard" jdbcType="VARCHAR" />
+	    <result column="mchntEmail" property="email" jdbcType="VARCHAR" />
+	    <result column="mchntAddr" property="mchntAddr" jdbcType="VARCHAR" />
+	</association>
+	<association property="frchse" javaType="com.centerm.model.mchnt.FrchseInf">
+	    <result column="frchseCd" property="frchseCd" jdbcType="VARCHAR" />
+	    <result column="frchseName" property="frchseName" jdbcType="VARCHAR" />
+	    <result column="frchseUserId" property="userId" jdbcType="VARCHAR" />
+	    <result column="frchseUserName" property="userName" jdbcType="VARCHAR" />
+	    <result column="frchseIdCard" property="idCard" jdbcType="VARCHAR" />
+	    <result column="frchseAddr" property="mchntAddr" jdbcType="VARCHAR" />
+	</association>
+  </resultMap>
+   <delete id="deleteByMchntCd" parameterType="java.lang.String" >
+    delete from tbl_bkms_frchse_mchnt_audit_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </delete>
+  <sql id="Base_Column_List" >
+    uuid, frchse_cd, mchnt_cd, audit_status, audit_role, audit_inf, audit_time, submit_time
+  </sql>
+  <sql id="Modal_Column_List" >
+    a.uuid, a.frchse_cd, a.mchnt_cd, a.audit_status, a.audit_role, a.audit_inf, a.audit_time, a.submit_time,
+    b.mchnt_cd mchntCd, b.mchnt_name mchntName, b.user_id mchntUserId, b.user_name mchntUserName, b.ID_card mchntIdCard, b.email mchntEmail, b.mchnt_addr mchntAddr,
+    c.frchse_cd frchseCd, c.frchse_name frchseName, c.user_id frchseUserId, c.user_name frchseUserName, c.ID_card frchseIdCard, c.mchnt_addr frchseAddr
+  </sql>
+  <select id="getByMchntCd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Modal_Column_List" />
+    from tbl_bkms_frchse_mchnt_audit_inf a
+    join tbl_bkms_mchnt_inf b
+    on a.mchnt_cd = b.mchnt_cd
+    join tbl_bkms_frchse_inf c
+    on a.frchse_cd = c.frchse_cd
+    where a.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_frchse_mchnt_audit_inf
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_frchse_mchnt_audit_inf
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Modal_Column_List" />
+	from tbl_bkms_frchse_mchnt_audit_inf a
+	 join tbl_bkms_mchnt_inf b
+    on a.mchnt_cd = b.mchnt_cd
+    join tbl_bkms_frchse_inf c
+    on a.frchse_cd = c.frchse_cd
+	<where>
+	<if test="uuid != null and uuid != ''">
+		 a.uuid = #{uuid}
+	</if>
+	<if test="frchseCd != null and frchseCd != ''">
+		AND a.frchse_cd = #{frchseCd}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND a.mchnt_cd = #{mchntCd}
+	</if>
+	<if test="auditStatus != null and auditStatus != ''">
+		AND a.audit_status = #{auditStatus}
+	</if>
+	<if test="auditRole != null and auditRole != ''">
+		AND a.audit_role = #{auditRole}
+	</if>
+	<if test="auditInf != null and auditInf != ''">
+		AND a.audit_inf = #{auditInf}
+	</if>
+	<if test="auditTime != null and auditTime != ''">
+		AND a.audit_time = #{auditTime}
+	</if>
+	<if test="submitTime != null and submitTime != ''">
+		AND a.submit_time = #{submitTime}
+	</if>
+	</where>
+</select>
+  <insert id="insert" parameterType="com.centerm.model.mchnt.FrchseAuditInf" >
+    insert into tbl_bkms_frchse_mchnt_audit_inf (uuid, frchse_cd, mchnt_cd, 
+      audit_status, audit_role, audit_inf, 
+      audit_time, submit_time)
+    values (#{uuid,jdbcType=VARCHAR}, #{frchseCd,jdbcType=VARCHAR}, #{mchntCd,jdbcType=VARCHAR}, 
+      #{auditStatus,jdbcType=INTEGER}, #{auditRole,jdbcType=VARCHAR}, #{auditInf,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.mchnt.FrchseAuditInf" >
+    insert into tbl_bkms_frchse_mchnt_audit_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="frchseCd != null" >
+        frchse_cd,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="auditRole != null" >
+        audit_role,
+      </if>
+      <if test="auditInf != null" >
+        audit_inf,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="submitTime != null" >
+        submit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="frchseCd != null" >
+        #{frchseCd,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditRole != null" >
+        #{auditRole,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInf != null" >
+        #{auditInf,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        #{submitTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.mchnt.FrchseAuditInf" >
+    update tbl_bkms_frchse_mchnt_audit_inf
+    <set >
+      <if test="frchseCd != null" >
+        frchse_cd = #{frchseCd,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="auditRole != null" >
+        audit_role = #{auditRole,jdbcType=VARCHAR},
+      </if>
+      <if test="auditInf != null" >
+        audit_inf = #{auditInf,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        submit_time = #{submitTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.mchnt.FrchseAuditInf" >
+    update tbl_bkms_frchse_mchnt_audit_inf
+    set frchse_cd = #{frchseCd,jdbcType=VARCHAR},
+      mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=INTEGER},
+      audit_role = #{auditRole,jdbcType=VARCHAR},
+      audit_inf = #{auditInf,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=VARCHAR},
+      submit_time = #{submitTime,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

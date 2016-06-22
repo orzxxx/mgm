@@ -26,6 +26,8 @@ requirejs.config({
         'audit-list': 'audit/audit_list',
         'admin-terminal': 'admin/terminal',
         'admin-mchnt': 'admin/mchnt',
-        'admin-order': 'admin/order'
+        'admin-order': 'admin/order',
+        'assoc-list': 'assoc/assoc',
+        'assoc-apply': 'assoc/assoc_apply'
     }
 });

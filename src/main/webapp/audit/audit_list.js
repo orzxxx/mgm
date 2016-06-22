@@ -71,7 +71,7 @@ define(function () {
 		if(row){
 			var dlg = $('<div/>').dialog({    
 			    title: '审核界面',    
-			    width: 700,    
+			    width: 500,    
 			    height: 500,    
 			    closable: false,    
 			    cache: false,    
@@ -131,7 +131,7 @@ define(function () {
 				}
 			}); 
 		}else{
-			$.messager.alert('提示', '请选择要修改的记录！', 'info');
+			$.messager.alert('提示', '请选择要审核的记录！', 'info');
 		}
 	}
 
