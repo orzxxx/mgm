@@ -9,12 +9,13 @@
     <result column="menutp_name" property="menutpName" jdbcType="VARCHAR" />
     <result column="product_name" property="productName" jdbcType="VARCHAR" />
     <result column="sales" property="sales" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    mchnt_cd, date, product_id, product_name, sales
+   <sql id="Base_Column_List" >
+    mchnt_cd, date, product_id, product_name, sales, amount
   </sql>
   <sql id="Model_Column_List" >
-    a.mchnt_cd, a.date, a.product_id, a.product_name, a.sales
+    a.mchnt_cd, a.date, a.product_id, a.product_name, a.sales, a.amount
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.centerm.model.report.SalesInf" >
     select 
@@ -31,7 +32,7 @@
       and product_id = #{productId,jdbcType=VARCHAR}
   </delete>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
-  	select  mchnt_cd, date, product_id, product_name, sum(sales) as sales, menutp_name, status from
+  	select  mchnt_cd, date, product_id, product_name, sum(sales) as sales, sum(amount) amount, menutp_name, status from
 	(select
 	<include refid="Model_Column_List" />,c.menutp_name, b.status
 	from tbl_bkms_report_sales a
@@ -104,11 +105,13 @@
 	order by menutp_name, sales desc
 </select>
   
-  <insert id="insert" parameterType="com.centerm.model.report.SalesInf" >
+   <insert id="insert" parameterType="com.centerm.model.report.SalesInf" >
     insert into tbl_bkms_report_sales (mchnt_cd, date, product_id, 
-      product_name, sales)
+      product_name, sales, amount
+      )
     values (#{mchntCd,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
-      #{productName,jdbcType=VARCHAR}, #{sales,jdbcType=INTEGER})
+      #{productName,jdbcType=VARCHAR}, #{sales,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.report.SalesInf" >
     insert into tbl_bkms_report_sales
@@ -128,6 +131,9 @@
       <if test="sales != null" >
         sales,
       </if>
+      <if test="amount != null" >
+        amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="mchntCd != null" >
@@ -145,6 +151,9 @@
       <if test="sales != null" >
         #{sales,jdbcType=INTEGER},
       </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.report.SalesInf" >
@@ -156,6 +165,9 @@
       <if test="sales != null" >
         sales = #{sales,jdbcType=INTEGER},
       </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
     </set>
     where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
       and date = #{date,jdbcType=VARCHAR}
@@ -164,7 +176,8 @@
   <update id="updateByPrimaryKey" parameterType="com.centerm.model.report.SalesInf" >
     update tbl_bkms_report_sales
     set product_name = #{productName,jdbcType=VARCHAR},
-      sales = #{sales,jdbcType=INTEGER}
+      sales = #{sales,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL}
     where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
       and date = #{date,jdbcType=VARCHAR}
       and product_id = #{productId,jdbcType=VARCHAR}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.menu.MenuVersionInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.menu.MenuVersionInf" >
+    <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="menu_version" property="menuVersion" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mchnt_cd, menu_version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_menu_version
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_menu_version
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.menu.MenuVersionInf" >
+    insert into tbl_bkms_menu_version (mchnt_cd, menu_version)
+    values (#{mchntCd,jdbcType=VARCHAR}, #{menuVersion,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.menu.MenuVersionInf" >
+    insert into tbl_bkms_menu_version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="menuVersion != null" >
+        menu_version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="menuVersion != null" >
+        #{menuVersion,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.MenuVersionInf" >
+    update tbl_bkms_menu_version
+    <set >
+      <if test="menuVersion != null" >
+        menu_version = #{menuVersion,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.menu.MenuVersionInf" >
+    update tbl_bkms_menu_version
+    set menu_version = #{menuVersion,jdbcType=INTEGER}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </update>
+</mapper>

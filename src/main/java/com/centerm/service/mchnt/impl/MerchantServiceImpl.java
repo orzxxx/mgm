@@ -14,12 +14,14 @@ import com.centerm.dao.mchnt.FrchseMchntMapInfMapper;
 import com.centerm.dao.mchnt.MchntAuditInfMapper;
 import com.centerm.dao.mchnt.MchntInfMapper;
 import com.centerm.dao.menu.MenuTypeInfMapper;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.sys.ParamInfMapper;
 import com.centerm.dao.sys.UserInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.mchnt.FrchseMchntMapInf;
 import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.model.mchnt.MchntInf;
+import com.centerm.model.menu.MenuVersionInf;
 import com.centerm.model.sys.UserInf;
 import com.centerm.service.mchnt.IMerchantService;
 import com.centerm.service.sys.impl.GetSequenceService;
@@ -37,6 +39,15 @@ public class MerchantServiceImpl implements IMerchantService{
 	private ParamInfMapper paramMapper;
 	private FrchseMchntMapInfMapper frchseMchntMapMapper; 
 	private MchntAuditInfMapper mchntAuditInfMapper;
+	private MenuVersionInfMapper menuVersionInfMapper;
+	
+	public MenuVersionInfMapper getMenuVersionInfMapper() {
+		return menuVersionInfMapper;
+	}
+	@Autowired
+	public void setMenuVersionInfMapper(MenuVersionInfMapper menuVersionInfMapper) {
+		this.menuVersionInfMapper = menuVersionInfMapper;
+	}
 	
 	public MchntAuditInfMapper getMchntAuditInfMapper() {
 		return mchntAuditInfMapper;
@@ -136,6 +147,11 @@ public class MerchantServiceImpl implements IMerchantService{
 		mchnt.setStatus(2);
 		mchnt.setMchntCd(getSequenceService.CreateNewMchntCd());
 		mchntMapper.insert(mchnt);
+		//添加菜单版本
+		MenuVersionInf menuVer = new MenuVersionInf();
+		menuVer.setMchntCd(mchnt.getMchntCd());
+		menuVer.setMenuVersion(0);
+		menuVersionInfMapper.insert(menuVer);
 		//添加账号
 		UserInf user = new UserInf();
 		user.setStatus("0");

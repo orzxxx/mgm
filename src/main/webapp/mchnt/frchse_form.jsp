@@ -8,7 +8,7 @@
 		<input id="frchse_frchseCd" type="hidden" name="frchseCd">
 		<table class="table_info" border="0">
 		<tr>
-			<td>
+			<td width="100px;">
 				<label>
 					手机号:
 				</label>
@@ -17,7 +17,7 @@
 			</td>
 			<td>
 				<input id="frchse_userId" type="text" name="userId" class="easyui-numberbox"
-				style="width:180px;"/>
+				style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -32,7 +32,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="frchseName" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:180px;"/>
+				<input type="text" name="frchseName" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -47,7 +47,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="frchse_userName" type="text" name="userName" maxlength="15" class="easyui-validatebox" data-options="required:true" style="width:180px;"/>
+				<input id="frchse_userName" type="text" name="userName" maxlength="15" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -62,7 +62,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" maxlength="18" class="easyui-validatebox" data-options="required:true" validType="idCard" style="width:180px;"/>
+				<input type="text" name="idCard" maxlength="18" class="easyui-validatebox" data-options="required:true" validType="idCard" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -77,7 +77,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:180px;"/>
+				<input type="text" name="mchntAddr" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
