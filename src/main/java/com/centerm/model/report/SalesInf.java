@@ -1,5 +1,7 @@
 package com.centerm.model.report;
 
+import java.math.BigDecimal;
+
 public class SalesInf{
     private String productName;
     
@@ -21,7 +23,17 @@ public class SalesInf{
     
     private String endDate;
     
-    public Integer getStatus() {
+    private Double amount;
+    
+    public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public Integer getStatus() {
 		return status;
 	}
 

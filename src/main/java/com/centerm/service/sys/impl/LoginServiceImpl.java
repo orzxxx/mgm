@@ -12,6 +12,7 @@ import com.centerm.dao.mchnt.FrchseInfMapper;
 import com.centerm.dao.mchnt.MchntAuditInfMapper;
 import com.centerm.dao.mchnt.MchntInfMapper;
 import com.centerm.dao.menu.MenuTypeInfMapper;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.sys.FunctionInfMapper;
 import com.centerm.dao.sys.ParamInfMapper;
 import com.centerm.dao.sys.SysMenuInfMapper;
@@ -21,6 +22,7 @@ import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.model.mchnt.MchntInf;
 import com.centerm.model.menu.MenuTypeInf;
+import com.centerm.model.menu.MenuVersionInf;
 import com.centerm.model.sys.FunctionInf;
 import com.centerm.model.sys.LoginUser;
 import com.centerm.model.sys.ParamInf;
@@ -45,7 +47,15 @@ public class LoginServiceImpl implements ILoginService {
 	private ParamInfMapper paramMapper;
 	private FrchseInfMapper frchseInfMapper;
 	private MchntAuditInfMapper mchntAuditInfMapper;
+	private MenuVersionInfMapper menuVersionInfMapper;
 	
+	public MenuVersionInfMapper getMenuVersionInfMapper() {
+		return menuVersionInfMapper;
+	}
+	@Autowired
+	public void setMenuVersionInfMapper(MenuVersionInfMapper menuVersionInfMapper) {
+		this.menuVersionInfMapper = menuVersionInfMapper;
+	}
 	public MchntAuditInfMapper getMchntAuditInfMapper() {
 		return mchntAuditInfMapper;
 	}
@@ -215,6 +225,11 @@ public class LoginServiceImpl implements ILoginService {
 		mchnt.setStatus(2);
 		mchnt.setMchntCd(getSequenceService.CreateNewMchntCd());
 		mchntMapper.insert(mchnt);
+		//添加菜单版本
+		MenuVersionInf menuVer = new MenuVersionInf();
+		menuVer.setMchntCd(mchnt.getMchntCd());
+		menuVer.setMenuVersion(0);
+		menuVersionInfMapper.insert(menuVer);
 		//添加账号
 		UserInf user = new UserInf();
 		user.setStatus("0");
