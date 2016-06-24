@@ -63,7 +63,7 @@
 							</tr>
 						</table>
 						<br/>
-						<span id="assoc_searchResult" class='ct-total'>查询记录数:<span id="assoc_total">0</span>条</span>
+						<span id="menu_searchResult" class='ct-total'>查询记录数:<span id="menu_total">0</span>条</span>
 				</form>
 	         </div>
 		</div>

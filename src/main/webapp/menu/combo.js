@@ -115,7 +115,7 @@ define(function () {
 		var dlg = $('<div/>').dialog({    
 		    title: '添加套餐',    
 		    width: 630,    
-		    height: 600,    
+		    height: 630,    
 		    closable: false,    
 		    cache: false,    
 		    href: 'menu/combo_form.jsp',    
@@ -178,6 +178,10 @@ define(function () {
 				initForm();
 				tagsInit();
 				originalPicture = "images/default_menu.png";
+				
+				requirejs(['menu-attr'],function  (attr) {
+					attr.init();
+				});
 			}
 		});  
 	}
@@ -188,7 +192,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '编辑套餐',    
 			    width: 630,    
-			    height: 600,    
+			    height: 630,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'menu/combo_form.jsp',    
@@ -297,6 +301,10 @@ define(function () {
 							//$('#combo_picture').validatebox('disableValidation');
 							$("#combo_productId, #combo_inventoryId").val(row.productId);
 							$("#combo_form tt[optional='true']").remove();
+							
+							requirejs(['menu-attr'],function  (attr) {
+								attr.init();
+							});
 						} else {
 							$.messager.alert("提示", result.message);
 						}

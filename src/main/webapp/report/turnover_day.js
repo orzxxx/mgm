@@ -106,6 +106,10 @@ define(function () {
 						}
 	            		data.push({payTp:-9, turnover: total});*/
 	            		$('#turnoverDay_pageList').datagrid('loadData',data);  
+	            		if (data.rows == null || data.rows.length == 0) {
+	            			$.messager.alert("提示", "没有符合条件的记录!");
+	            			return;
+						}
 	            		//按照日期合并行
 	            		if (data.length == 0) {
 							return;

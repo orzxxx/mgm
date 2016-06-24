@@ -3,6 +3,7 @@ requirejs.config({
 	
     paths: {
         'menu': 'menu/menu',
+        'menu-attr': 'menu/menu_attr',
         'menuType': 'menu/menuType',
         'menuTmpl': 'template/menu',
         'menuTypeTmpl': 'template/menuType',

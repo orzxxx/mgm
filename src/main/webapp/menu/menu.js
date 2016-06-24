@@ -304,6 +304,10 @@ define(function () {
 				initForm();
 				tagsInit();
 				originalPicture = "images/default_menu.png";
+				
+				requirejs(['menu-attr'],function  (attr) {
+					attr.init();
+				});
 			}
 		});  
 	}
@@ -375,6 +379,10 @@ define(function () {
 					//$('#menu_picture').validatebox('disableValidation');
 					$("#menu_productId, #menu_inventoryId").val(row.productId);
 					$("#menu_form tt[optional='true']").remove();
+					
+					requirejs(['menu-attr'],function  (attr) {
+						attr.init();
+					});
 				}
 			}); 
 		}else{
