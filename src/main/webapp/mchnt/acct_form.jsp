@@ -3,7 +3,7 @@
 
 </script>
 <div>
-	<form method="post" id="acct_form" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="acct_form" class="easyui-form" data-options="novalidate:true" >
 		<input id="acct_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0">
 		<tr>

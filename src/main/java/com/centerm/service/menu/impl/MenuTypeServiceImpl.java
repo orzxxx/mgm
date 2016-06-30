@@ -1,10 +1,10 @@
 package com.centerm.service.menu.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +18,17 @@ import com.centerm.dao.mchnt.FrchseMchntMapInfMapper;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuInfMapper;
 import com.centerm.dao.menu.MenuTypeInfMapper;
+import com.centerm.dao.menu.ProductAttrInfMapper;
+import com.centerm.dao.menu.ProductAttrTypeInfMapper;
+import com.centerm.dao.template.ProductAttrTypeTemplateInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.InventoryInf;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.MenuTypeInf;
+import com.centerm.model.menu.ProductAttrInf;
+import com.centerm.model.menu.ProductAttrTypeInf;
+import com.centerm.model.template.ProductAttrTemplateInf;
+import com.centerm.model.template.ProductAttrTypeTemplateInf;
 import com.centerm.service.menu.IMenuTypeServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.BeanUtil;
@@ -48,6 +55,36 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 	private InventoryInfMapper inventoryMapper;
 	
 	private FrchseMchntMapInfMapper frchseMchntMapInfMapper;
+	
+	private ProductAttrTypeInfMapper productAttrTypeMapper;
+	
+	private ProductAttrInfMapper productAttrMapper;
+	
+	private ProductAttrTypeTemplateInfMapper productAttrTypeTemplateMapper;
+	
+	public ProductAttrTypeTemplateInfMapper getProductAttrTypeTemplateMapper() {
+		return productAttrTypeTemplateMapper;
+	}
+	@Autowired
+	public void setProductAttrTypeTemplateMapper(
+			ProductAttrTypeTemplateInfMapper productAttrTypeTemplateMapper) {
+		this.productAttrTypeTemplateMapper = productAttrTypeTemplateMapper;
+	}
+	public ProductAttrInfMapper getProductAttrMapper() {
+		return productAttrMapper;
+	}
+	@Autowired
+	public void setProductAttrMapper(ProductAttrInfMapper productAttrMapper) {
+		this.productAttrMapper = productAttrMapper;
+	}
+	public ProductAttrTypeInfMapper getProductAttrTypeMapper() {
+		return productAttrTypeMapper;
+	}
+	@Autowired
+	public void setProductAttrTypeMapper(
+			ProductAttrTypeInfMapper productAttrTypeMapper) {
+		this.productAttrTypeMapper = productAttrTypeMapper;
+	}
 
 	public FrchseMchntMapInfMapper getFrchseMchntMapInfMapper() {
 		return frchseMchntMapInfMapper;
@@ -91,7 +128,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 	}
 
 	public List<MenuTypeInf> tree(String mchntCd, boolean needCombo){
-		Map param = new HashMap();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("mchntCd", mchntCd);
 		param.put("needCombo", needCombo);
 		return menuTypeMapper.tree(param);
@@ -180,6 +217,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		//添加菜品和库存
 		List<MenuInf> menus = new ArrayList<MenuInf>();
 		List<InventoryInf> inventorys = new ArrayList<InventoryInf>();
+		List<ProductAttrInf> attrs = new LinkedList<ProductAttrInf>();
 		int menuMaxPriority = menuMapper.queryMaxPriority(mchntCd);
 		for (MenuTypeInf menuType : menuTypes) {
 			List<MenuInf> menuList = menuType.getMenus();
@@ -193,17 +231,43 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 					File destFile = new File(filePath+"/"+mchntCd+"/"+pictureName);
 					FileUtils.copyFile(srcFile, destFile);
 					
+					String tmplProductId = menu.getProductId();
+					
 					menu.setProductId(getSequenceService.GetNewProductId(false));
 					menu.setPriority(++menuMaxPriority);
 					menu.setMenutpId(menuType.getMenutpId());
+					menu.setPackingBoxNum(0);
 					
 					InventoryInf inventory = new InventoryInf();
 					inventory.setInventory(-1);
 					inventory.setProductId(menu.getProductId());
 					inventorys.add(inventory);
+					//添加属性
+					List<ProductAttrTypeTemplateInf> attrTypes = productAttrTypeTemplateMapper.queryByProductId(tmplProductId);
+					if (attrTypes != null && attrTypes.size() != 0) {
+						for (ProductAttrTypeTemplateInf attrType : attrTypes) {
+							ProductAttrTypeInf pAttrType = new ProductAttrTypeInf();
+							pAttrType.setAttrTypeName(attrType.getAttrTypeName());
+							pAttrType.setProductId(menu.getProductId());
+							pAttrType.setMchntCd(mchntCd);
+							pAttrType.setProductId(menu.getProductId());
+							productAttrTypeMapper.insert(pAttrType);
+							for (ProductAttrTemplateInf attr : attrType.getProductAttrs()) {
+								ProductAttrInf pAttr = new ProductAttrInf();
+								//设置typeId
+								pAttr.setAttrTypeId(pAttrType.getAttrTypeId());
+								pAttr.setAttrName(attr.getAttrName());
+								pAttr.setAttrPrice(attr.getAttrPrice());
+								attrs.add(pAttr);
+							}
+						}
+					}
 				}
 				menus.addAll(menuList);
 			}
+		}
+		if (attrs.size() != 0) {
+			productAttrMapper.insertbatch(attrs);
 		}
 		if (menus.size() != 0) {
 			menuMapper.insertbatch(menus);
@@ -211,6 +275,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		if (inventorys.size() != 0) {
 			inventoryMapper.insertbatch(inventorys);
 		}
+		
 		return 0;
 	}
 }

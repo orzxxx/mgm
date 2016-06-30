@@ -171,7 +171,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [30],
 				frozenColumns:[[
 	                {field:'productId',title:'商品号',width:70,sortable:true}
 				]],
@@ -183,6 +183,7 @@ define(function () {
 				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return value.toFixed(2);
 						}},
+					{field:'packingBoxNum',title:'打包盒份数',width:70,sortable:true,align:'center'},
 					{field:'inventory',title:'库存',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    if (value.inventory == -1) {
 							return "无限制";
@@ -191,7 +192,7 @@ define(function () {
 						}
 						return value.inventory;
 						}},
-					{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
+					/*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
 						if (value == "") {
 							return "<span style=\"color:red;\">不可选</span>";
 						}
@@ -202,6 +203,16 @@ define(function () {
 							return "<span style=\"color:red;\">不可选</span>";
 						}
 						return value.replace(/\|/g, ",");
+					}},*/
+					{field:'productAttrTypes',title:'属性',width:100,sortable:true,align:'center',formatter:function(value, rec){
+							if (value == null || value == "") {
+								return "<span style=\"color:red;\">未配置</span>";
+							}
+							var types = "";
+							for ( var i in value) {
+								types += value[i].attrTypeName+",";
+							}
+							return types.substring(0, types.length-1);
 					}},
 				    {field:'productDetail',title:'商品详情',width:200,sortable:true,align:'center',
 						formatter : function(value, rec) {
@@ -275,22 +286,31 @@ define(function () {
 				text : '添加',
 				handler :function(){
 		    	if($('#menu_form').form("validate")){
-		    		$('#menu_form').ajaxSubmit( {
-		    			url : contextPath+"/menu/menu/add",
-		    			dataType : "json",
-		                success : function(result) {
-		                	if (result.code == 0) {
-		                		$.messager.alert("提示", "添加成功!");
-		                		//刷新
-		                		reload();
-		                		//关闭对话框
-		                		dlg.dialog('close');
-		    	        		dlg.remove();
-		    				} else {
-		    					$.messager.alert("提示", result.message);
-		    				}
-		    			}
-		            })
+		    		requirejs(['menu-attr'],function  (attr) {
+		    			var param = {};
+						param.productAttrTypeJson = attr.getAttrArr();
+						if (!param.productAttrTypeJson) {
+							return;
+						}
+						$('#menu_form').ajaxSubmit( {
+			    			url : contextPath+"/menu/menu/add",
+			    			data: param,
+			    			dataType : "json",
+			                success : function(result) {
+			                	if (result.code == 0) {
+			                		$.messager.alert("提示", "添加成功!");
+			                		//刷新
+			                		reload();
+			                		//关闭对话框
+			                		dlg.dialog('close');
+			    	        		dlg.remove();
+			    				} else {
+			    					$.messager.alert("提示", result.message);
+			    				}
+			    			}
+			            })
+					});
+		    		
 		    	}
 		    }
 			},{
@@ -328,25 +348,34 @@ define(function () {
 					handler : function(){
 			    	//$('#menu_form').form('enableValidation');
 			    	//$('#menu_picture').validatebox('disableValidation');
-			    	if($('#menu_form').form("validate")){
-			    		$('#menu_form').ajaxSubmit( {
-			    			url : contextPath+"/menu/menu/update",
-			    			dataType : "json",
-			                success : function(result) {
-			                	if (result.code == 0) {
-			                		$.messager.alert("提示", "修改成功!");
-			                		//刷新
-			                		reload();
-			                		//关闭对话框
-			                		dlg.dialog('close');
-			    	        		dlg.remove();
-			                		
-			    				} else {
-			    					$.messager.alert("提示", result.message);
-			    				}
-			    			}
-			            })
-			    	}
+						requirejs(['menu-attr'],function  (attr) {
+			    			var param = {};
+							param.productAttrTypeJson = attr.getAttrArr();
+							if (!param.productAttrTypeJson) {
+								return;
+							}
+							if($('#menu_form').form("validate")){
+					    		$('#menu_form').ajaxSubmit( {
+					    			url : contextPath+"/menu/menu/update",
+					    			data: param,
+					    			dataType : "json",
+					                success : function(result) {
+					                	if (result.code == 0) {
+					                		$.messager.alert("提示", "修改成功!");
+					                		//刷新
+					                		reload();
+					                		//关闭对话框
+					                		dlg.dialog('close');
+					    	        		dlg.remove();
+					                		
+					    				} else {
+					    					$.messager.alert("提示", result.message);
+					    				}
+					    			}
+					            })
+					    	}
+						});
+			    	
 			    }
 				},{
 					text : '关闭',
@@ -382,6 +411,7 @@ define(function () {
 					
 					requirejs(['menu-attr'],function  (attr) {
 						attr.init();
+						attr.loadAttr(row.productAttrTypes);
 					});
 				}
 			}); 

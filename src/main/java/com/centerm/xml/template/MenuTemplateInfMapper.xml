@@ -17,11 +17,24 @@
 	    <id property="productId" column="product_id"/>
 	    <result property="inventory" column="inventory"/>
 	</association>
+	<collection property="productAttrTypes" ofType="com.centerm.model.template.ProductAttrTypeTemplateInf">
+	    <id column="attr_type_id" property="attrTypeId" jdbcType="INTEGER" />
+	    <result column="attr_type_name" property="attrTypeName" jdbcType="VARCHAR" />
+	    <collection property="productAttrs" ofType="com.centerm.model.template.ProductAttrTemplateInf">
+			<id column="attr_id" property="attrId" jdbcType="INTEGER" />
+		    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+		    <result column="attr_price" property="attrPrice" jdbcType="DECIMAL" />
+		</collection>
+	</collection>
   </resultMap>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Model_Column_List" />
 	from tbl_bkms_menu_inf_template a
+	left join tbl_bkms_product_attr_type_template c
+	on a.product_id = c.product_id
+	left join tbl_bkms_product_attr_template d
+	on c.attr_type_id = d.attr_type_id
 	<where>
 	<if test="productId != null and productId != ''">
 		a.product_id = #{productId}
@@ -33,7 +46,7 @@
 		AND menutp_id = #{menutpId}
 	</if>
 	<if test="mchntCd != null and mchntCd != ''">
-		AND mchnt_cd = #{mchntCd}
+		AND a.mchnt_cd = #{mchntCd}
 	</if>
 	<if test="price != null and price != ''">
 		AND price = #{price}
@@ -82,7 +95,8 @@
   </sql>
   <sql id="Model_Column_List" >
     a.product_id, a.product_name, a.menutp_id, a.mchnt_cd, a.price, a.picture_link, 
-    a.product_detail, a.taste, a.status, a.priority,a.specifications
+    a.product_detail, a.taste, a.status, a.priority,a.specifications,
+    c.attr_type_id, c.attr_type_name, d.attr_id, d.attr_name, d.attr_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

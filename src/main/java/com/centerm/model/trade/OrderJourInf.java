@@ -62,7 +62,17 @@ public class OrderJourInf {
     
     private String maxTransdate;
     
-    private List<OrderDetailInf> details;
+    private BigDecimal discount;
+    
+    public BigDecimal getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(BigDecimal discount) {
+		this.discount = discount;
+	}
+
+	private List<OrderDetailInf> details;
 
     public String getMinTransdate() {
 		return minTransdate;

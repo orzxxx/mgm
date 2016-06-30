@@ -3,8 +3,7 @@
 
 
 </script>
-<div id="combo_tab" class="easyui-tabs" data-options="border:false, fit:true">
-<div title="基础信息">
+<div>
 	<form method="post" id="combo_form" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
 		<input id="combo_mchntCd" type="hidden" name="mchntCd">
 		<input id="combo_productId" type="hidden" name="productId">
@@ -79,6 +78,21 @@
 				</td>
 				<td class="hintspace"></td>				
 			</tr>
+			<tr>
+				<td>
+					<label>
+						打包盒份数
+					</label>
+				</td>
+				<td class="tdspace">
+				</td>
+				<td>
+					<input type="text" name="packingBoxNum" maxlength="30" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
+				</td>
+				<td class="hintspace">
+					<tt>*</tt> 
+				</td>			
+			</tr>
 		<!-- <tr>
 			<td>
 				<label>
@@ -114,27 +128,3 @@
 		</div>
 	</form>
 </div>
-<div title="单品属性">
-	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
-		<input id="menu_mchntCd" type="hidden" name="mchntCd">
-		<table class="table_info" border="0" style="width:370px;">
-			<tr>
-				<td valign="top" >
-					<label style='width: 60px;'>
-						属性名
-					</label>
-				</td>
-				<td valign="top" class="tdspace">
-				</td>
-				<td style="width:420px;text-align: left;">
-					<input id="menuAttr_newAttr" type="text" maxlength="8" class="easyui-validatebox" style="width:120px;"/>
-					<a id="menuAttr_addAttr" href="javascript:void(0)" style="width:100px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新属性</a>
-				</td>
-			</tr>
-		</table>
-		<br/>
-		<hr>
-	</form>
-	</div>
-</div>
-

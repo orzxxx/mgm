@@ -117,7 +117,7 @@
 				<td class="hintspace">
 				</td>				
 			</tr>
-			<tr>
+			<%--<tr>
 				<td valign="top">
 					<label>
 						规格
@@ -144,7 +144,7 @@
 				<td class="hintspace">
 				</td>			
 			</tr>
-			<tr>
+			--%><tr>
 				<td style="vertical-align: top;">
 					<label for="product_detail">
 						商品详情

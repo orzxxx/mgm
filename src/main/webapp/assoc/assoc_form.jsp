@@ -4,7 +4,7 @@
 
 </script>
 <div>
-	<form method="post" id="assoc_form" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="assoc_form" class="easyui-form ct-menu-from" data-options="novalidate:true" >
 		<input id="assoc_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0">
 		<tr>

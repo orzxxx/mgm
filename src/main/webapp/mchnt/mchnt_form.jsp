@@ -4,7 +4,7 @@
 
 </script>
 <div>
-	<form method="post" id="mchnt_form" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="mchnt_form" class="easyui-form" data-options="novalidate:true" >
 		<input id="mchnt_mchntCd" type="hidden" name="mchntCd">
 		<input id="mchnt_frchseCd" type="hidden" name="frchseCd">
 		<table class="table_info" border="0">

@@ -30,7 +30,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 20, 30 ],
 				frozenColumns:[[
 	                {field:'mchntCd',title:'商户号',width:100,sortable:true}
 				]],
@@ -121,7 +121,7 @@ define(function () {
 		    			dataType : "json",
 		                success : function(result) {
 		                	if (result.code == 0) {
-		                		$.messager.alert("提示", "添加成功!");
+		                		$.messager.alert("提示", "添加账号成功,账号将在24小时内审核完成,请登录账号查看审核结果");
 		                		//刷新
 		                		reload();
 		                		//关闭对话框

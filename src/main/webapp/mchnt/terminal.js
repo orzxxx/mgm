@@ -20,7 +20,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 	                {field:'terminalCd',title:'终端号',width:70,sortable:true}
 				]],

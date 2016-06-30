@@ -32,7 +32,17 @@ public class ComboInf {
     
     private List<ComboDetailInf> comboDetails;
     
-    public List<ComboDetailInf> getComboDetails() {
+    private Integer packingBoxNum;
+    
+    public Integer getPackingBoxNum() {
+		return packingBoxNum;
+	}
+
+	public void setPackingBoxNum(Integer packingBoxNum) {
+		this.packingBoxNum = packingBoxNum;
+	}
+
+	public List<ComboDetailInf> getComboDetails() {
 		return comboDetails;
 	}
 

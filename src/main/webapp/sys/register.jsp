@@ -4,7 +4,7 @@
 
 </script>
 <div>
-	<form method="post" id="register_form" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="register_form" class="easyui-form" data-options="novalidate:true" >
 		<table class="table_info" border="0">
 		<tr>
 			<td width="100px">

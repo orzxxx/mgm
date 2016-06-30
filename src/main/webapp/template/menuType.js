@@ -24,7 +24,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 	                {field:'menutpId',title:'分类号',width:70,sortable:true}
 				]],

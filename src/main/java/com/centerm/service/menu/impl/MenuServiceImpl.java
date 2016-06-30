@@ -1,5 +1,6 @@
 package com.centerm.service.menu.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuInfMapper;
+import com.centerm.dao.menu.ProductAttrInfMapper;
+import com.centerm.dao.menu.ProductAttrTypeInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuInf;
+import com.centerm.model.menu.ProductAttrInf;
+import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.service.menu.IMenuServiceImpl;
 import com.centerm.utils.BeanUtil;
 
@@ -26,7 +31,26 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	private MenuInfMapper menuMapper;
 	
 	private InventoryInfMapper inventoryMapper;
-
+	
+	private ProductAttrTypeInfMapper productAttrTypeMapper;
+	
+	private ProductAttrInfMapper productAttrMapper;
+	
+	public ProductAttrInfMapper getProductAttrMapper() {
+		return productAttrMapper;
+	}
+	@Autowired
+	public void setProductAttrMapper(ProductAttrInfMapper productAttrMapper) {
+		this.productAttrMapper = productAttrMapper;
+	}
+	public ProductAttrTypeInfMapper getProductAttrTypeMapper() {
+		return productAttrTypeMapper;
+	}
+	@Autowired
+	public void setProductAttrTypeMapper(
+			ProductAttrTypeInfMapper productAttrTypeMapper) {
+		this.productAttrTypeMapper = productAttrTypeMapper;
+	}
 	public InventoryInfMapper getInventoryMapper() {
 		return inventoryMapper;
 	}
@@ -49,7 +73,7 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		return menuMapper.query(map);
 	}
 	
-	public int del(MenuInf menu){
+	public void del(MenuInf menu){
 		//校验是否在套餐中使用 
 		List<ComboInf> combos = menuMapper.isUsedByCombo(menu.getProductId());
 		if (combos.size() > 0) {
@@ -60,11 +84,14 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			comboNames = comboNames.substring(0, comboNames.length()-1)+"中被使用,无法删除";
 			throw new BusinessException(comboNames);
 		}
-		return menuMapper.updateByPrimaryKeySelective(menu);
+		menuMapper.updateByPrimaryKeySelective(menu);
+		//删除属性
+		productAttrMapper.deleteByProductId(menu.getProductId());
+		productAttrTypeMapper.deleteByProductId(menu.getProductId());
 		//inventoryMapper.deleteByPrimaryKey(menu.getProductId());
 	}
 	
-	public int add(MenuInf menu){
+	public void add(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes){
 		logger.info("=====添加单品开始");
 		//唯一性校验
 		int num = menuMapper.isNameExisted(menu);
@@ -78,17 +105,47 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		
 		inventoryMapper.insert(menu.getInventory());
 		menuMapper.insert(menu);
+		//添加属性
+		if (productAttrTypes != null && productAttrTypes.size() != 0) {
+			List<ProductAttrInf> attrs = new LinkedList<ProductAttrInf>();
+			for (ProductAttrTypeInf attrType : productAttrTypes) {
+				attrType.setProductId(menu.getProductId());
+				productAttrTypeMapper.insert(attrType);
+				for (ProductAttrInf attr : attrType.getProductAttrs()) {
+					//设置typeId
+					attr.setAttrTypeId(attrType.getAttrTypeId());
+				}
+				attrs.addAll(attrType.getProductAttrs());
+			}
+			productAttrMapper.insertbatch(attrs);
+		}
 		logger.info("=====添加单品结束");
-		return 0;
 	}
 	
-	public int update(MenuInf menu){
+	public void update(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes) {
 		//唯一性校验
 		int num = menuMapper.isNameExisted(menu);
 		if (num > 0) {
 			throw new BusinessException("菜品名已存在");
 		}
 		inventoryMapper.updateByPrimaryKeySelective(menu.getInventory());
-		return menuMapper.updateByPrimaryKeySelective(menu);
+		menuMapper.updateByPrimaryKeySelective(menu);
+		//删除属性
+		productAttrMapper.deleteByProductId(menu.getProductId());
+		productAttrTypeMapper.deleteByProductId(menu.getProductId());
+		// 添加属性
+		if (productAttrTypes != null && productAttrTypes.size() != 0) {
+			List<ProductAttrInf> attrs = new LinkedList<ProductAttrInf>();
+			for (ProductAttrTypeInf attrType : productAttrTypes) {
+				attrType.setProductId(menu.getProductId());
+				productAttrTypeMapper.insert(attrType);
+				for (ProductAttrInf attr : attrType.getProductAttrs()) {
+					//设置typeId
+					attr.setAttrTypeId(attrType.getAttrTypeId());
+				}
+				attrs.addAll(attrType.getProductAttrs());
+			}
+			productAttrMapper.insertbatch(attrs);
+		}
 	}
 }

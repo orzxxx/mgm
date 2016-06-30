@@ -116,11 +116,8 @@ public class ComboServiceImpl implements IComboServiceImpl{
 			comboDetail.setComboId(combo.getProductId());
 			//套餐详情
 			productDetail += comboDetail.getProductName();
-			if (!StringUtils.isNull(comboDetail.getSpecifications())) {
-				productDetail += "("+comboDetail.getSpecifications()+")";
-			}
-			if (!StringUtils.isNull(comboDetail.getTaste())) {
-				productDetail += " "+comboDetail.getTaste();
+			if (!StringUtils.isNull(comboDetail.getSelectedAttr())) {
+				productDetail += "("+comboDetail.getSelectedAttr()+")";
 			}
 			productDetail += " x"+comboDetail.getNum()+"\r\n";
 		}
@@ -145,11 +142,8 @@ public class ComboServiceImpl implements IComboServiceImpl{
 			comboDetail.setComboId(combo.getProductId());
 			//套餐详情
 			productDetail += comboDetail.getProductName();
-			if (!StringUtils.isNull(comboDetail.getSpecifications())) {
-				productDetail += "("+comboDetail.getSpecifications()+")";
-			}
-			if (!StringUtils.isNull(comboDetail.getTaste())) {
-				productDetail += " "+comboDetail.getTaste();
+			if (!StringUtils.isNull(comboDetail.getSelectedAttr())) {
+				productDetail += "("+comboDetail.getSelectedAttr()+")";
 			}
 			productDetail += " x"+comboDetail.getNum()+"\r\n";
 		}

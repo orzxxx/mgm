@@ -237,10 +237,11 @@ public class LoginServiceImpl implements ILoginService {
 		user.setUserId(mchnt.getUserId());
 		user.setRole("pendinguser");
 		userMapper.insert(user);
-		//添加审核表
+		//提交审核
 		MchntAuditInf mchntAudit = new MchntAuditInf();
 		mchntAudit.setMchntCd(mchnt.getMchntCd());
-		mchntAudit.setAuditStatus(0);
+		mchntAudit.setAuditStatus(2);
+		mchntAudit.setSubmitTime(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
 		mchntAuditInfMapper.insert(mchntAudit);
 		//获取登录信息
 		return login(mchnt.getUserId(), passwd);

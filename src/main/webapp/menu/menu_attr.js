@@ -9,24 +9,24 @@ define(function () {
 		attrArr = {};
 		$("#menuAttr_addAttr").click(addNewAttr);
 		//test
-		$("#menuAttr_addAttr").parent().append("<input id='test' type='button'/>");
+		/*$("#menuAttr_addAttr").parent().append("<input id='test' type='button'/>");
 		$("#test").click(getAttrArr);
 		var data = [{
-			name: "a1",
-			value: [
-			        {name:'v1', price: '20'},
-			        {name:'v2', price: '-20'},
-			        {name:'v3', price: '120'}
+			attrTypeName: "a1",
+			productAttrs: [
+			        {attrName:'v1', attrPrice: '20'},
+			        {attrName:'v2', attrPrice: '-20'},
+			        {attrName:'v3', attrPrice: '120'}
 			]},
 			{
-				name: "a2",
-				value: [
-				        {name:'v4', price: '220'},
-				        {name:'v5', price: '-240'},
-				        {name:'v6', price: '20'}
+				attrTypeName: "a2",
+				productAttrs: [
+				        {attrName:'v4', attrPrice: '220'},
+				        {attrName:'v5', attrPrice: '-240'},
+				        {attrName:'v6', attrPrice: '20'}
 				]},
 		];
-		loadAttr(data);
+		loadAttr(data);*/
 	}
 	//添加新属性
 	function addNewAttr(){
@@ -37,8 +37,8 @@ define(function () {
 		}
 		var count = 0;
 		for ( var i in attrArr) {
-			if (++count >= 3) {
-				$.messager.alert("提示", "最多添加3个属性");
+			if (++count >= 2) {
+				$.messager.alert("提示", "最多添加2个属性");
 				return;
 			}
 		}
@@ -66,8 +66,8 @@ define(function () {
 		$(div).find("table tr:last td:eq(0) input").focus();
 		//添加数据
 		var attrVal = {};
-		attrVal.name = val;
-		attrVal.price = price;
+		attrVal.attrName = val;
+		attrVal.attrPrice = price;
 		attrArr[attr][i++] = attrVal;
 	}
 	//
@@ -168,14 +168,14 @@ define(function () {
 			var n = $(this).attr('count');
 			var pAttr = getAttr(this);
 			for ( var m in attrArr[pAttr]) {
-				if (attrArr[pAttr][m].name == $(this).val()){
+				if (attrArr[pAttr][m].attrName == $(this).val()){
 					$.messager.alert("提示", "属性值不能重复");
 					//值还原
 					$(this).val(curAttrVal);
 					return;
 				}
 			}
-			attrArr[pAttr][n].name = $(this).val();
+			attrArr[pAttr][n].attrName = $(this).val();
 		});
 		
 		$priceVal.blur(function(){
@@ -185,7 +185,7 @@ define(function () {
 			};
 			var n = $(this).attr('count');
 			var pAttr = getAttr(this);
-			attrArr[pAttr][n].price = $(this).val();
+			attrArr[pAttr][n].attrPrice = $(this).val();
 		});
 		
 		$delBtn.click(function(){
@@ -225,21 +225,22 @@ define(function () {
 	//返回属性配置
 	function getAttrArr(){
 		if (!validateAttr()) {
-			return;
+			return false;
 		}
 		var result = [];
 		for ( var i in attrArr) {
 			var attr = {};
-			attr.name = i;
-			attr.value = [];
+			attr.attrTypeName = i;
+			attr.productAttrs = [];
+			attr.mchntCd = userInfo.mchntCd;
 			for ( var j in attrArr[i]) {
 				var attrVal =  attrArr[i][j];
-				attr.value.push(attrVal);
+				attr.productAttrs.push(attrVal);
 			}
 			result.push(attr);
 		}
-		$.messager.alert("提示", JSON.stringify(result));
-		//return JSON.stringify(result);
+		//$.messager.alert("提示", JSON.stringify(result));
+		return JSON.stringify(result);
 	}
 	//校验属性配置
 	function validateAttr(){
@@ -248,8 +249,13 @@ define(function () {
 			for ( var j in attrArr[i]) {
 				++count;
 				//存在未配置属性值
-				if ($.trim(attrArr[i][j].name) == "") {
+				if ($.trim(attrArr[i][j].attrName) == "") {
 					$.messager.alert("提示", "【"+i+"】中存在空属性值");
+					return false;
+				};
+				//价格合法校验
+				if (!/^\d+(\.\d+$)?/.test(attrArr[i][j].attrPrice)) {
+					$.messager.alert("提示", "【"+i+"】中存在非法价格值");
 					return false;
 				};
 			}
@@ -263,10 +269,10 @@ define(function () {
 	//数据回显
 	function loadAttr(data){
 		for ( var i in data) {
-			var $div = insertNewAttr(data[i].name);
-			for ( var j in data[i].value) {
-				var attrVal = (data[i].value)[j];
-				addNewAttrValue($div, data[i].name, attrVal.name, attrVal.price);
+			var $div = insertNewAttr(data[i].attrTypeName);
+			for ( var j in data[i].productAttrs) {
+				var attrVal = (data[i].productAttrs)[j];
+				addNewAttrValue($div, data[i].attrTypeName, attrVal.attrName, attrVal.attrPrice);
 			}
 		}
 		//界面渲染

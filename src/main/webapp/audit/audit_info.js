@@ -14,6 +14,8 @@ define(function () {
 			if (result.code == 0) {
 				if (parseInt(result.data.auditStatus) == -1 ) {
 					//$('#audit_edit').linkbutton('enable');
+					$('#audit_submit').show();
+					$('#audit_submit').click(submit);
 					$('#audit_edit').show();
 					$("#audit_edit").click(edit);
 				}
@@ -22,11 +24,31 @@ define(function () {
 			}
 		}, "json");
 	}
+	
 	function initButton(){
 		//$("#audit_edit").click(edit);
 		
 	}
 
+	function submit(){
+		$.post("mchnt/audit/submit",{mchntCd: currentMchntCd},function(result){
+			if (result.code == 0) {
+				$.messager.alert("提示", "提交申请成功,将在24小时内告知审批结果,请耐心等待");
+				buttionDisabled();
+			} else {
+				$.messager.alert("提示", result.message);
+			}
+		}, "json");
+		
+	}
+	
+	function buttionDisabled(){
+		$('#audit_submit').linkbutton('disable');
+		$("#audit_submit").unbind("click");
+		$('#audit_edit').linkbutton('disable');
+		$("#audit_edit").unbind("click");
+	}
+	
 	function edit(){
 			var dlg = $('<div/>').dialog({    
 			    title: '修改个人信息',    

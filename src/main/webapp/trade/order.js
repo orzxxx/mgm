@@ -19,7 +19,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 				                {field:'orderNo',title:'订单号',width:170,sortable:true}
 							]],

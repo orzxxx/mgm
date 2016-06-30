@@ -13,6 +13,7 @@
     <result column="transdate" property="transdate" jdbcType="VARCHAR" />
     <result column="datetime" property="datetime" jdbcType="VARCHAR" />
     <result column="stdtrnsamt" property="stdtrnsamt" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
     <result column="totalnum" property="totalnum" jdbcType="INTEGER" />
     <result column="order_detail" property="orderDetail" jdbcType="VARCHAR" />
     <result column="pay_no" property="payNo" jdbcType="VARCHAR" />
@@ -44,15 +45,15 @@
   --></resultMap>
   <sql id="Base_Column_List" >
     order_no, pseq, term_trans_trc, mchnt_cd, terminal_cd, oper_id, term_datetime, transtime, 
-    transdate, datetime, stdtrnsamt, totalnum, order_detail, pay_no, pay_tp, chnl_seq, 
-    trnsflag, setdate, trnsdatetime, stdrspcod, print_info, chnl_mchntcd, chnl_termcd, 
+    transdate, datetime, stdtrnsamt, discount, totalnum, order_detail, pay_no, pay_tp, 
+    chnl_seq, trnsflag, setdate, trnsdatetime, stdrspcod, print_info, chnl_mchntcd, chnl_termcd, 
     batchno, chnl_systraceno, authcode, orderid_scan
   </sql>
   <sql id="Model_Column_List" >
     a.order_no, a.pseq, a.term_trans_trc, a.mchnt_cd, a.terminal_cd, a.oper_id, a.term_datetime, a.transtime, 
     a.transdate, a.datetime, a.stdtrnsamt, a.totalnum, a.order_detail, a.pay_no, a.pay_tp, a.chnl_seq, 
     a.trnsflag, a.setdate, a.trnsdatetime, a.stdrspcod, a.print_info, a.chnl_mchntcd, a.chnl_termcd, 
-    a.batchno, a.chnl_systraceno, a.authcode, a.orderid_scan,
+    a.batchno, a.chnl_systraceno, a.authcode, a.orderid_scan, a.discount,
     b.uuid as d_uuid, b.order_no as d_order_no, b.product_id as d_product_id, b.product_name as d_product_name,
     b.price as d_price, b.taste as d_taste, b.num as d_num, b.transtime as d_transtime, 
     b.transdate as d_transdate, b.specifications as d_specifications
@@ -96,6 +97,9 @@
 	<if test="transtime != null and transtime != ''">
 		AND transtime = #{transtime}
 	</if>
+	<if test="discount != null and discount != ''" >
+        discount = #{discount},
+    </if>
 	<if test="transdate != null and transdate != ''">
 		AND transdate = #{transdate}
 	</if>
@@ -262,23 +266,23 @@
     insert into tbl_bkms_order_oldjour (order_no, pseq, term_trans_trc, 
       mchnt_cd, terminal_cd, oper_id, 
       term_datetime, transtime, transdate, 
-      datetime, stdtrnsamt, totalnum, 
-      order_detail, pay_no, pay_tp, 
-      chnl_seq, trnsflag, setdate, 
-      trnsdatetime, stdrspcod, print_info, 
-      chnl_mchntcd, chnl_termcd, batchno, 
-      chnl_systraceno, authcode, orderid_scan
-      )
+      datetime, stdtrnsamt, discount, 
+      totalnum, order_detail, pay_no, 
+      pay_tp, chnl_seq, trnsflag, 
+      setdate, trnsdatetime, stdrspcod, 
+      print_info, chnl_mchntcd, chnl_termcd, 
+      batchno, chnl_systraceno, authcode, 
+      orderid_scan)
     values (#{orderNo,jdbcType=VARCHAR}, #{pseq,jdbcType=VARCHAR}, #{termTransTrc,jdbcType=VARCHAR}, 
       #{mchntCd,jdbcType=VARCHAR}, #{terminalCd,jdbcType=VARCHAR}, #{operId,jdbcType=VARCHAR}, 
       #{termDatetime,jdbcType=VARCHAR}, #{transtime,jdbcType=VARCHAR}, #{transdate,jdbcType=VARCHAR}, 
-      #{datetime,jdbcType=VARCHAR}, #{stdtrnsamt,jdbcType=DECIMAL}, #{totalnum,jdbcType=INTEGER}, 
-      #{orderDetail,jdbcType=VARCHAR}, #{payNo,jdbcType=VARCHAR}, #{payTp,jdbcType=CHAR}, 
-      #{chnlSeq,jdbcType=VARCHAR}, #{trnsflag,jdbcType=INTEGER}, #{setdate,jdbcType=VARCHAR}, 
-      #{trnsdatetime,jdbcType=VARCHAR}, #{stdrspcod,jdbcType=VARCHAR}, #{printInfo,jdbcType=VARCHAR}, 
-      #{chnlMchntcd,jdbcType=VARCHAR}, #{chnlTermcd,jdbcType=VARCHAR}, #{batchno,jdbcType=VARCHAR}, 
-      #{chnlSystraceno,jdbcType=VARCHAR}, #{authcode,jdbcType=VARCHAR}, #{orderidScan,jdbcType=VARCHAR}
-      )
+      #{datetime,jdbcType=VARCHAR}, #{stdtrnsamt,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{totalnum,jdbcType=INTEGER}, #{orderDetail,jdbcType=VARCHAR}, #{payNo,jdbcType=VARCHAR}, 
+      #{payTp,jdbcType=CHAR}, #{chnlSeq,jdbcType=VARCHAR}, #{trnsflag,jdbcType=INTEGER}, 
+      #{setdate,jdbcType=VARCHAR}, #{trnsdatetime,jdbcType=VARCHAR}, #{stdrspcod,jdbcType=VARCHAR}, 
+      #{printInfo,jdbcType=VARCHAR}, #{chnlMchntcd,jdbcType=VARCHAR}, #{chnlTermcd,jdbcType=VARCHAR}, 
+      #{batchno,jdbcType=VARCHAR}, #{chnlSystraceno,jdbcType=VARCHAR}, #{authcode,jdbcType=VARCHAR}, 
+      #{orderidScan,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.trade.OrderJourInf" >
     insert into tbl_bkms_order_oldjour
@@ -315,6 +319,9 @@
       </if>
       <if test="stdtrnsamt != null" >
         stdtrnsamt,
+      </if>
+      <if test="discount != null" >
+        discount,
       </if>
       <if test="totalnum != null" >
         totalnum,
@@ -399,6 +406,9 @@
       <if test="stdtrnsamt != null" >
         #{stdtrnsamt,jdbcType=DECIMAL},
       </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DECIMAL},
+      </if>
       <if test="totalnum != null" >
         #{totalnum,jdbcType=INTEGER},
       </if>
@@ -482,6 +492,9 @@
       <if test="stdtrnsamt != null" >
         stdtrnsamt = #{stdtrnsamt,jdbcType=DECIMAL},
       </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
       <if test="totalnum != null" >
         totalnum = #{totalnum,jdbcType=INTEGER},
       </if>
@@ -545,6 +558,7 @@
       transdate = #{transdate,jdbcType=VARCHAR},
       datetime = #{datetime,jdbcType=VARCHAR},
       stdtrnsamt = #{stdtrnsamt,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
       totalnum = #{totalnum,jdbcType=INTEGER},
       order_detail = #{orderDetail,jdbcType=VARCHAR},
       pay_no = #{payNo,jdbcType=VARCHAR},

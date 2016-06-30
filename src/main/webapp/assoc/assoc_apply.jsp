@@ -15,7 +15,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 		<br/>
 		<a id="assocApply_add" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn" style="width:100px;">关联申请</a>
 	</div>
-	<form method="post" id="assocInfo" class="easyui-form" style="display:none;" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="assocInfo" class="easyui-form" style="display:none;" data-options="novalidate:true" >
 		<table class="table_info" border="0" style="width:700px;">
 		<tr>
 			<td width="100px;">
@@ -118,7 +118,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 		</tr>
 		</table>
 	</form>
-	<form method="post" id="assocResult" class="easyui-form" style="display:none;" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="assocResult" class="easyui-form" style="display:none;" data-options="novalidate:true" >
 		<table class="table_info" border="0" style="width:700px;">
 		<tr>
 			<td width="100px;">

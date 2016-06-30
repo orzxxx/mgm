@@ -1,5 +1,7 @@
 package com.centerm.model.menu;
 
+import java.util.List;
+
 public class ComboDetailInf{
 
 	private String comboId;
@@ -20,6 +22,38 @@ public class ComboDetailInf{
     
     private String allTaste;
     
+    private String attrCmp;
+    /**
+     * 选中的属性名,逗号分割
+     */
+    private String selectedAttr;
+    
+	private MenuInf product;
+	
+	public String getSelectedAttr() {
+		return selectedAttr;
+	}
+
+	public void setSelectedAttr(String selectedAttr) {
+		this.selectedAttr = selectedAttr;
+	}
+    
+	public MenuInf getProduct() {
+		return product;
+	}
+
+	public void setProduct(MenuInf product) {
+		this.product = product;
+	}
+
+	public String getAttrCmp() {
+		return attrCmp;
+	}
+
+	public void setAttrCmp(String attrCmp) {
+		this.attrCmp = attrCmp;
+	}
+
 	public String getAllTaste() {
 		return allTaste;
 	}

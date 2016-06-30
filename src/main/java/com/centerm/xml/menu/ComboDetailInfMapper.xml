@@ -7,17 +7,27 @@
     <result column="taste" property="taste" jdbcType="VARCHAR" />
     <result column="specifications" property="specifications" jdbcType="VARCHAR" />
     <result column="num" property="num" jdbcType="INTEGER" />
-    <result column="all_spec" property="allSpec" jdbcType="VARCHAR" />
-    <result column="all_taste" property="allTaste" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="attr_cmp" property="attrCmp" jdbcType="VARCHAR" />
+     <association property="product" javaType="com.centerm.model.menu.MenuInf">
+	    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+	    <result column="price" property="price" jdbcType="DECIMAL" />
+		<collection property="productAttrTypes" ofType="com.centerm.model.menu.ProductAttrTypeInf">
+		    <id column="attr_type_id" property="attrTypeId" jdbcType="INTEGER" />
+		    <result column="attr_type_name" property="attrTypeName" jdbcType="VARCHAR" />
+		    <collection property="productAttrs" ofType="com.centerm.model.menu.ProductAttrInf">
+				<id column="attr_id" property="attrId" jdbcType="INTEGER" />
+			    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+			    <result column="attr_price" property="attrPrice" jdbcType="DECIMAL" />
+			</collection>
+		</collection>
+	</association>
   </resultMap>
   <sql id="Base_Column_List" >
-    combo_id, product_id, taste, specifications, num
+    combo_id, product_id, taste, specifications, num, attr_cmp
   </sql>
   <sql id="Modal_Column_List" >
-    a.combo_id, a.product_id, a.taste, a.specifications, a.num,d.price as price,d.product_name as product_name,d.specifications as all_spec,
-	d.taste as all_taste
+    a.combo_id, a.product_id, a.taste, a.specifications, a.num, a.attr_cmp, b.product_name, b.price,
+    c.attr_type_id, c.attr_type_name, d.attr_id, d.attr_name, d.attr_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.centerm.model.menu.ComboDetailInf" >
     select 
@@ -30,8 +40,12 @@
     select 
     <include refid="Modal_Column_List" />
     from tbl_bkms_menu_combo_detail_inf a
-    join tbl_bkms_menu_inf d
-    on a.product_id = d.product_id
+    join tbl_bkms_menu_inf b
+    on a.product_id = b.product_id
+    left join tbl_bkms_product_attr_type_inf c
+	on b.product_id = c.product_id
+	left join tbl_bkms_product_attr_inf d
+	on c.attr_type_id = d.attr_type_id
     where combo_id = #{comboId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.centerm.model.menu.ComboDetailInf" >
@@ -45,17 +59,18 @@
   </delete>
   <insert id="insert" parameterType="com.centerm.model.menu.ComboDetailInf" >
     insert into tbl_bkms_menu_combo_detail_inf (combo_id, product_id, taste, 
-      specifications, num)
+      specifications, num, attr_cmp
+      )
     values (#{comboId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, #{taste,jdbcType=VARCHAR}, 
-      #{specifications,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER})
+      #{specifications,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{attrCmp,jdbcType=VARCHAR})
   </insert>
   <insert id="insertbatch" parameterType="java.util.List" >
     insert into tbl_bkms_menu_combo_detail_inf (combo_id, product_id, taste, 
-      specifications, num)
+      specifications, num, attr_cmp)
     values
      <foreach collection="list" item="item" index="index" separator="," >
         (#{item.comboId,jdbcType=VARCHAR}, #{item.productId,jdbcType=VARCHAR}, #{item.taste,jdbcType=VARCHAR}, 
-      #{item.specifications,jdbcType=VARCHAR}, #{item.num,jdbcType=INTEGER})
+      #{item.specifications,jdbcType=VARCHAR}, #{item.num,jdbcType=INTEGER}, #{item.attrCmp,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.menu.ComboDetailInf" >
@@ -76,6 +91,9 @@
       <if test="num != null" >
         num,
       </if>
+      <if test="attrCmp != null" >
+        attr_cmp,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="comboId != null" >
@@ -93,6 +111,9 @@
       <if test="num != null" >
         #{num,jdbcType=INTEGER},
       </if>
+      <if test="attrCmp != null" >
+        #{attrCmp,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.ComboDetailInf" >
@@ -107,6 +128,9 @@
       <if test="num != null" >
         num = #{num,jdbcType=INTEGER},
       </if>
+      <if test="attrCmp != null" >
+        attr_cmp = #{attrCmp,jdbcType=VARCHAR},
+      </if>
     </set>
     where combo_id = #{comboId,jdbcType=VARCHAR}
       and product_id = #{productId,jdbcType=VARCHAR}
@@ -115,7 +139,8 @@
     update tbl_bkms_menu_combo_detail_inf
     set taste = #{taste,jdbcType=VARCHAR},
       specifications = #{specifications,jdbcType=VARCHAR},
-      num = #{num,jdbcType=INTEGER}
+      num = #{num,jdbcType=INTEGER},
+      attr_cmp = #{attrCmp,jdbcType=VARCHAR}
     where combo_id = #{comboId,jdbcType=VARCHAR}
       and product_id = #{productId,jdbcType=VARCHAR}
   </update>

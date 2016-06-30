@@ -3,7 +3,8 @@
 
 
 </script>
-<div>
+<div id="menuTmpl_tab" class="easyui-tabs" data-options="border:false, fit:true">  
+<div title="基础信息">
 	<form method="post" id="menuTmpl_form" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
 		<input id="menuTmpl_mchntCd" type="hidden" name="mchntCd">
 		<input id="menuTmpl_productId" type="hidden" name="productId">
@@ -83,7 +84,7 @@
 					<tt>*</tt> 
 				</td>			
 			</tr>
-			<tr>
+			<%--<tr>
 				<td valign="top">
 					<label>
 						规格
@@ -137,7 +138,7 @@
 				<td class="hintspace">
 				</td>			
 			</tr>
-			<tr>
+			--%><tr>
 				<td style="vertical-align: top;">
 					<label for="product_detail">
 						商品详情
@@ -156,4 +157,27 @@
 			
 		</table>
 	</form>
+</div>
+	<div title="单品属性">
+	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
+		<input id="menu_mchntCd" type="hidden" name="mchntCd">
+		<table class="table_info" border="0" style="width:370px;">
+			<tr>
+				<td valign="top" >
+					<label style='width: 60px;'>
+						属性名
+					</label>
+				</td>
+				<td valign="top" class="tdspace">
+				</td>
+				<td style="width:420px;text-align: left;">
+					<input id="menuAttr_newAttr" type="text" maxlength="8" class="easyui-validatebox" style="width:120px;"/>
+					<a id="menuAttr_addAttr" href="javascript:void(0)" style="width:100px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新属性</a>
+				</td>
+			</tr>
+		</table>
+		<br/>
+		<hr>
+	</form>
+	</div>
 </div>

@@ -6,7 +6,7 @@ requirejs(['discount'],function  (discount) {
 
 </script>
 <div>
-	<form method="post" id="discount_form" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="discount_form" class="easyui-form" data-options="novalidate:true" >
 		<input id="discount_mchntCd" type="hidden" name="mchntCd">
 		<input id="discount_id" type="hidden" name="uuid">
 		<table class="table_info" border="0" style="width:500px;">

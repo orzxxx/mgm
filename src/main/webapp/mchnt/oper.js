@@ -67,7 +67,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10],
+				pageList : [ 20],
 				columns:[[
 				   {field:'operId',title:'操作员号',width:150,sortable:true,align:'center'},
 				   {field:'operation',title:'操作',width:150,sortable:true,align:'center',formatter:function(value, rec){

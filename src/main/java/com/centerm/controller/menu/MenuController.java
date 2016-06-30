@@ -1,6 +1,7 @@
 package com.centerm.controller.menu;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.alibaba.fastjson.JSON;
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
+import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.MenuInf;
+import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.service.menu.IMenuServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.ImageUtils;
@@ -80,11 +85,11 @@ public class MenuController {
 	
 	@RequestMapping("/add")
 	@ResponseBody()
-	public Object add(@ModelAttribute("menuInf") MenuInf menu) throws Exception {
+	public Object add(@ModelAttribute("menuInf") MenuInf menu, @RequestParam("productAttrTypeJson")String productAttrTypeJson) throws Exception {
         menu.setProductId(getSequenceService.GetNewProductId(false));
         menu.setStatus(0);
        (menu.getInventory()).setProductId(menu.getProductId());
-		menuServiceImpl.add(menu);
+		menuServiceImpl.add(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
 		return null;
 	}
 	
@@ -111,11 +116,11 @@ public class MenuController {
 	
 	@RequestMapping("/update")
 	@ResponseBody()
-	public Object update(@ModelAttribute("menuInf") MenuInf menu) throws Exception {
+	public Object update(@ModelAttribute("menuInf") MenuInf menu, @RequestParam("productAttrTypeJson")String productAttrTypeJson) throws Exception {
 		if (StringUtils.isNull(menu.getPictureLink())) {
 			menu.setPictureLink(null);
 		}
-		menuServiceImpl.update(menu);
+		menuServiceImpl.update(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
 		return null;
 	}
 }

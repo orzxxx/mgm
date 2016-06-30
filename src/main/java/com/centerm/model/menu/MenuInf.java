@@ -1,6 +1,7 @@
 package com.centerm.model.menu;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class MenuInf {
     private String productId;
@@ -27,7 +28,27 @@ public class MenuInf {
     
     private InventoryInf inventory;
     
-    public InventoryInf getInventory() {
+    private Integer packingBoxNum;
+    
+    private List<ProductAttrTypeInf> productAttrTypes;
+    
+    public Integer getPackingBoxNum() {
+		return packingBoxNum;
+	}
+
+	public void setPackingBoxNum(Integer packingBoxNum) {
+		this.packingBoxNum = packingBoxNum;
+	}
+
+    public List<ProductAttrTypeInf> getProductAttrTypes() {
+		return productAttrTypes;
+	}
+
+	public void setProductAttrTypes(List<ProductAttrTypeInf> productAttrTypes) {
+		this.productAttrTypes = productAttrTypes;
+	}
+
+	public InventoryInf getInventory() {
 		return inventory;
 	}
 

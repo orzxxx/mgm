@@ -5,6 +5,7 @@ requirejs.config({
         'menu': 'menu/menu',
         'menu-attr': 'menu/menu_attr',
         'menuType': 'menu/menuType',
+        'packingboxfee': 'menu/packingboxfee',
         'menuTmpl': 'template/menu',
         'menuTypeTmpl': 'template/menuType',
         'combo': 'menu/combo',

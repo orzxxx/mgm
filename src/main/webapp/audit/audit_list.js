@@ -19,7 +19,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10],
+				pageList : [ 30],
 				columns:[[
 				   {field:'mchntCd',title:'商户号',width:150,sortable:true,align:'center'},
 				   {field:'mchntName',title:'店名',width:150,sortable:true,align:'center'},
@@ -71,7 +71,7 @@ define(function () {
 		if(row){
 			var dlg = $('<div/>').dialog({    
 			    title: '审核界面',    
-			    width: 500,    
+			    width: 540,    
 			    height: 500,    
 			    closable: false,    
 			    cache: false,    

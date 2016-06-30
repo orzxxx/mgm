@@ -14,6 +14,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="priority" property="priority" jdbcType="INTEGER" />
     <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+    <result column="packing_box_num" property="packingBoxNum" jdbcType="INTEGER" />
     <association property="inventory" javaType="com.centerm.model.menu.InventoryInf">
 	    <id property="productId" column="product_id"/>
 	    <result property="inventory" column="inventory"/>
@@ -32,7 +33,7 @@
   --></resultMap>
   <sql id="Base_Column_List" >
     product_id, product_name, menutp_id, mchnt_cd, price, ori_price, picture_link, product_detail, 
-    taste, status, priority, specifications
+    taste, status, priority, specifications, packing_box_num
   </sql>
   <!--<sql id="Model_Column_List" >
     a.product_id, a.product_name, a.menutp_id, a.mchnt_cd, a.price, a.picture_link, a.ori_price,
@@ -43,7 +44,7 @@
   -->
   <sql id="Model_Column_List" >
     a.product_id, a.product_name, a.menutp_id, a.mchnt_cd, a.price, a.picture_link, a.ori_price,
-    a.product_detail, a.taste, a.status, a.priority,a.specifications,b.inventory
+    a.product_detail, a.taste, a.packing_box_num, a.status, a.priority,a.specifications,b.inventory
   </sql>
   <select id="queryMaxPriority" resultType="int" parameterType="java.util.Map">
 	select IFNULL(MAX(priority),0)
@@ -174,13 +175,13 @@
     insert into tbl_bkms_menu_combo_inf (product_id, product_name, menutp_id, 
       mchnt_cd, price, ori_price, 
       picture_link, product_detail, taste, 
-      status, priority, specifications
-      )
+      status, priority, specifications, 
+      packing_box_num)
     values (#{productId,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{menutpId,jdbcType=VARCHAR}, 
       #{mchntCd,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{oriPrice,jdbcType=DECIMAL}, 
       #{pictureLink,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR}, #{taste,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{priority,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR}
-      )
+      #{status,jdbcType=INTEGER}, #{priority,jdbcType=INTEGER}, #{specifications,jdbcType=VARCHAR}, 
+      #{packingBoxNum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.menu.ComboInf" >
     insert into tbl_bkms_menu_combo_inf
@@ -221,6 +222,9 @@
       <if test="specifications != null" >
         specifications,
       </if>
+      <if test="packingBoxNum != null" >
+        packing_box_num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="productId != null" >
@@ -258,6 +262,9 @@
       </if>
       <if test="specifications != null" >
         #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="packingBoxNum != null" >
+        #{packingBoxNum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -297,6 +304,9 @@
       <if test="specifications != null" >
         specifications = #{specifications,jdbcType=VARCHAR},
       </if>
+      <if test="packingBoxNum != null" >
+        packing_box_num = #{packingBoxNum,jdbcType=INTEGER},
+      </if>
     </set>
     where product_id = #{productId,jdbcType=VARCHAR}
   </update>
@@ -312,7 +322,8 @@
       taste = #{taste,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       priority = #{priority,jdbcType=INTEGER},
-      specifications = #{specifications,jdbcType=VARCHAR}
+      specifications = #{specifications,jdbcType=VARCHAR},
+      packing_box_num = #{packingBoxNum,jdbcType=INTEGER}
     where product_id = #{productId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -4,7 +4,7 @@
 
 </script>
 <div>
-	<form method="post" id="pwd_form" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="pwd_form" class="easyui-form" data-options="novalidate:true" >
 		<input id="pwd_mchntCd" type="hidden" name="mchntCd">
 		<input id="pwd_operId" type="hidden" name="operId">
 		<input id="pwd_userId" type="hidden" name="userId">

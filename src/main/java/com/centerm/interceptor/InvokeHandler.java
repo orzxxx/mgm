@@ -70,7 +70,7 @@ public class InvokeHandler{
 		HttpSession session = request.getSession();
 		String uri = request.getRequestURI();
 		String method = pjp.getTarget().getClass().getSimpleName()+"."+pjp.getSignature().getName();
-		Map param = request.getParameterMap();
+		Map param = request.getParameterMap();//multipart/form-data类型的无法获取
 		String jsonData = new Gson().toJson(param);
 		LoginUser loginUser = (LoginUser) session.getAttribute(Constant.LOGIN_USER);
 		logger.debug("=========收到请求==========");

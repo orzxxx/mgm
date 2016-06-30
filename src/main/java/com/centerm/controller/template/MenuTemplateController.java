@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.alibaba.fastjson.JSON;
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.MenuInf;
+import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.template.MenuTemplateInf;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.service.template.IMenuTemplateServiceImpl;
@@ -82,11 +84,11 @@ public class MenuTemplateController {
 	
 	@RequestMapping("/add")
 	@ResponseBody()
-	public Object add(@ModelAttribute("menuTemplateInf") MenuTemplateInf menu, HttpServletRequest request) throws Exception {
+	public Object add(@ModelAttribute("menuTemplateInf") MenuTemplateInf menu, @RequestParam("productAttrTypeJson")String productAttrTypeJson) throws Exception {
         menu.setProductId(getSequenceService.GetNewProductId(false));
         menu.setStatus(0);
         (menu.getInventory()).setProductId(menu.getProductId());
-		menuTemplateServiceImpl.add(menu);
+		menuTemplateServiceImpl.add(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
 		return null;
 	}
 	
@@ -113,11 +115,11 @@ public class MenuTemplateController {
 	
 	@RequestMapping("/update")
 	@ResponseBody()
-	public Object update(@ModelAttribute("menuTemplateInf") MenuTemplateInf menu, HttpServletRequest request) throws Exception {
+	public Object update(@ModelAttribute("menuTemplateInf") MenuTemplateInf menu, @RequestParam("productAttrTypeJson")String productAttrTypeJson) throws Exception {
 		if (StringUtils.isNull(menu.getPictureLink())) {
 			menu.setPictureLink(null);
 		}
-		menuTemplateServiceImpl.update(menu);
+		menuTemplateServiceImpl.update(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
 		return null;
 	}
 }

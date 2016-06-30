@@ -24,7 +24,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 	                {field:'productId',title:'商品号',width:70,sortable:true}
 				]],
@@ -33,6 +33,7 @@ define(function () {
 				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return value.toFixed(2);
 						}},
+						{field:'packingBoxNum',title:'打包盒份数',width:70,sortable:true,align:'center'},
 						{field:'inventory',title:'库存',width:70,sortable:true,align:'center',formatter:function(value, rec){
 						    if (value.inventory == -1) {
 								return "无限制";
@@ -41,7 +42,7 @@ define(function () {
 							}
 							return value.inventory;
 							}},
-							{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
+							/*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
 								if (value == "") {
 									return "<span style=\"color:red;\">不可选</span>";
 								}
@@ -52,10 +53,10 @@ define(function () {
 									return "<span style=\"color:red;\">不可选</span>";
 								}
 								return value.replace(/\|/g, ",");
-							}},
+							}},*/
 				    {field:'productDetail',title:'商品详情',width:200,sortable:true,align:'center',
 						formatter : function(value, rec) {
-						var info = value.length > 20 ? value.substring(0,20)+"..." : value;
+						var info = value.length > 30 ? value.substring(0,30)+"..." : value;
 						return "<span title=\""+value+".\" " +
 								"class=\"easyui-tooltip\">"+info+"</span>";
 					}}
@@ -115,7 +116,7 @@ define(function () {
 		var dlg = $('<div/>').dialog({    
 		    title: '添加套餐',    
 		    width: 630,    
-		    height: 630,    
+		    height: 600,    
 		    closable: false,    
 		    cache: false,    
 		    href: 'menu/combo_form.jsp',    
@@ -134,11 +135,16 @@ define(function () {
 		    	
 		    	if($('#combo_form').form("validate")){
 			    	for ( var i in rows) {
-			    		var id = rows[i].productId;
-			    		var taste = $("[name='t"+id+"']:checked").val();
-			    		var specs = $("[name='s"+id+"']:checked").val();
-			    		rows[i].taste = taste;
-			    		rows[i].specifications = specs;
+			    		rows[i].attrCmp = "";
+			    		rows[i].selectedAttr = "";
+			    		for ( var j in rows[i].productAttrTypes) {
+			    			rows[i].attrCmp += $("input[name='"+rows[i].productAttrTypes[j].attrTypeId+"']:checked").val()+"|";
+			    			rows[i].selectedAttr += $("input[name='"+rows[i].productAttrTypes[j].attrTypeId+"']:checked").attr("attrName")+",";
+						}
+			    		if (rows[i].attrCmp != "") {
+			    			rows[i].attrCmp = rows[i].attrCmp.substring(0, rows[i].attrCmp.length-1);
+			    			rows[i].selectedAttr = rows[i].selectedAttr.substring(0, rows[i].selectedAttr.length-1);
+						}
 					}
 			    	param.comboDetailsJson = JSON.stringify(rows);
 			    	param.price = $('#combo_price').numberbox('getValue');
@@ -178,10 +184,6 @@ define(function () {
 				initForm();
 				tagsInit();
 				originalPicture = "images/default_menu.png";
-				
-				requirejs(['menu-attr'],function  (attr) {
-					attr.init();
-				});
 			}
 		});  
 	}
@@ -192,7 +194,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '编辑套餐',    
 			    width: 630,    
-			    height: 630,    
+			    height: 600,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'menu/combo_form.jsp',    
@@ -213,11 +215,16 @@ define(function () {
 				    //$('#combo_picture').validatebox('disableValidation');
 			    	if($('#combo_form').form("validate")){
 			    		for ( var i in rows) {
-				    		var id = rows[i].productId;
-				    		var taste = $("[name='t"+id+"']:checked").val();
-				    		var specs = $("[name='s"+id+"']:checked").val();
-				    		rows[i].taste = taste;
-				    		rows[i].specifications = specs;
+				    		rows[i].attrCmp = "";
+				    		rows[i].selectedAttr = "";
+				    		for ( var j in rows[i].productAttrTypes) {
+				    			rows[i].attrCmp += $("input[name='"+rows[i].productAttrTypes[j].attrTypeId+"']:checked").val()+"|";
+				    			rows[i].selectedAttr += $("input[name='"+rows[i].productAttrTypes[j].attrTypeId+"']:checked").attr("attrName")+",";
+							}
+				    		if (rows[i].attrCmp != "") {
+				    			rows[i].attrCmp = rows[i].attrCmp.substring(0, rows[i].attrCmp.length-1);
+				    			rows[i].selectedAttr = rows[i].selectedAttr.substring(0, rows[i].selectedAttr.length-1);
+							}
 						}
 				    	param.comboDetailsJson = JSON.stringify(rows);
 				    	param.price = $('#combo_price').numberbox('getValue');
@@ -264,8 +271,26 @@ define(function () {
 							initForm();
 							var oriPrice = 0;//重新计算原价,避免单品价格更新导致原价变动
 							var list = result.data;
+							//属性赋值
 							for ( var i in list) {
-								list[i].total = list[i].price * list[i].num;
+								list[i].attrPrice1 = 0;
+								list[i].attrPrice2 = 0;
+								if (list[i].attrCmp != null && list[i].attrCmp != "") {
+									var attrArr = list[i].attrCmp.split("|");
+									for ( var j in attrArr) {
+											var attrs = list[i].product.productAttrTypes[j].productAttrs;
+											for ( var k in attrs) {
+												if (attrs[k].attrId == attrArr[j]) {
+													list[i]["attrPrice"+(j*1+1)] = attrs[k].attrPrice;
+												}
+											}
+									}
+								}
+								list[i].product.productId = list[i].productId;
+								$.extend(true, list[i], list[i].product);
+								list[i].attrType1 = list[i].product.productAttrTypes[0];
+								list[i].attrType2 = list[i].product.productAttrTypes[1];
+								list[i].total = (list[i].product.price + list[i].attrPrice1 + list[i].attrPrice2) * list[i].num;
 								oriPrice += list[i].total;
 							}
 							//深拷贝
@@ -276,10 +301,14 @@ define(function () {
 								arr.push(pList[i]);
 							}
 							$('#combo_package').datagrid('loadData', arr);
-							//
+							//属性单选回显
 							for ( var i in list) {
-								$("[name='s"+list[i].productId+"'][value='"+list[i].specifications+"']").attr("checked","checked");				
-								$("[name='t"+list[i].productId+"'][value='"+list[i].taste+"']").attr("checked","checked");				
+								if (list[i].product.productAttrTypes[0] != null) {
+									$("[name='"+list[i].product.productAttrTypes[0].attrTypeId+"'][value='"+list[i].attrCmp.split("|")[0]+"']").attr("checked","checked");				
+								}
+								if (list[i].product.productAttrTypes[1] != null) {
+									$("[name='"+list[i].product.productAttrTypes[1].attrTypeId+"'][value='"+list[i].attrCmp.split("|")[1]+"']").attr("checked","checked");				
+								}
 								//list[i].total = list[i].price * list[i].num;
 							}
 							//数据填充
@@ -301,10 +330,6 @@ define(function () {
 							//$('#combo_picture').validatebox('disableValidation');
 							$("#combo_productId, #combo_inventoryId").val(row.productId);
 							$("#combo_form tt[optional='true']").remove();
-							
-							requirejs(['menu-attr'],function  (attr) {
-								attr.init();
-							});
 						} else {
 							$.messager.alert("提示", result.message);
 						}
@@ -464,9 +489,29 @@ define(function () {
 		    			if ($("#menu_tree").tree('isLeaf',node.target)) {
 							var menu = node.attributes;
 							menu.num = menu.num || 1;
-							menu.total = menu.price * menu.num;
-							menu.allSpec = menu.specifications;
-							menu.allTaste = menu.taste;
+							menu.attrType1 = menu.productAttrTypes[0];
+							menu.attrType2 = menu.productAttrTypes[1];
+							//根据属性处理单价，默认选中第一项
+							if (menu.attrType1 != null && menu.attrType1.productAttrs != null) {
+								menu.attrType1.productAttrs.sort(function(a, b){
+									return a.attrPrice - b.attrPrice;
+								});
+								menu.attrPrice1 = parseFloat(menu.attrType1.productAttrs[0].attrPrice);
+							}else{
+								menu.attrPrice1 = 0;
+							}
+							if (menu.attrType2 != null && menu.attrType2.productAttrs != null) {
+								menu.attrType2.productAttrs.sort(function(a, b){
+									return a.attrPrice - b.attrPrice;
+								});
+								menu.attrPrice2 = parseFloat(menu.attrType2.productAttrs[0].attrPrice);
+							} else {
+								menu.attrPrice2 = 0;
+							}
+							//总价是计算完属性后的价格
+							menu.total = (menu.price+menu.attrPrice1+menu.attrPrice2) * menu.num;
+							//menu.allSpec = menu.specifications;
+							//menu.allTaste = menu.taste;
 							menus.push(menu);
 						}
 					}
@@ -474,8 +519,13 @@ define(function () {
 		    		//赋值
 		    		$('#combo_package').datagrid('loadData',data);
 		    		for ( var i in menus) {
-		    			$("[name='s"+menus[i].productId+"'][value='"+menus[i].selectedSpec+"']").attr("checked","checked");				
-		    			$("[name='t"+menus[i].productId+"'][value='"+menus[i].selectedTaste+"']").attr("checked","checked");				
+		    			if (menus[i].selectedAttr1 != null && menus[i].selectedAttr1 != "") {
+		    				$("[name='"+menus[i].productAttrTypes[0].attrTypeId+"'][value='"+menus[i].selectedAttr1+"']").attr("checked","checked");				
+						}
+		    			if (menus[i].selectedAttr2 != null && menus[i].selectedAttr2 != "") {
+		    				$("[name='"+menus[i].productAttrTypes[1].attrTypeId+"'][value='"+menus[i].selectedAttr2+"']").attr("checked","checked");	
+		    			}
+		    						
 		    		}
 		    		var total = 0;
 		    		for ( var i in menus) {
@@ -483,7 +533,7 @@ define(function () {
 					}
 		    		$("#combo_oriPrice").text(total.toFixed(2));
 		    		$('#combo_price').numberbox('setValue', total.toFixed(2));
-
+		    		
 		    		//关闭
 		    		dlg.dialog('close');
 		    		dlg.remove();
@@ -506,14 +556,19 @@ define(function () {
 			checkbox:true
 		}); 
 		getAllMenuTypeTree(currentMchntCd);
-		//回显
+		//根据套餐组合回显
 		var rows = $('#combo_package').datagrid('getRows');        
     	if (!(rows == "" || rows.length == 0)) {
     		for ( var i in rows) {
     			var node = $('#combo_tree').tree('find', rows[i].productId);
     			node.attributes.num = rows[i].num;
-    			node.attributes.selectedSpec = $("[name='s"+rows[i].productId+"']:checked").val();
-    			node.attributes.selectedTaste = $("[name='t"+rows[i].productId+"']:checked").val();
+    			if (rows[i].attrType1 != null && rows[i].attrType1 !="") {
+    				node.attributes.selectedAttr1 = $("[name='"+rows[i].attrType1.attrTypeId+"']:checked").val();
+				}
+    			if (rows[i].attrType2 != null && rows[i].attrType2 !="") {
+    				node.attributes.selectedAttr2 = $("[name='"+rows[i].attrType2.attrTypeId+"']:checked").val();
+				}
+    			
     			$('#combo_tree').tree('check', node.target);
 			}
 		}
@@ -667,32 +722,32 @@ define(function () {
 				columns:[[
 				    {field:'productId',title:'商品号',hidden:true},
 					{field:'productName',title:'商品名',width:100,sortable:true,align:'center'},
-					{field:'allTaste',title:'口味',width:150,sortable:true,align:'center',formatter:function(value, rec){
-						if (value == "" || value == null) {
-							return "<span style=\"color:red;\">不可选</span>";
+					{field:'attrType1',title:'属性1',width:150,sortable:true,align:'center',formatter:function(value, rec){
+						if (value == null) {
+							return "<span style=\"color:red;\">未配置</span>";
 						}
-						var arr = value.split("|");
-						var taste = "";
+						var arr = value.productAttrs;
+						var attrType1 = value.attrTypeName+": ";
 						for ( var i in arr) {
 							var isChecked = i == 0 ? "checked" : "";
-							taste += "<input type=\'radio\' "+isChecked+" name=\"t"+rec.productId+"\" value=\""+arr[i]+"\"/>"+arr[i];
+							attrType1 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 1)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
 						}
-					    return taste;
+					    return attrType1;
 						}},
-					{field:'allSpec',title:'规格',width:150,sortable:true,align:'center',formatter:function(value, rec){
-						if (value == "" || value == null) {
-							return "<span style=\"color:red;\">不可选</span>";
+					{field:'attrType2',title:'属性2',width:150,sortable:true,align:'center',formatter:function(value, rec){
+						if (value == null) {
+							return "<span style=\"color:red;\">未配置</span>";
 						}
-						var arr = value.split("|");
-						var specifications = "";
+						var arr = value.productAttrs;
+						var attrType2 = value.attrTypeName+": ";
 						for ( var i in arr) {
 							var isChecked = i == 0 ? "checked" : "";
-							specifications += "<input type=\'radio\' "+isChecked+" name=\"s"+rec.productId+"\" value=\""+arr[i]+"\"/>"+arr[i];
+							attrType2 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 2)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
 						}
-					    return specifications;
+					    return attrType2;
 						}},
 				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
-					    return value.toFixed(2);
+					    return (value+rec.attrPrice1+rec.attrPrice2).toFixed(2);
 						}},
 					{field:'num',title:'数量',width:60,sortable:true,align:'center',formatter:function(value, rec){
 						var leftBtn = "<a class=\"btn-left\" onclick=\"combePackageSub(this)\"></a>";
@@ -714,45 +769,65 @@ define(function () {
     
 });
 
+function combePackageChangePrice(obj, price, i){
+	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
+	$("#combo_package").datagrid("selectRecord", id);
+	var row = $("#combo_package").datagrid("getSelected");
+	var index = $("#combo_package").datagrid("getRowIndex", row);
+	row["attrPrice"+i] = price;
+	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);  
+	var oriTotal = row.total;
+	row.total = (newPrice * Number(row.num)).toFixed(2);
+	$(obj).parents("td").siblings("td[field='price']").find("div").text(newPrice);
+	$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
+	//$('#combo_package').datagrid('beginEdit', index);
+	//$('#combo_package').datagrid('updateRow', {index:index,row:row});
+	//$('#combo_package').datagrid('endEdit', index);
+	setOriPrice(parseFloat(row.total-oriTotal));
+}
+
 function combePackageSub(obj){
 	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
 	$("#combo_package").datagrid("selectRecord", id);
 	var row = $("#combo_package").datagrid("getSelected");
 	var index = $("#combo_package").datagrid("getRowIndex", row);
+	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);
 	if (row.num == 1) {
 		$.messager.confirm('提示', '是否要删除该单品？', function(r){
 			if (r){
 				$('#combo_package').datagrid('deleteRow', index);
-				setOriPrice(-row.price*1);
+				setOriPrice(-newPrice*1);
 			}
 		});
 	}else{
 		row.num = row.num-1;
-		row.total = (parseFloat(row.total) - parseFloat(row.price)).toFixed(2);
+		row.total = (parseFloat(row.total) - parseFloat(newPrice)).toFixed(2);
 		$(obj).siblings("span").text(row.num);
 		$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
 		//$('#combo_package').datagrid('beginEdit', index);
 		//$('#combo_package').datagrid('updateRow', {index:index,row:row});
 		//$('#combo_package').datagrid('endEdit', index);
-		setOriPrice(-row.price*1);
+		setOriPrice(-newPrice*1);
 	}
 }	
+
 
 function combePackageAdd(obj){
 	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
 	$("#combo_package").datagrid("selectRecord", id);
 	var row = $("#combo_package").datagrid("getSelected");
 	var index = $("#combo_package").datagrid("getRowIndex", row);
+	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);
 	row.num = (row.num+1)>999 ? 999 : row.num+1;
-	row.total = (parseFloat(row.total) + parseFloat(row.price)).toFixed(2);
+	row.total = (parseFloat(row.total) + parseFloat(newPrice)).toFixed(2);
 	$(obj).siblings("span").text(row.num);
 	$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
 	//$('#combo_package').datagrid('beginEdit', index);
 	//$('#combo_package').datagrid('updateRow', {index:index,row:row});
 	//$('#combo_package').datagrid('endEdit', index);
-	setOriPrice(row.price*1);
+	setOriPrice(newPrice*1);
 }	
-
+//设置原价
 function setOriPrice(num){
 	var price = parseFloat($("#combo_oriPrice").text());
 	$("#combo_oriPrice").text((price+num).toFixed(2));

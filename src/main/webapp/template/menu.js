@@ -79,7 +79,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 10, 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 	                {field:'productId',title:'商品号',width:70,sortable:true}
 				]],
@@ -91,7 +91,7 @@ define(function () {
 					    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 						    return value.toFixed(2);
 							}},
-							{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
+							/*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
 								if (value == "") {
 									return "<span style=\"color:red;\">不可选</span>";
 								}
@@ -102,7 +102,17 @@ define(function () {
 									return "<span style=\"color:red;\">不可选</span>";
 								}
 								return value.replace(/\|/g, ",");
-							}},
+							}},*/
+					{field:'productAttrTypes',title:'属性',width:100,sortable:true,align:'center',formatter:function(value, rec){
+								if (value == null || value == "") {
+									return "<span style=\"color:red;\">未配置</span>";
+								}
+								var types = "";
+								for ( var i in value) {
+									types += value[i].attrTypeName+",";
+								}
+								return types.substring(0, types.length-1);
+					}},
 				    {field:'productDetail',title:'商品详情',width:200,sortable:true,align:'center',
 						formatter : function(value, rec) {
 						var info = value.length > 13 ? value.substring(0,13)+"..." : value;
@@ -189,7 +199,7 @@ define(function () {
 		var dlg = $('<div/>').dialog({    
 		    title: '添加单品',    
 		    width: 420,    
-		    height: 520,    
+		    height: 530,    
 		    closable: false,    
 		    cache: false,    
 		    href: 'template/menu_form.jsp',    
@@ -197,24 +207,33 @@ define(function () {
 		    buttons : [ {
 				text : '添加',
 				handler :function(){
-		    	if($('#menuTmpl_form').form("validate")){
-		    		$('#menuTmpl_form').ajaxSubmit( {
-		    			url : contextPath+"/template/menu/add",
-		    			dataType : "json",
-		                success : function(result) {
-		                	if (result.code == 0) {
-		                		$.messager.alert("提示", "添加成功!");
-		                		//刷新
-		                		reload();
-		                		//关闭对话框
-		                		dlg.dialog('close');
-		    	        		dlg.remove();
-		    				} else {
-		    					$.messager.alert("提示", result.message);
-		    				}
-		    			}
-		            })
-		    	}
+					requirejs(['menu-attr'],function  (attr) {
+		    			var param = {};
+						param.productAttrTypeJson = attr.getAttrArr();
+						if (!param.productAttrTypeJson) {
+							return;
+						}
+						if($('#menuTmpl_form').form("validate")){
+				    		$('#menuTmpl_form').ajaxSubmit( {
+				    			url : contextPath+"/template/menu/add",
+				    			data: param,
+				    			dataType : "json",
+				                success : function(result) {
+				                	if (result.code == 0) {
+				                		$.messager.alert("提示", "添加成功!");
+				                		//刷新
+				                		reload();
+				                		//关闭对话框
+				                		dlg.dialog('close');
+				    	        		dlg.remove();
+				    				} else {
+				    					$.messager.alert("提示", result.message);
+				    				}
+				    			}
+				            })
+				    	}
+					});
+		    	
 		    }
 			},{
 				text : '关闭',
@@ -227,6 +246,10 @@ define(function () {
 			    originalPicture = "images/default_menu.png";
 				initForm();
 				tagsInit();
+				
+				requirejs(['menu-attr'],function  (attr) {
+					attr.init();
+				});
 			}
 		});  
 	}
@@ -237,7 +260,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '编辑菜品',    
 			    width: 420,    
-			    height: 520,    
+			    height: 530,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'template/menu_form.jsp',    
@@ -247,25 +270,33 @@ define(function () {
 					handler : function(){
 			    	//$('#menuTmpl_form').form('enableValidation');
 			    	//$('#menuTmpl_picture').validatebox('disableValidation');
-			    	if($('#menuTmpl_form').form("validate")){
-			    		$('#menuTmpl_form').ajaxSubmit( {
-			    			url : contextPath+"/template/menu/update",
-			    			dataType : "json",
-			                success : function(result) {
-			                	if (result.code == 0) {
-			                		$.messager.alert("提示", "修改成功!");
-			                		//刷新
-			                		reload();
-			                		//关闭对话框
-			                		dlg.dialog('close');
-			    	        		dlg.remove();
-			                		
-			    				} else {
-			    					$.messager.alert("提示", result.message);
-			    				}
-			    			}
-			            })
-			    	}
+						requirejs(['menu-attr'],function  (attr) {
+			    			var param = {};
+							param.productAttrTypeJson = attr.getAttrArr();
+							if (!param.productAttrTypeJson) {
+								return;
+							}
+							if($('#menuTmpl_form').form("validate")){
+					    		$('#menuTmpl_form').ajaxSubmit( {
+					    			url : contextPath+"/template/menu/update",
+					    			data: param,
+					    			dataType : "json",
+					                success : function(result) {
+					                	if (result.code == 0) {
+					                		$.messager.alert("提示", "修改成功!");
+					                		//刷新
+					                		reload();
+					                		//关闭对话框
+					                		dlg.dialog('close');
+					    	        		dlg.remove();
+					                		
+					    				} else {
+					    					$.messager.alert("提示", result.message);
+					    				}
+					    			}
+					            })
+					    	}
+						});
 			    }
 				},{
 					text : '关闭',
@@ -299,6 +330,11 @@ define(function () {
 					//$('#menuTmpl_picture').validatebox('disableValidation');
 					$("#menuTmpl_productId, #menuTmpl_inventoryId").val(row.productId);
 					$("#menuTmpl_form tt[optional='true']").remove();
+					
+					requirejs(['menu-attr'],function  (attr) {
+						attr.init();
+						attr.loadAttr(row.productAttrTypes);
+					});
 				}
 			}); 
 		}else{

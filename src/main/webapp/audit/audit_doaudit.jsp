@@ -5,7 +5,7 @@
 <div>
 	<div id="doaudit_tab" class="easyui-tabs" >   
 	    <div title="基础信息" style="padding:20px;">   
-	    	<form id="doaudit_form" method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	    	<form id="doaudit_form" method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" >
 				<table class="table_info" border="0" style="width:500px;">
 				<tr>
 					<td width="120px;">
@@ -153,7 +153,7 @@
 				
 			</form>
 	    </div>   
-	    <div title="身份证" data-options="" style="overflow:auto;padding:20px;">   
+	    <%--<div title="身份证" data-options="" style="overflow:auto;padding:20px;">   
 	    	<table>
 	        <tr>
 				<td>
@@ -205,12 +205,12 @@
 			</tr>
 			</table>    
 	    </div>   
-	    <div title="进行审核" data-options="" style="overflow:auto;padding:20px;">   
-	       <form method="post"  id="doaudit_auditForm" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	    --%><div title="进行审核" data-options="" style="overflow:auto;padding:20px;">   
+	       <form method="post"  id="doaudit_auditForm" class="easyui-form" data-options="novalidate:true" >
 				<input id="doaudit_mchntCd" type="hidden" name="mchntCd">
 				<table class="table_info" border="0">
 				<tr>
-					<td width="100px">
+					<td width="140px">
 						<label>
 							审核结果:
 						</label>

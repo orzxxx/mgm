@@ -4,7 +4,7 @@
 
 </script>
 <div>
-	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
 		<input id="menu_mchntCd" type="hidden" name="mchntCd">
 		<input id="menu_productId" type="hidden" name="productId">
 		<input id="menu_pictureLink" type="hidden" name="pictureLink">

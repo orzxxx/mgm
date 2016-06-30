@@ -1,6 +1,7 @@
 package com.centerm.model.template;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.centerm.model.menu.InventoryInf;
 
@@ -29,10 +30,21 @@ public class MenuTemplateInf {
     
     private InventoryInf inventory;
     
-    public InventoryInf getInventory() {
+    private List<ProductAttrTypeTemplateInf> productAttrTypes;
+    
+	public InventoryInf getInventory() {
 		return inventory;
 	}
 
+	public List<ProductAttrTypeTemplateInf> getProductAttrTypes() {
+		return productAttrTypes;
+	}
+
+	public void setProductAttrTypes(
+			List<ProductAttrTypeTemplateInf> productAttrTypes) {
+		this.productAttrTypes = productAttrTypes;
+	}
+	
 	public void setInventory(InventoryInf inventory) {
 		this.inventory = inventory;
 	}

@@ -84,6 +84,21 @@
 					<tt>*</tt> 
 				</td>			
 			</tr>
+			<tr>
+				<td>
+					<label>
+						打包盒份数
+					</label>
+				</td>
+				<td class="tdspace">
+				</td>
+				<td>
+					<input type="text" name="packingBoxNum" maxlength="30" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
+				</td>
+				<td class="hintspace">
+					<tt>*</tt> 
+				</td>			
+			</tr>
 			<tr >
 				<td>
 					<label>
@@ -131,7 +146,7 @@
 	</form>
 	</div>
 	<div title="单品属性">
-	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="menuAttr_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
 		<input id="menu_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0" style="width:370px;">
 			<tr>

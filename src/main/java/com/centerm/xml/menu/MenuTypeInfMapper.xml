@@ -32,6 +32,15 @@
 		    <id property="productId" column="product_id"/>
 		    <result property="inventory" column="inventory"/>
 		</association>
+		<collection property="productAttrTypes" ofType="com.centerm.model.menu.ProductAttrTypeInf">
+	    <id column="attr_type_id" property="attrTypeId" jdbcType="INTEGER" />
+	    <result column="attr_type_name" property="attrTypeName" jdbcType="VARCHAR" />
+	    <collection property="productAttrs" ofType="com.centerm.model.menu.ProductAttrInf">
+			<id column="attr_id" property="attrId" jdbcType="INTEGER" />
+		    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+		    <result column="attr_price" property="attrPrice" jdbcType="DECIMAL" />
+		</collection>
+	</collection>
 	</collection>
   </resultMap>
    <select id="tree" resultMap="TreeResultMap" parameterType="map">
@@ -41,12 +50,16 @@
 		b.menutp_id, b.mchnt_cd as menu_mchnt_cd, b.price, 
 		b.picture_link, b.product_detail, 
 		b.taste, b.status as menu_status, b.priority as menu_priority, 
-		b.specifications 
+		b.specifications,d.attr_type_id, d.attr_type_name, e.attr_id, e.attr_name, e.attr_price 
 	  from tbl_bkms_menu_type_inf a
 	  left join tbl_bkms_menu_inf b
 	  on a.menutp_id = b.menutp_id
 	  join tbl_bkms_product_inventory c
 	  on b.product_id = c.product_id
+	  left join tbl_bkms_product_attr_type_inf d
+	  on b.product_id = d.product_id
+	  left join tbl_bkms_product_attr_inf e
+	  on d.attr_type_id = e.attr_type_id
 	  where b.status = 0
 	  and b.mchnt_cd = #{mchntCd}
 	  <if test="needCombo != null and needCombo == false">
@@ -59,12 +72,16 @@
 		b.menutp_id, b.mchnt_cd as menu_mchnt_cd, b.price, 
 		b.picture_link, b.product_detail, 
 		b.taste, b.status as menu_status, b.priority as menu_priority, 
-		b.specifications 
+		b.specifications,d.attr_type_id, d.attr_type_name, e.attr_id, e.attr_name, e.attr_price 
 	  from tbl_bkms_menu_type_inf a
 	  left join tbl_bkms_menu_combo_inf b
 	  on a.menutp_id = b.menutp_id
 	  join tbl_bkms_product_inventory c
 	  on b.product_id = c.product_id
+	  left join tbl_bkms_product_attr_type_inf d
+	  on b.product_id = d.product_id
+	  left join tbl_bkms_product_attr_inf e
+	  on d.attr_type_id = e.attr_type_id
 	  where b.status = 0
 	  and b.mchnt_cd = #{mchntCd}
 	  <if test="needCombo != null and needCombo == false">

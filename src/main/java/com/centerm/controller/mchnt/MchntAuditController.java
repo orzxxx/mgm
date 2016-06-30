@@ -94,7 +94,7 @@ public class MchntAuditController {
 	@ResponseBody()
 	public Object submit(@ModelAttribute("mchntAuditInf") MchntAuditInf mchntAudit) throws Exception {
 		mchntAudit = mchntAuditServiceImpl.get(mchntAudit.getMchntCd());
-		if (mchntAudit.getAuditStatus() == 2) {
+		/*if (mchntAudit.getAuditStatus() == 2) {
 			throw new BusinessException("账号正在审核");
 		}
 		if (StringUtils.isNull(mchntAudit.getIdCardFront())) {
@@ -108,7 +108,7 @@ public class MchntAuditController {
 		}
 		if (StringUtils.isNull(mchntAudit.getStorePhoto())) {
 			throw new BusinessException("未提交店铺照片");
-		}
+		}*/
 		mchntAudit.setAuditStatus(2);
 		mchntAudit.setSubmitTime(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
 		mchntAuditServiceImpl.update(mchntAudit);

@@ -87,7 +87,7 @@ define(function () {
 				formatter : function(value, rec) {
 					return value.toFixed(2);
 				}
-			}, {field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
+			}, /*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
 				if (value == "") {
 					//return "<span style=\"color:red;\">不可选</span>";
 					return "不可选";
@@ -100,7 +100,7 @@ define(function () {
 					return "不可选";
 				}
 				return value.replace(/\|/g, ",");
-			}},{
+			}},*/{
 				field : 'productDetail',
 				title : '商品详情',
 				width : 200,
@@ -142,8 +142,11 @@ define(function () {
 				edit();
 			},
 			rowStyler : function(index, row) {
-				if (row.status == -1 || row.inventory == null || row.inventory == "") {
+				if (row.status == -1) {
 					return 'color:red;';
+				}
+				if (row.inventory == null || row.inventory == "") {
+					return 'color:blue;';
 				}
 			}
 

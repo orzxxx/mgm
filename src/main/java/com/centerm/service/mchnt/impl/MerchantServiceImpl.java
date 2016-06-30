@@ -26,6 +26,7 @@ import com.centerm.model.sys.UserInf;
 import com.centerm.service.mchnt.IMerchantService;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.BeanUtil;
+import com.centerm.utils.DateUtils;
 import com.centerm.utils.MD5;
 import com.centerm.utils.StringUtils;
 
@@ -159,10 +160,11 @@ public class MerchantServiceImpl implements IMerchantService{
 		user.setUserId(mchnt.getUserId());
 		user.setRole("pendinguser");
 		userMapper.insert(user);
-		//添加审核表
+		//提交审核
 		MchntAuditInf mchntAudit = new MchntAuditInf();
 		mchntAudit.setMchntCd(mchnt.getMchntCd());
-		mchntAudit.setAuditStatus(0);
+		mchntAudit.setAuditStatus(2);
+		mchntAudit.setSubmitTime(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
 		mchntAuditInfMapper.insert(mchntAudit);
 		//总部关联
 		FrchseMchntMapInf frchseMchntMap = new FrchseMchntMapInf();

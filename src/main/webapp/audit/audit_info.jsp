@@ -6,7 +6,7 @@ requirejs(['audit-info'],function  (audit) {
 
 </script>
 <div>
-	<form method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" enctype="multipart/form-data">
+	<form method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" >
 		<input id="auditInfo_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0" style="width:700px;">
 		<tr>
@@ -159,6 +159,7 @@ requirejs(['audit-info'],function  (audit) {
 			</td>
 			<td>
 				<a id="audit_edit" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn" style="width:100px;display: none;">进行修改</a>
+				<a id="audit_submit" style="width:100px;display: none;" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">提交申请</a>
 			</td>
 			<td class="hintspace">
 			</td>

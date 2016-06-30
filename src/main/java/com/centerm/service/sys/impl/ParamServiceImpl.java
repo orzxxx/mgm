@@ -43,8 +43,14 @@ public class ParamServiceImpl implements IParamServiceImpl{
 		ParamInf result = paramMapper.getParam(param);
 		if (result == null) {
 			//未配置则添加
-			param.setParam("discount_rate");
-			param.setData("10|20160101|20160101");
+			if (param.getParam().equals("discount_rate")) {
+				param.setData("10|20160101|20160101");
+			} else if (param.getParam().equals("packing_box_price")) {
+				param.setData("0");
+			} else {
+				throw new BusinessException("未知的配置参数");
+			}
+			
 			param.setMchntCd(param.getMchntCd());
 			param.setUuid(UUID.randomUUID().toString());
 			paramMapper.insert(param);

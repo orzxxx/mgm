@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.menu.ProductAttrTypeInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.menu.ProductAttrTypeInf">
+    <id column="attr_type_id" jdbcType="INTEGER" property="attrTypeId" />
+    <result column="attr_type_name" jdbcType="VARCHAR" property="attrTypeName" />
+    <result column="mchnt_cd" jdbcType="VARCHAR" property="mchntCd" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    attr_type_id, attr_type_name, mchnt_cd, product_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_product_attr_type_inf
+    where attr_type_id = #{attrTypeId,jdbcType=INTEGER}
+  </select>
+   <delete id="deleteByProductId" parameterType="java.lang.String" >
+    delete from tbl_bkms_product_attr_type_inf
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_bkms_product_attr_type_inf
+    where attr_type_id = #{attrTypeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.menu.ProductAttrTypeInf" useGeneratedKeys="true" keyProperty="attrTypeId">
+    insert into tbl_bkms_product_attr_type_inf (attr_type_id, attr_type_name, mchnt_cd, 
+      product_id)
+    values (#{attrTypeId,jdbcType=INTEGER}, #{attrTypeName,jdbcType=VARCHAR}, #{mchntCd,jdbcType=VARCHAR}, 
+      #{productId,jdbcType=VARCHAR})
+  </insert>
+ <insert id="insertSelective" parameterType="com.centerm.model.menu.ProductAttrTypeInf" >
+    insert into tbl_bkms_product_attr_type_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attrTypeId != null" >
+        attr_type_id,
+      </if>
+      <if test="attrTypeName != null" >
+        attr_type_name,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attrTypeId != null" >
+        #{attrTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="attrTypeName != null" >
+        #{attrTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.ProductAttrTypeInf" >
+    update tbl_bkms_product_attr_type_inf
+    <set >
+      <if test="attrTypeName != null" >
+        attr_type_name = #{attrTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where attr_type_id = #{attrTypeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.menu.ProductAttrTypeInf" >
+    update tbl_bkms_product_attr_type_inf
+    set attr_type_name = #{attrTypeName,jdbcType=VARCHAR},
+      mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR}
+    where attr_type_id = #{attrTypeId,jdbcType=INTEGER}
+  </update>
+</mapper>
