@@ -20,6 +20,7 @@ import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.service.menu.IMenuServiceImpl;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 
 @Service("menuService")
@@ -36,6 +37,8 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	
 	private ProductAttrInfMapper productAttrMapper;
 	
+	private SysLogService sysLogService;
+	
 	public ProductAttrInfMapper getProductAttrMapper() {
 		return productAttrMapper;
 	}
@@ -50,6 +53,14 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	public void setProductAttrTypeMapper(
 			ProductAttrTypeInfMapper productAttrTypeMapper) {
 		this.productAttrTypeMapper = productAttrTypeMapper;
+	}
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
 	}
 	public InventoryInfMapper getInventoryMapper() {
 		return inventoryMapper;
@@ -73,7 +84,9 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		return menuMapper.query(map);
 	}
 	
+
 	public void del(MenuInf menu){
+		logger.info("=====删除单品开始:"+menu.getProductId());
 		//校验是否在套餐中使用 
 		List<ComboInf> combos = menuMapper.isUsedByCombo(menu.getProductId());
 		if (combos.size() > 0) {
@@ -82,6 +95,7 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 				comboNames += "【"+combo.getProductName()+"】,";
 			}
 			comboNames = comboNames.substring(0, comboNames.length()-1)+"中被使用,无法删除";
+			logger.info("=====删除单品失败:"+comboNames);
 			throw new BusinessException(comboNames);
 		}
 		menuMapper.updateByPrimaryKeySelective(menu);
@@ -89,10 +103,13 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		productAttrMapper.deleteByProductId(menu.getProductId());
 		productAttrTypeMapper.deleteByProductId(menu.getProductId());
 		//inventoryMapper.deleteByPrimaryKey(menu.getProductId());
+		//日志
+		sysLogService.add("MenuServiceImpl.del", new String[]{"tbl_bkms_menu_inf"}, menu, SysLogService.UPDATE);
+		logger.info("=====删除单品结束:"+menu.getProductId());
 	}
 	
 	public void add(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes){
-		logger.info("=====添加单品开始");
+		logger.info("=====添加单品开始:"+menu.getProductId());
 		//唯一性校验
 		int num = menuMapper.isNameExisted(menu);
 		if (num > 0) {
@@ -102,6 +119,7 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		//设置优先级
 		int maxPriority = menuMapper.queryMaxPriority(menu.getMchntCd());
 		menu.setPriority(maxPriority+1);
+		logger.info("=====单品优先级:"+menu.getPriority());
 		
 		inventoryMapper.insert(menu.getInventory());
 		menuMapper.insert(menu);
@@ -119,13 +137,17 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			}
 			productAttrMapper.insertbatch(attrs);
 		}
-		logger.info("=====添加单品结束");
+		//日志
+		sysLogService.add("MenuServiceImpl.add", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.INSERT);
+		logger.info("=====添加单品结束:"+menu.getProductId());
 	}
 	
-	public void update(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes) {
+	public void update(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes){
+		logger.info("=====修改单品开始:"+menu.getProductId());
 		//唯一性校验
 		int num = menuMapper.isNameExisted(menu);
 		if (num > 0) {
+			logger.info("=====单品名已存在:"+menu.getProductName());
 			throw new BusinessException("菜品名已存在");
 		}
 		inventoryMapper.updateByPrimaryKeySelective(menu.getInventory());
@@ -147,5 +169,8 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			}
 			productAttrMapper.insertbatch(attrs);
 		}
+		//日志
+		sysLogService.add("MenuServiceImpl.update", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.UPDATE);
+		logger.info("=====修改单品结束:"+menu.getProductId());
 	}
 }

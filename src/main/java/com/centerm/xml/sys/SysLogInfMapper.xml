@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.sys.SysLogInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.sys.SysLogInf" >
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="oper_dt" property="operDt" jdbcType="VARCHAR" />
+    <result column="oper_func" property="operFunc" jdbcType="VARCHAR" />
+    <result column="oper_desc" property="operDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uuid, user_id, oper_dt, oper_func, oper_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_sys_log
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tbl_bkms_sys_log
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.sys.SysLogInf" >
+    insert into tbl_bkms_sys_log (uuid, user_id, oper_dt, 
+      oper_func, oper_desc)
+    values (#{uuid,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{operDt,jdbcType=VARCHAR}, 
+      #{operFunc,jdbcType=VARCHAR}, #{operDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.sys.SysLogInf" >
+    insert into tbl_bkms_sys_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="operDt != null" >
+        oper_dt,
+      </if>
+      <if test="operFunc != null" >
+        oper_func,
+      </if>
+      <if test="operDesc != null" >
+        oper_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="operDt != null" >
+        #{operDt,jdbcType=VARCHAR},
+      </if>
+      <if test="operFunc != null" >
+        #{operFunc,jdbcType=VARCHAR},
+      </if>
+      <if test="operDesc != null" >
+        #{operDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.sys.SysLogInf" >
+    update tbl_bkms_sys_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="operDt != null" >
+        oper_dt = #{operDt,jdbcType=VARCHAR},
+      </if>
+      <if test="operFunc != null" >
+        oper_func = #{operFunc,jdbcType=VARCHAR},
+      </if>
+      <if test="operDesc != null" >
+        oper_desc = #{operDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.sys.SysLogInf" >
+    update tbl_bkms_sys_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+      oper_dt = #{operDt,jdbcType=VARCHAR},
+      oper_func = #{operFunc,jdbcType=VARCHAR},
+      oper_desc = #{operDesc,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>
