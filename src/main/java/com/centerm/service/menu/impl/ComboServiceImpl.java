@@ -3,6 +3,7 @@ package com.centerm.service.menu.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +19,15 @@ import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuTypeInf;
 import com.centerm.service.menu.IComboServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.StringUtils;
 
 @Service("comboService")
 @Transactional
 public class ComboServiceImpl implements IComboServiceImpl{
+	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	private ComboInfMapper comboMapper;
 	
@@ -34,6 +38,16 @@ public class ComboServiceImpl implements IComboServiceImpl{
 	private MenuTypeInfMapper menuTypeMapper;
 	
 	private GetSequenceService getSequenceService;
+	
+	private SysLogService sysLogService;
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 
 	public GetSequenceService getGetSequenceService() {
 		return getSequenceService;
@@ -79,13 +93,18 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		return comboMapper.query(map);
 	}
 	
-	public int del(ComboInf combo){
+	public void del(ComboInf combo){
+		logger.info("=====删除套餐开始:"+combo.getProductId());
 		//inventoryMapper.deleteByPrimaryKey(combo.getProductId());
 		comboMapper.updateByPrimaryKeySelective(combo);
-		return comboDetailMapper.deleteByComboId(combo.getProductId());
+		comboDetailMapper.deleteByComboId(combo.getProductId());
+		//日志
+		sysLogService.add("MenuServiceImpl.del", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.DELETE);
+		logger.info("=====删除套餐开始:"+combo.getProductId());
 	}
 	
-	public int add(ComboInf combo){
+	public void add(ComboInf combo){
+		logger.info("=====添加套餐开始:"+combo.getProductId());
 		//设置分类id
 		String comboMenuupId = menuTypeMapper.getComboMenutpId(combo.getMchntCd());
 		if(StringUtils.isNull(comboMenuupId)){
@@ -104,11 +123,13 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		//唯一性校验
 		int num = comboMapper.isNameExisted(combo);
 		if (num > 0) {
+			logger.info("=====套餐名已存在:"+combo.getProductName());
 			throw new BusinessException("套餐名已存在");
 		}
 		//设置优先级
 		int maxPriority = comboMapper.queryMaxPriority(combo.getMchntCd());
 		combo.setPriority(maxPriority+1);
+		logger.info("=====套餐优先级:"+combo.getPriority());
 		//详情拼接
 		String productDetail = "";
 		List<ComboDetailInf> comboDetails = combo.getComboDetails();
@@ -124,13 +145,18 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		combo.setProductDetail(productDetail);
 		inventoryMapper.insert(combo.getInventory());
 		comboDetailMapper.insertbatch(comboDetails);
-		return comboMapper.insert(combo);
+		comboMapper.insert(combo);
+		//日志
+		sysLogService.add("ComboServiceImpl.add", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.INSERT);
+		logger.info("=====添加套餐结束:"+combo.getProductId());
 	}
 	
-	public int update(ComboInf combo){
+	public void update(ComboInf combo){
+		logger.info("=====更新套餐开始:"+combo.getProductId());
 		//唯一性校验
 		int num = comboMapper.isNameExisted(combo);
 		if (num > 0) {
+			logger.info("=====套餐名已存在:"+combo.getProductName());
 			throw new BusinessException("套餐名已存在");
 		}
 		//套餐详细重新添加
@@ -151,7 +177,10 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		comboDetailMapper.insertbatch(comboDetails);
 		
 		inventoryMapper.updateByPrimaryKeySelective(combo.getInventory());
-		return comboMapper.updateByPrimaryKeySelective(combo);
+		comboMapper.updateByPrimaryKeySelective(combo);
+		//日志
+		sysLogService.add("ComboServiceImpl.update", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.UPDATE);
+		logger.info("=====更新套餐结束:"+combo.getProductId());
 	}
 	@Override
 	public List<ComboDetailInf> getDetails(String comboId) {

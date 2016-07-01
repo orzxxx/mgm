@@ -17,6 +17,7 @@ import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.model.mchnt.MchntInf;
 import com.centerm.model.sys.UserInf;
 import com.centerm.service.mchnt.IMchntAuditServiceImpl;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.HttpClientUtil;
 
@@ -25,6 +26,16 @@ import com.centerm.utils.HttpClientUtil;
 public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
+	
+	private SysLogService sysLogService;
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 
 	private MchntAuditInfMapper mchntAuditMapper;
 	private MchntInfMapper mchntMapper;
@@ -75,6 +86,7 @@ public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
 	}
 	@Override
 	public void audit(MchntAuditInf mchntAudit) {
+		logger.info("=====账号审核开始:"+mchntAudit.getMchntCd());
 		mchntAuditMapper.updateByPrimaryKeySelective(mchntAudit);
 		//审核通过赋予权限
 		if (mchntAudit.getAuditStatus() == 1) {
@@ -88,6 +100,14 @@ public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
 			String result = sendSms(mchnt.getUserId(), "您的验证码为:123456");
 			System.out.println(result);
 		}
+		//日志
+		sysLogService.add("MchntAuditServiceImpl.audit", "tbl_bkms_mchnt_audit_inf", mchntAudit, SysLogService.UPDATE);
+		if (mchntAudit.getAuditStatus() == 1) {
+			logger.info("=====账号审核通过");
+		} else {
+			logger.info("=====账号审核不通过");
+		}
+		logger.info("=====账号审核结束:"+mchntAudit.getMchntCd());
 	}
 	//发送短信
 	private String sendSms(String phoneNum, String content){

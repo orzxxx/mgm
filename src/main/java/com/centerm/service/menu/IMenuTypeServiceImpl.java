@@ -9,13 +9,13 @@ import com.centerm.model.menu.MenuTypeInf;
 public interface IMenuTypeServiceImpl {
 	public List<MenuTypeInf> list(MenuTypeInf menuType, Page page) throws Exception;
 	
-	public int del(int menutpId);
+	public void del(int menutpId);
 	
-	public int add(MenuTypeInf menuType);
+	public void add(MenuTypeInf menuType);
 	
-	public int addTree(List<MenuTypeInf> menuTypes) throws Exception;
+	public void addTree(List<MenuTypeInf> menuTypes) throws Exception;
 	
-	public int update(MenuTypeInf menuType);
+	public void update(MenuTypeInf menuType);
 	
 	public List<MenuTypeInf> tree(String mchntCd, boolean needCombo);
 }

@@ -48,7 +48,15 @@ public class LoginServiceImpl implements ILoginService {
 	private FrchseInfMapper frchseInfMapper;
 	private MchntAuditInfMapper mchntAuditInfMapper;
 	private MenuVersionInfMapper menuVersionInfMapper;
+	private SysLogService sysLogService;
 	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 	public MenuVersionInfMapper getMenuVersionInfMapper() {
 		return menuVersionInfMapper;
 	}
@@ -181,6 +189,8 @@ public class LoginServiceImpl implements ILoginService {
 		loginUser.setUserInfo(userInfo);
 		loginUser.setMenus(primaryMenus);
 		loginUser.setFunctions(functions);
+		//日志
+		sysLogService.addInfo(user.getUserId(), "LoginServiceImpl.login", "登入:"+user.getUserId());
 		return loginUser;
 	}
 	/**

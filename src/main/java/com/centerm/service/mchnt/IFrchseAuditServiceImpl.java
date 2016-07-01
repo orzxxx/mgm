@@ -10,9 +10,9 @@ public interface IFrchseAuditServiceImpl {
 	
 	public int del(int id);
 	
-	public int add(FrchseAuditInf frchseAudit);
+	public void add(FrchseAuditInf frchseAudit);
 	
-	public int update(FrchseAuditInf frchseAudit);
+	public void update(FrchseAuditInf frchseAudit);
 
 	public FrchseAuditInf getByMchntCd(String mchntCd);
 }

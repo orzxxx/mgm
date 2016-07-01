@@ -8,7 +8,7 @@ import com.centerm.model.mchnt.TerminalBindInf;
 public interface ITerminalBindServiceImpl {
 	public List<TerminalBindInf> list(TerminalBindInf terminalBind, Page page) throws Exception;
 	
-	public int del(TerminalBindInf terminalBind);
+	public void del(TerminalBindInf terminalBind);
 	
 	public int add(TerminalBindInf terminalBind);
 	

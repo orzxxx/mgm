@@ -111,4 +111,25 @@ public class SysLogService{
 		sysLogMapper.insert(sysLog);
 	}
 	
+	public void addInfo(String func, String info){
+		//从session中获取UserId
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder
+				.getRequestAttributes()).getRequest(); 
+		HttpSession session = request.getSession();
+		LoginUser loginUser = (LoginUser) session.getAttribute(Constant.LOGIN_USER);
+		String userId = loginUser.getUserInfo().getUserId();
+		
+		addInfo(userId, func, info);
+	}
+	
+	public void addInfo(String userId, String func, String info){
+		SysLogInf sysLog = new SysLogInf();
+		sysLog.setUuid(UUID.randomUUID().toString());
+		sysLog.setUserId(userId);
+		sysLog.setOperFunc(func);
+		sysLog.setOperDt(DateUtils.getCurrentDate("yyyyMMddHHmmss"));
+		sysLog.setOperDesc(info);
+		
+		sysLogMapper.insert(sysLog);
+	}
 }

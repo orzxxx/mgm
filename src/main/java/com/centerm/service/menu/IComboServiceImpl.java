@@ -9,11 +9,11 @@ import com.centerm.model.menu.ComboInf;
 public interface IComboServiceImpl {
 	public List<ComboInf> list(ComboInf combo, Page page) throws Exception;
 	
-	public int del(ComboInf combo);
+	public void del(ComboInf combo);
 	
-	public int add(ComboInf combo);
+	public void add(ComboInf combo);
 	
-	public int update(ComboInf combo);
+	public void update(ComboInf combo);
 
 	public List<ComboDetailInf> getDetails(String comboId);
 }

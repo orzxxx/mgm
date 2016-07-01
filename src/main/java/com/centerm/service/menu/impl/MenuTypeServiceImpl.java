@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,14 +32,19 @@ import com.centerm.model.template.ProductAttrTemplateInf;
 import com.centerm.model.template.ProductAttrTypeTemplateInf;
 import com.centerm.service.menu.IMenuTypeServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.PropertyUtils;
 
 @Service("menuTypeService")
 @Transactional
 public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
+	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	private GetSequenceService getSequenceService;
+	
+	private SysLogService sysLogService;
 
 	public GetSequenceService getGetSequenceService() {
 		return getSequenceService;
@@ -64,6 +70,14 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 	
 	public ProductAttrTypeTemplateInfMapper getProductAttrTypeTemplateMapper() {
 		return productAttrTypeTemplateMapper;
+	}
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
 	}
 	@Autowired
 	public void setProductAttrTypeTemplateMapper(
@@ -134,34 +148,49 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		return menuTypeMapper.tree(param);
 	}	
 	
-	public int del(int id){
-		return menuTypeMapper.deleteByPrimaryKey(id);
+	public void del(int id){
+		logger.info("=====删除分类开始:"+id);
+		menuTypeMapper.deleteByPrimaryKey(id);
+		//日志
+		sysLogService.add("MenuTypeServiceImpl.del", "tbl_bkms_menu_type_inf", id, SysLogService.DELETE);
+		logger.info("=====删除分类结束:"+id);
 	}
 	
-	public int add(MenuTypeInf menuType){
+	public void add(MenuTypeInf menuType){
+		logger.info("=====添加分类开始:"+menuType.getMenutpId());
 		//唯一性校验
 		int num = menuTypeMapper.isNameExisted(menuType);
 		if (num > 0) {
+			logger.info("=====分类型名已存在:"+menuType.getMenutpName());
 			throw new BusinessException("分类名已存在");
 		}
 		//设置优先级
 		int maxPriority = menuTypeMapper.queryMaxPriority(menuType.getMchntCd());
 		menuType.setPriority(maxPriority+1);
-		//添加库存表，预定
-		return menuTypeMapper.insert(menuType);
+		logger.info("=====分类优先级:"+menuType.getPriority());
+		menuTypeMapper.insert(menuType);
+		//日志
+		sysLogService.add("MenuTypeServiceImpl.add", "tbl_bkms_menu_type_inf", menuType, SysLogService.INSERT);
+		logger.info("=====添加分类结束:"+menuType.getMenutpId());
 	}
 	
-	public int update(MenuTypeInf menuType){
+	public void update(MenuTypeInf menuType){
+		logger.info("=====更新分类开始:"+menuType.getMenutpId());
 		//唯一性校验
 		int num = menuTypeMapper.isNameExisted(menuType);
 		if (num > 0) {
+			logger.info("=====分类型名已存在:"+menuType.getMenutpName());
 			throw new BusinessException("分类名已存在");
 		}
-		return menuTypeMapper.updateByPrimaryKeySelective(menuType);
+		//日志
+		sysLogService.add("MenuTypeServiceImpl.update", "tbl_bkms_menu_type_inf", menuType, SysLogService.UPDATE);
+		menuTypeMapper.updateByPrimaryKeySelective(menuType);
+		logger.info("=====更新分类结束:"+menuType.getMenutpId());
 	}
 
 	@Override
-	public int addTree(List<MenuTypeInf> menuTypeTree) throws Exception {
+	public void addTree(List<MenuTypeInf> menuTypeTree) throws Exception {
+		logger.info("=====导入单品开始");
 		//java.util.Arrays$ArrayList ==> java.util.ArrayList
 		List<MenuTypeInf> menuTypes = new ArrayList<MenuTypeInf>();
 		menuTypes.addAll(menuTypeTree);
@@ -197,8 +226,10 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 				menuType.setMenutpId(getSequenceService.CreateNewMenutpId(false));
 				menuType.setPriority(++maxPriority);
 			}
+			
 			menuTypeMapper.insertbatch(menuTypes);
 		}
+		sysLogService.add("MenuTypeServiceImpl.addTree", "tbl_bkms_menu_type_inf", menuTypes, SysLogService.INSERT);
 		menuTypes.addAll(existedTypes);//包括所有数据
 		
 		//菜品校验
@@ -209,6 +240,8 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 				param.put("list", menuType.getMenus());
 				List<MenuInf> menuResult = menuMapper.isNamesExisted(param);
 				if (menuResult.size() > 0) {
+					logger.info("分类【"+menuType.getMenutpName()+"】中" +
+							"已存在菜品【"+menuResult.get(0).getProductName()+"】");
 					throw new BusinessException("分类【"+menuType.getMenutpName()+"】中" +
 							"已存在菜品【"+menuResult.get(0).getProductName()+"】");
 				}
@@ -267,15 +300,16 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 			}
 		}
 		if (attrs.size() != 0) {
+			sysLogService.add("MenuTypeServiceImpl.addTree", new String[]{"tbl_bkms_product_attr_type_inf","tbl_bkms_product_attr_inf"}, attrs, SysLogService.INSERT);
 			productAttrMapper.insertbatch(attrs);
 		}
 		if (menus.size() != 0) {
+			sysLogService.add("MenuTypeServiceImpl.addTree", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menus, SysLogService.INSERT);
 			menuMapper.insertbatch(menus);
 		}
 		if (inventorys.size() != 0) {
 			inventoryMapper.insertbatch(inventorys);
 		}
-		
-		return 0;
+		logger.info("=====导入单品结束");
 	}
 }

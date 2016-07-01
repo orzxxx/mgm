@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import com.centerm.model.menu.MenuVersionInf;
 import com.centerm.model.sys.UserInf;
 import com.centerm.service.mchnt.IMerchantService;
 import com.centerm.service.sys.impl.GetSequenceService;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.DateUtils;
 import com.centerm.utils.MD5;
@@ -34,6 +36,8 @@ import com.centerm.utils.StringUtils;
 @Transactional
 public class MerchantServiceImpl implements IMerchantService{
 	
+	private Logger logger = Logger.getLogger(this.getClass());
+	
 	private UserInfMapper userMapper;
 	private MchntInfMapper mchntMapper;
 	private MenuTypeInfMapper menuTypeMapper;
@@ -41,6 +45,16 @@ public class MerchantServiceImpl implements IMerchantService{
 	private FrchseMchntMapInfMapper frchseMchntMapMapper; 
 	private MchntAuditInfMapper mchntAuditInfMapper;
 	private MenuVersionInfMapper menuVersionInfMapper;
+	
+	private SysLogService sysLogService;
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 	
 	public MenuVersionInfMapper getMenuVersionInfMapper() {
 		return menuVersionInfMapper;
@@ -130,18 +144,24 @@ public class MerchantServiceImpl implements IMerchantService{
 		return mchntMapper.selectByPrimaryKey(mchntCd);
 	}
 	@Override
-	public int update(MchntInf mchnt) {
-		return mchntMapper.updateByPrimaryKeySelective(mchnt);
+	public void update(MchntInf mchnt) {
+		logger.info("=====更新商户信息开始:"+mchnt.getMchntCd());
+		mchntMapper.updateByPrimaryKeySelective(mchnt);
+		//日志
+		sysLogService.add("MerchantServiceImpl.update", "tbl_bkms_mchnt_inf", mchnt, SysLogService.UPDATE);
+		logger.info("=====更新商户信息结束:"+mchnt.getMchntCd());
 	}
 	
 	public int del(int id){
 		return mchntMapper.deleteByPrimaryKey(id);
 	}
 	
-	public int add(MchntInf mchnt, String frchseCd, String passwd){
+	public void add(MchntInf mchnt, String frchseCd, String passwd){
+		logger.info("=====添加商户开始:"+mchnt.getMchntCd());
 		//用户名检测
 		int num = mchntMapper.isUserIdExisted(mchnt);
 		if (num > 0) {
+			logger.info("=====手机号已被注册:"+mchnt.getUserId());
 			throw new BusinessException("手机号已被注册");
 		}
 		//添加商户信息
@@ -173,19 +193,27 @@ public class MerchantServiceImpl implements IMerchantService{
 		frchseMchntMap.setFrchseCd(frchseCd);
 		frchseMchntMap.setMchntCd(mchnt.getMchntCd());
 		frchseMchntMapMapper.insert(frchseMchntMap);
-		return 0;
+		//日志
+		sysLogService.add("MerchantServiceImpl.add", "tbl_bkms_mchnt_inf", mchnt, SysLogService.INSERT);
+		logger.info("=====添加商户结束:"+mchnt.getMchntCd());
 	}
 	@Override
 	public void resetPwd(MchntInf mchnt, String oldPwd, String newPwd) {
+		logger.info("=====修改密码开始:"+mchnt.getMchntCd());
 		UserInf user = userMapper.selectByPrimaryKey(mchnt.getUserId());
 		if(!(new MD5().getMD5Str(oldPwd)).equals(user.getPasswd())) {
+			logger.info("=====旧密码不正确");
 			throw new BusinessException("旧密码不正确");
 		}
 		if(oldPwd.equals(newPwd)) {
+			logger.info("=====新旧密码不能相同");
 			throw new BusinessException("新旧密码不能相同");
 		}
 		user.setPasswd(new MD5().getMD5Str(newPwd));
 		userMapper.updateByPrimaryKeySelective(user);
+		//日志
+		sysLogService.add("MerchantServiceImpl.resetPwd", "tbl_bkms_user_inf", user, SysLogService.UPDATE);
+		logger.info("=====修改密码结束:"+mchnt.getMchntCd());
 		
 	}
 }

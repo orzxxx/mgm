@@ -13,11 +13,11 @@ public interface IMerchantService {
 
 	public abstract MchntInf get(String mchntCd);
 
-	public abstract int update(MchntInf mchnt);
+	public abstract void update(MchntInf mchnt);
 	
 	public int del(int id);
 	
-	public int add(MchntInf mchnt, String frchseCd, String passwd);
+	public void add(MchntInf mchnt, String frchseCd, String passwd);
 
 	public List<MchntInf> selectMchntByFrchseCd(String frchseCd, String mchntName, Page page) throws Exception;
 

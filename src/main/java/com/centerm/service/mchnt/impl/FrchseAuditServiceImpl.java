@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+import org.omg.CORBA.FREE_MEM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +18,25 @@ import com.centerm.model.mchnt.FrchseAuditInf;
 import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.mchnt.FrchseMchntMapInf;
 import com.centerm.service.mchnt.IFrchseAuditServiceImpl;
+import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.DateUtils;
 
 @Service("frchseAuditService")
 @Transactional
 public class FrchseAuditServiceImpl implements IFrchseAuditServiceImpl{
+	
+	private Logger logger = Logger.getLogger(this.getClass());
+	
+	private SysLogService sysLogService;
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 
 	private FrchseAuditInfMapper frchseAuditMapper;
 	
@@ -64,16 +79,21 @@ public class FrchseAuditServiceImpl implements IFrchseAuditServiceImpl{
 		return frchseAuditMapper.deleteByPrimaryKey(id);
 	}
 	
-	public int add(FrchseAuditInf frchseAudit){
+	public void add(FrchseAuditInf frchseAudit){
+		logger.info("=====关联申请开始:"+frchseAudit.getFrchseCd());
 		//先删除
 		frchseAuditMapper.deleteByMchntCd(frchseAudit.getMchntCd());
 		frchseAudit.setUuid(UUID.randomUUID().toString());
 		frchseAudit.setSubmitTime(DateUtils.getCurrentDate());
 		frchseAudit.setAuditStatus(2);
-		return frchseAuditMapper.insert(frchseAudit);
+		frchseAuditMapper.insert(frchseAudit);
+		//日志
+		sysLogService.addInfo("FrchseAuditServiceImpl.add", "提交关联申请:"+frchseAudit.getFrchseCd());
+		logger.info("=====关联申请结束:"+frchseAudit.getFrchseCd());
 	}
 	
-	public int update(FrchseAuditInf frchseAudit){
+	public void update(FrchseAuditInf frchseAudit){
+		logger.info("=====关联审核开始:"+frchseAudit.getMchntCd());
 		//查找总部信息
 		FrchseInf frchse = frchseMapper.selectByPrimaryKey(frchseAudit.getFrchseCd());
 		//修改关联审核
@@ -87,9 +107,16 @@ public class FrchseAuditServiceImpl implements IFrchseAuditServiceImpl{
 			fmmi.setStatus(0);
 			fmmi.setUuid(UUID.randomUUID().toString());
 			frchseMchntMapMapper.insert(fmmi);
-			return frchseAuditMapper.updateByPrimaryKeySelective(frchseAudit);
+			frchseAuditMapper.updateByPrimaryKeySelective(frchseAudit);
 		}
-		return 0;
+		//日志
+		sysLogService.add("FrchseAuditServiceImpl.update", "tbl_bkms_frchse_mchnt_audit_inf", frchseAudit, SysLogService.UPDATE);
+		if (frchseAudit.getAuditStatus() == 1) {
+			logger.info("=====关联审核通过");
+		} else {
+			logger.info("=====关联审核不通过");
+		}
+		logger.info("=====关联审核结束:"+frchseAudit.getMchntCd());
 	}
 	@Override
 	public FrchseAuditInf getByMchntCd(String mchntCd) {

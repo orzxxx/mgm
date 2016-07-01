@@ -39,6 +39,13 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	
 	private SysLogService sysLogService;
 	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 	public ProductAttrInfMapper getProductAttrMapper() {
 		return productAttrMapper;
 	}
@@ -53,14 +60,6 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	public void setProductAttrTypeMapper(
 			ProductAttrTypeInfMapper productAttrTypeMapper) {
 		this.productAttrTypeMapper = productAttrTypeMapper;
-	}
-	
-	public SysLogService getSysLogService() {
-		return sysLogService;
-	}
-	@Autowired
-	public void setSysLogService(SysLogService sysLogService) {
-		this.sysLogService = sysLogService;
 	}
 	public InventoryInfMapper getInventoryMapper() {
 		return inventoryMapper;
@@ -139,6 +138,9 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		}
 		//日志
 		sysLogService.add("MenuServiceImpl.add", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.INSERT);
+		if (productAttrTypes != null && productAttrTypes.size() != 0) {
+			sysLogService.add("MenuServiceImpl.add", new String[]{"tbl_bkms_product_attr_type_inf","tbl_bkms_product_attr_inf"}, productAttrTypes, SysLogService.INSERT);
+		}
 		logger.info("=====添加单品结束:"+menu.getProductId());
 	}
 	
@@ -171,6 +173,9 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		}
 		//日志
 		sysLogService.add("MenuServiceImpl.update", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.UPDATE);
+		if (productAttrTypes != null && productAttrTypes.size() != 0) {
+			sysLogService.add("MenuServiceImpl.update", new String[]{"tbl_bkms_product_attr_type_inf","tbl_bkms_product_attr_inf"}, productAttrTypes, SysLogService.INSERT, "覆盖旧属性");
+		}
 		logger.info("=====修改单品结束:"+menu.getProductId());
 	}
 }
