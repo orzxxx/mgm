@@ -3,7 +3,6 @@ package com.centerm.service.mchnt;
 import java.util.List;
 
 import com.centerm.base.Page;
-import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.mchnt.MchntInf;
 
 public interface IMerchantService {

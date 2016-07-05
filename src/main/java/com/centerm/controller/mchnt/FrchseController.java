@@ -2,7 +2,6 @@ package com.centerm.controller.mchnt;
 
 
 
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,13 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.centerm.base.Constant;
-import com.centerm.base.Page;
 import com.centerm.model.mchnt.FrchseInf;
-import com.centerm.model.mchnt.MchntInf;
 import com.centerm.model.sys.LoginUser;
 import com.centerm.service.mchnt.IFrchseServiceImpl;
 

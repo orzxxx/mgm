@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
-import com.centerm.model.menu.ComboInf;
 import com.centerm.model.prom.PromotionInf;
 import com.centerm.service.prom.IPromotionServiceImpl;
 import com.centerm.utils.ImageUtils;

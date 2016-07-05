@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.centerm.base.Page;
 import com.centerm.dao.prom.PromotionInfMapper;
-import com.centerm.dao.sys.ParamInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.prom.PromotionInf;
 import com.centerm.service.prom.IPromotionServiceImpl;

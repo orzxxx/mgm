@@ -22,7 +22,6 @@ import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.ComboInf;
-import com.centerm.model.menu.MenuInf;
 import com.centerm.service.menu.IComboServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.ImageUtils;

@@ -2,7 +2,6 @@ package com.centerm.service.sys.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +20,9 @@ import com.centerm.exception.BusinessException;
 import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.model.mchnt.MchntInf;
-import com.centerm.model.menu.MenuTypeInf;
 import com.centerm.model.menu.MenuVersionInf;
 import com.centerm.model.sys.FunctionInf;
 import com.centerm.model.sys.LoginUser;
-import com.centerm.model.sys.ParamInf;
 import com.centerm.model.sys.RoleInf;
 import com.centerm.model.sys.SysMenuInf;
 import com.centerm.model.sys.UserInf;

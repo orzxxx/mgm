@@ -1,7 +1,6 @@
 package com.centerm.service.menu;
 
 import java.util.List;
-import java.util.Map;
 
 import com.centerm.base.Page;
 import com.centerm.model.menu.MenuTypeInf;

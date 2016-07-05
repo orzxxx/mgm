@@ -1,4 +1,5 @@
 requirejs.config({
+	urlArgs: "v=" +  4,
 	baseUrl:contextPath+"/",
 	
     paths: {

@@ -12,7 +12,7 @@ public interface IParamServiceImpl {
 	
 	public int add(ParamInf param);
 	
-	public int update(ParamInf param);
+	public void update(ParamInf param);
 	
 	public ParamInf get(ParamInf param) throws Exception;
 }

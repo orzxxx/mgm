@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,18 @@ import com.centerm.utils.BeanUtil;
 @Service("paramService")
 @Transactional
 public class ParamServiceImpl implements IParamServiceImpl{
+	
+	private Logger logger = Logger.getLogger(this.getClass());
+	
+	private SysLogService sysLogService;
+	
+	public SysLogService getSysLogService() {
+		return sysLogService;
+	}
+	@Autowired
+	public void setSysLogService(SysLogService sysLogService) {
+		this.sysLogService = sysLogService;
+	}
 
 	private ParamInfMapper paramMapper;
 
@@ -62,7 +75,11 @@ public class ParamServiceImpl implements IParamServiceImpl{
 		return paramMapper.insert(param);
 	}
 	
-	public int update(ParamInf param){
-		return paramMapper.updateByPrimaryKeySelective(param);
+	public void update(ParamInf param){
+		logger.info("=====修改参数开始:"+param.getMchntCd());
+		paramMapper.updateByPrimaryKeySelective(param);
+		//日志
+		sysLogService.add("ParamServiceImpl.update", "tbl_bkms_mchnt_param_inf", param, SysLogService.UPDATE);
+		logger.info("=====修改参数结束:"+param.getMchntCd());
 	}
 }

@@ -2,7 +2,6 @@ package com.centerm.controller.mchnt;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.mchnt.FrchseAuditInf;
-import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.service.mchnt.IFrchseAuditServiceImpl;
-import com.centerm.utils.PropertyUtils;
-import com.centerm.utils.StringUtils;
 
 @Controller
 @RequestMapping("mchnt/assoc")

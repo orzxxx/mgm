@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.centerm.base.Constant;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.mchnt.MchntInf;
-import com.centerm.model.menu.MenuInf;
 import com.centerm.model.sys.LoginUser;
 import com.centerm.service.sys.ILoginService;
 

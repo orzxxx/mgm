@@ -99,14 +99,14 @@ define(function () {
 				
 				$.post("report/turnover/listday", param, function(result){
 					if (result.code == 0) {
-	            		var data = result.data;
+	            		var data = result.data.rows;
 	            		/*var total = 0;
 	            		for ( var i in data) {
 							total += data[i].turnover;
 						}
 	            		data.push({payTp:-9, turnover: total});*/
-	            		$('#turnoverDay_pageList').datagrid('loadData',data);  
-	            		if (data.rows == null || data.rows.length == 0) {
+	            		$('#turnoverDay_pageList').datagrid('loadData', result.data);  
+	            		if (data == null || data.length == 0) {
 	            			$.messager.alert("提示", "没有符合条件的记录!");
 	            			return;
 						}

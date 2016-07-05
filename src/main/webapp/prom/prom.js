@@ -357,8 +357,8 @@ define(function () {
 						}
 					}
 		    		//赋值
-		    		menu.taste = menu.taste.replace(/\|/g, ",");
-		    		menu.specifications = menu.specifications.replace(/\|/g, ",");
+		    		//menu.taste = menu.taste.replace(/\|/g, ",");
+		    		//menu.specifications = menu.specifications.replace(/\|/g, ",");
 		    		var inventory = menu.inventory.inventory;
 					if (inventory == "-1") {
 						inventory = "无限制";

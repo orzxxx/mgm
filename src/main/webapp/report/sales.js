@@ -85,7 +85,7 @@ define(function () {
 						return value;
 					}},
 					{field:'sales',title:'销量',width:150,sortable:true,align:'center'},
-					{field:'amount',title:'总价(元)',width:150,sortable:true,align:'center',formatter:function(value, rec){
+					{field:'amount',title:'总金额(元)',width:150,sortable:true,align:'center',formatter:function(value, rec){
 						return value.toFixed(2);
 					}}
 				]],

@@ -11,10 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.centerm.base.Page;
 import com.centerm.dao.menu.InventoryInfMapper;
-import com.centerm.dao.menu.ProductAttrInfMapper;
-import com.centerm.dao.menu.ProductAttrTypeInfMapper;
 import com.centerm.dao.template.MenuTemplateInfMapper;
-import com.centerm.dao.template.MenuTypeTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTypeTemplateInfMapper;
 import com.centerm.exception.BusinessException;
