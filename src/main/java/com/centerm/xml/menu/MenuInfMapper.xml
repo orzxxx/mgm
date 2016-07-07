@@ -32,6 +32,49 @@
     <id column="product_id" property="productId" jdbcType="VARCHAR" />
     <result column="product_name" property="productName" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="count"  resultType="int" parameterType="com.centerm.model.menu.MenuInf">
+	select count(*)
+	from tbl_bkms_menu_inf a
+	<where>
+	<if test="productId != null and productId != ''">
+		a.product_id = #{productId}
+	</if>
+	<if test="productName != null and productName != ''">
+		AND product_name like '%${productName}%'
+	</if>
+	<if test="menutpId != null and menutpId != ''">
+		AND menutp_id = #{menutpId}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND a.mchnt_cd = #{mchntCd}
+	</if>
+	<if test="price != null and price != ''">
+		AND price = #{price}
+	</if>
+	<if test="pictureLink != null and pictureLink != ''">
+		AND picture_link = #{pictureLink}
+	</if>
+	<if test="productDetail != null and productDetail != ''">
+		AND product_detail = #{productDetail}
+	</if>
+	<if test="taste != null and taste != ''">
+		AND taste = #{taste}
+	</if>
+	<if test="status != null and status != '' or status == 0">
+		AND status = #{status}
+	</if>
+	<if test="priority != null and priority != ''">
+		AND priority = #{priority}
+	</if>
+	<if test="packingBoxNum != null and packingBoxNum != ''">
+		AND packing_box_num = #{packingBoxNum}
+	</if>
+	<if test="specifications != null and specifications != ''">
+		AND specifications = #{specifications}
+	</if>
+	</where>
+	order by priority
+</select>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Model_Column_List" />

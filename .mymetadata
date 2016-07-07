@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="mgm_test"
+  name="mgm"
   id="myeclipse.1465720588879"
   context-root="/mgm"
-  j2ee-spec="1.7"
+  j2ee-spec="6.0"
   archive="mgm_test.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />

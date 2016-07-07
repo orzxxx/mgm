@@ -15,6 +15,7 @@ import com.centerm.dao.template.MenuTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTypeTemplateInfMapper;
 import com.centerm.exception.BusinessException;
+import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.template.MenuTemplateInf;
@@ -80,7 +81,9 @@ public class MenuTemplateServiceImpl implements IMenuTemplateServiceImpl{
 	public List<MenuTemplateInf> list(MenuTemplateInf menu, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
-		return menuTemplateMapper.query(map);
+		List<MenuTemplateInf> result = menuTemplateMapper.query(map);
+		page.setTotal(menuTemplateMapper.count(menu));
+		return result;
 	}
 	
 	public void del(MenuTemplateInf menu){

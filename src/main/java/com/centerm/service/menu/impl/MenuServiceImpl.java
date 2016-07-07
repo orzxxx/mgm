@@ -90,7 +90,9 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	public List<MenuInf> list(MenuInf menu, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
-		return menuMapper.query(map);
+		List<MenuInf> result = menuMapper.query(map);
+		page.setTotal(menuMapper.count(menu));
+		return result;
 	}
 	
 

@@ -7,4 +7,6 @@ public interface MenuTemplateInfMapper extends BaseMapper<MenuTemplateInf>{
 	public int queryMaxPriority(String mchntCd);
 	
 	public int isNameExisted(MenuTemplateInf menu);
+	
+	public int count(MenuTemplateInf menu);
 }
