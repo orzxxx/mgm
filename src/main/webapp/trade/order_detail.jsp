@@ -2,7 +2,7 @@
 <script type="text/javascript">
 </script>
 <div>
-	<form method="post" id="order_form" class="easyui-form" data-options="novalidate:true" >
+	<form method="post" id="order_form" class="easyui-form info_from" data-options="novalidate:true" >
 		<table class="table_info" border="0">
 		<tr>
 			<td width="100px;">
@@ -14,7 +14,7 @@
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="orderNo"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="orderNo"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		
@@ -27,7 +27,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="pseq" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="pseq" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -39,7 +39,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="operId" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="operId" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -51,7 +51,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="transdate" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="transdate" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -63,7 +63,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="transtime" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="transtime" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +75,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="stdtrnsamt" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="stdtrnsamt" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -87,7 +87,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="payTp" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="payTp" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -99,7 +99,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="trnsflag" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="trnsflag" style="width:320px;" readonly unselectable="on"/>
 			</td>
 		</tr>
 		<tr>
@@ -111,7 +111,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<textarea rows="10" type="text" name="orderDetail" style="width:320px;" disabled="disabled"></textarea>
+				<textarea rows="10" type="text" name="orderDetail" style="width:320px;" readonly unselectable="on"></textarea>
 			</td>
 		</tr>
 		</table>

@@ -6,9 +6,24 @@ requirejs(['acct'],function  (acct) {
 
 </script>
 <div>
-	<form method="post" id="acctInfo" class="easyui-form" data-options="novalidate:true" >
+	<form method="post" id="acctInfo" class="easyui-form info_from" data-options="novalidate:true" >
 		<input id="acctInfo_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0" style="width:700px;">
+		<tr>
+			<td width="100px;">
+				<label>
+					商户编号:
+				</label>
+			</td>
+			<td class="tdspace">
+			</td>
+			<td>
+				<span style="width:320px;"></span>
+				<input type="text" name="mchntCd"  style="width:320px;" readonly unselectable="on"/>
+			</td>
+			<td class="hintspace">
+			</td>
+		</tr>
 		<tr>
 			<td width="100px;">
 				<label>
@@ -19,7 +34,7 @@ requirejs(['acct'],function  (acct) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="userId"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userId"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -34,7 +49,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="mchntName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -48,7 +63,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -62,7 +77,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="idCard" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -76,7 +91,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="email" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="email" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -90,7 +105,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -104,7 +119,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="license" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="license" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -118,7 +133,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="inAcct" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="inAcct" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -132,7 +147,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="alipayNo" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="alipayNo" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -146,7 +161,7 @@ requirejs(['acct'],function  (acct) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="wechatNo" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="wechatNo" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>

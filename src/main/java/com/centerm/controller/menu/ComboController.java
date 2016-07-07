@@ -78,9 +78,9 @@ public class ComboController {
 	
 	@RequestMapping("/del")
 	@ResponseBody()
-	public Object del(String productId) throws Exception {
-		ComboInf combo = new ComboInf();
-		combo.setProductId(productId);
+	public Object del(@ModelAttribute("comboInf") ComboInf combo) throws Exception {
+		//ComboInf combo = new ComboInf();
+		//combo.setProductId(productId);
 		combo.setStatus(-1);
 		comboServiceImpl.del(combo);
 		return null;

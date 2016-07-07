@@ -146,7 +146,7 @@ public class LoginServiceImpl implements ILoginService {
 		}*/
 		RoleInf role = new RoleInf();
 		if (user.getRole().equals("superadmin")) {
-			userInfo.setUserId("0");
+			userInfo.setUserId("admin");
 			userInfo.setUserName("超级管理员");
 			role.setRoleId("c888cf40-ad23-409b-9ac0-c3d525c37cde");
 		}else if(user.getRole().equals("merchant")){

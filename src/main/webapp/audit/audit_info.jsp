@@ -6,7 +6,7 @@ requirejs(['audit-info'],function  (audit) {
 
 </script>
 <div>
-	<form method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" >
+	<form method="post" id="auditInfo" class="easyui-form info_from" data-options="novalidate:true" >
 		<input id="auditInfo_mchntCd" type="hidden" name="mchntCd">
 		<table class="table_info" border="0" style="width:700px;">
 		<tr>
@@ -19,7 +19,7 @@ requirejs(['audit-info'],function  (audit) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="userId"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userId"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -34,7 +34,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="mchntName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -48,7 +48,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -62,7 +62,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="idCard" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -76,7 +76,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="email" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="email" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -90,7 +90,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -104,7 +104,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="license" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="license" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -118,7 +118,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="inAcct" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="inAcct" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -132,7 +132,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="alipayNo" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="alipayNo" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -146,7 +146,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="wechatNo" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="wechatNo" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>

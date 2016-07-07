@@ -70,7 +70,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input id="prom_productName" type="text" name="productName" readonly="readonly" style="width:180px;"/>
+					<input id="prom_productName" type="text" name="productName" readonly="readonly" style="width:180px;border:0px;" unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>				
@@ -84,7 +84,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="menutpName" readonly="readonly"  style="width:180px;"/>
+					<input type="text" name="menutpName" readonly="readonly"  style="width:180px;border:0px;" unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>			
@@ -98,7 +98,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="price" readonly="readonly" style="width:180px;"/>
+					<input type="text" name="price" readonly="readonly" style="width:180px;border:0px;" unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>			
@@ -112,7 +112,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="inventory" readonly="readonly" style="width:180px;"/>
+					<input type="text" name="inventory" readonly="readonly" style="width:180px;border:0px;" unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>				
@@ -153,7 +153,7 @@
 				<td class="tdspace" valign="top">
 				</td>
 				<td>
-					<textarea rows="5" name="productDetail" readonly="readonly" style="width:180px;"></textarea>
+					<textarea rows="5" name="productDetail" readonly="readonly" style="width:180px;border:0px;outline: 0px;" unselectable="on"></textarea>
 				</td>
 				<td class="hintspace">
 				</td>			

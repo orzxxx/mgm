@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.centerm.base.Page;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.prom.PromotionInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.prom.PromotionInf;
@@ -23,6 +24,16 @@ public class PromotionServiceImpl implements IPromotionServiceImpl{
 	private Logger logger = Logger.getLogger(this.getClass());
 	
 	private SysLogService sysLogService;
+	
+	private MenuVersionInfMapper menuVersionMapper;
+	
+	public MenuVersionInfMapper getMenuVersionMapper() {
+		return menuVersionMapper;
+	}
+	@Autowired
+	public void setMenuVersionMapper(MenuVersionInfMapper menuVersionMapper) {
+		this.menuVersionMapper = menuVersionMapper;
+	}
 	
 	public SysLogService getSysLogService() {
 		return sysLogService;
@@ -48,12 +59,13 @@ public class PromotionServiceImpl implements IPromotionServiceImpl{
 		return promotionMapper.findPromotionProducts(map);
 	}
 	
-	public void del(String id){
-		logger.info("=====删除活动单品开始:"+id);
-		promotionMapper.deleteByPrimaryKey(id);
+	public void del(PromotionInf promotion){
+		logger.info("=====删除活动单品开始:"+promotion.getProductId());
+		promotionMapper.deleteByPrimaryKey(promotion.getProductId());
+		menuVersionMapper.versionIncrement(promotion.getMchntCd());//菜单版本自增
 		//日志
-		sysLogService.add("PromotionServiceImpl.del", "tbl_bkms_promotion_inf", id, SysLogService.DELETE);
-		logger.info("=====删除活动单品结束:"+id);
+		sysLogService.add("PromotionServiceImpl.del", "tbl_bkms_promotion_inf", promotion.getProductId(), SysLogService.DELETE);
+		logger.info("=====删除活动单品结束:"+promotion.getProductId());
 	}
 	
 	public void add(PromotionInf promotion){
@@ -64,6 +76,7 @@ public class PromotionServiceImpl implements IPromotionServiceImpl{
 			throw new BusinessException("该菜品已添加为促销菜品");
 		}
 		promotionMapper.insert(promotion);
+		menuVersionMapper.versionIncrement(promotion.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("PromotionServiceImpl.add", "tbl_bkms_promotion_inf", promotion, SysLogService.INSERT);
 		logger.info("=====添加活动单品结束:"+promotion.getProductId());
@@ -72,6 +85,7 @@ public class PromotionServiceImpl implements IPromotionServiceImpl{
 	public void update(PromotionInf promotion){
 		logger.info("=====更新活动单品开始:"+promotion.getProductId());
 		promotionMapper.updateByPrimaryKeySelective(promotion);
+		menuVersionMapper.versionIncrement(promotion.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("PromotionServiceImpl.update", "tbl_bkms_promotion_inf", promotion, SysLogService.UPDATE);
 		logger.info("=====更新活动单品结束:"+promotion.getProductId());

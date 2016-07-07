@@ -8,7 +8,7 @@ import com.centerm.model.menu.MenuTypeInf;
 public interface IMenuTypeServiceImpl {
 	public List<MenuTypeInf> list(MenuTypeInf menuType, Page page) throws Exception;
 	
-	public void del(int menutpId);
+	public void del(MenuTypeInf menuType);
 	
 	public void add(MenuTypeInf menuType);
 	

@@ -6,6 +6,7 @@
     <id column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
     <result column="terminal_sn" property="terminalSn" jdbcType="VARCHAR" />
     <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     terminal_cd, mchnt_cd, terminal_sn, date
@@ -18,24 +19,29 @@
       and mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
   </select>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
-	select
-	<include refid="Base_Column_List" />
-	from tbl_bkms_terminal_bind_inf
+	SELECT
+	a.terminal_cd, a.mchnt_cd, a.terminal_sn, a.date, b.user_id
+	FROM tbl_bkms_terminal_bind_inf a
+	JOIN tbl_bkms_mchnt_inf b
+	ON a.mchnt_cd = b.mchnt_cd
 	<where>
 	<if test="terminalSn != null and terminalSn != ''">
-		 terminal_sn like #{terminalSn}
+		 a.terminal_sn like #{terminalSn}
 	</if>
 	<if test="date != null and date != ''">
-		AND date = #{date}
+		AND a.date = #{date}
 	</if>
 	<if test="terminalCd != null and terminalCd != ''">
-		AND terminal_cd like #{terminalCd}
+		AND a.terminal_cd like #{terminalCd}
 	</if>
 	<if test="mchntCd != null and mchntCd != ''">
-		AND mchnt_cd like #{mchntCd}
+		AND a.mchnt_cd like #{mchntCd}
+	</if>
+	<if test="userId != null and userId != ''">
+		AND b.user_id like #{userId}
 	</if>
 	</where>
-	order by date desc
+	order by a.date desc
 </select>
   
   <delete id="deleteByPrimaryKey" parameterType="com.centerm.model.mchnt.TerminalBindInf" >

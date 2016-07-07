@@ -18,7 +18,7 @@ requirejs(['audit-status'],function  (audit) {
 				<td valign="top" class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="auditRole" class="easyui-validatebox"  readonly style="width:220px;" disabled="disabled"/>
+					<input type="text" name="auditRole" class="easyui-validatebox"  style="width:220px;" readonly unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>			
@@ -32,7 +32,7 @@ requirejs(['audit-status'],function  (audit) {
 				<td valign="top" class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="auditTime"  class="easyui-validatebox"  readonly style="width:220px;" disabled="disabled"/>
+					<input type="text" name="auditTime"  class="easyui-validatebox"  style="width:220px;" readonly unselectable="on"/>
 				</td>
 				<td class="hintspace">
 				</td>			
@@ -46,7 +46,7 @@ requirejs(['audit-status'],function  (audit) {
 				<td valign="top" class="tdspace">
 				</td>
 				<td>
-					<textarea rows="5" name="auditInf" class="easyui-validatebox"   readonly style="width:220px;" disabled="disabled"></textarea>
+					<textarea rows="5" name="auditInf" class="easyui-validatebox"  style="width:220px;" readonly unselectable="on"></textarea>
 				</td>
 				<td class="hintspace">
 				</td>			

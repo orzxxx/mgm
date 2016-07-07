@@ -9,6 +9,6 @@
 				<table id="auditList_pageList"></table>
 		</div>
 		<div id="auditList_toolbar">        
-			<a id="auditList_edit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">审核</a>
+			<a id="auditList_audit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">审核</a>
 		</div>
 </div>

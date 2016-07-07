@@ -19,7 +19,7 @@ requirejs(['packingboxfee'],function  (fee) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="fee_fee" type="text" name="userId" class="easyui-numberbox" 
+				<input id="fee_fee" type="text" name="userId" class="easyui-numberbox" maxlength="5"
 				data-options="required:true,precision:2" style="width:180px;"/>
 				<span></span>
 			</td>

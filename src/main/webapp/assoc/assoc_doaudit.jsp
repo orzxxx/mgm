@@ -5,7 +5,7 @@
 <div>
 	<div id="assocAudit_tab" class="easyui-tabs" >   
 	    <div title="基础信息" style="padding:20px;">   
-	    	<form id="assocAudit_form" method="post" id="auditInfo" class="easyui-form" data-options="novalidate:true" >
+	    	<form id="assocAudit_form" method="post" id="auditInfo" class="easyui-form info_from" data-options="novalidate:true" >
 				<table class="table_info" border="0" style="width:500px;">
 				<tr>
 					<td width="120px;">
@@ -17,7 +17,7 @@
 					</td>
 					<td>
 						<span style="width:320px;"></span>
-						<input type="text" name="userId"  style="width:320px;" disabled="disabled"/>
+						<input type="text" name="userId"  style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -32,7 +32,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="mchntName" style="width:320px;" disabled="disabled"/>
+						<input type="text" name="mchntName" style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -46,7 +46,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="userName" style="width:320px;" disabled="disabled"/>
+						<input type="text" name="userName" style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -60,7 +60,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="idCard" style="width:320px;" disabled="disabled"/>
+						<input type="text" name="idCard" style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -74,7 +74,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="email" style="width:320px;" disabled="disabled"/>
+						<input type="text" name="email" style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -88,7 +88,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="mchntAddr" style="width:320px;" disabled="disabled"/>
+						<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
 					</td>
 					<td class="hintspace">
 					</td>

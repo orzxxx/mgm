@@ -8,8 +8,18 @@ public class TerminalBindInf{
     private String terminalCd;
 
     private String mchntCd;
+    
+    private String userId;
 
-    public String getTerminalCd() {
+    public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getTerminalCd() {
         return terminalCd;
     }
 

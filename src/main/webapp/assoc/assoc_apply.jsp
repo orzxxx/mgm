@@ -15,7 +15,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 		<br/>
 		<a id="assocApply_add" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn" style="width:100px;">关联申请</a>
 	</div>
-	<form method="post" id="assocInfo" class="easyui-form" style="display:none;" data-options="novalidate:true" >
+	<form method="post" id="assocInfo" class="easyui-form info_from" style="display:none;" data-options="novalidate:true" >
 		<table class="table_info" border="0" style="width:700px;">
 		<tr>
 			<td width="100px;">
@@ -27,7 +27,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="frchseCd"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="frchseCd"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -42,7 +42,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="userId"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userId"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -57,7 +57,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="frchseName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="frchseName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -71,7 +71,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="userName" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -85,7 +85,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="idCard" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -99,7 +99,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" style="width:320px;" disabled="disabled"/>
+				<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -130,7 +130,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="auditRole"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="auditRole"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -145,7 +145,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			</td>
 			<td>
 				<span style="width:320px;"></span>
-				<input type="text" name="auditTime"  style="width:320px;" disabled="disabled"/>
+				<input type="text" name="auditTime"  style="width:320px;" readonly unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -160,7 +160,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<textarea rows="5" name="auditInf" class="easyui-validatebox"   readonly style="width:320px;" disabled="disabled"></textarea>
+				<textarea rows="5" name="auditInf" class="easyui-validatebox"   readonly style="width:320px;" readonly unselectable="on"></textarea>
 			</td>
 			<td class="hintspace">
 			</td>

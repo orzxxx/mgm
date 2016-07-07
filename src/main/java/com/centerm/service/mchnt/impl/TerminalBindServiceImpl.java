@@ -53,6 +53,9 @@ public class TerminalBindServiceImpl implements ITerminalBindServiceImpl{
 		if (!StringUtils.isNull(terminalBind.getTerminalSn())) {
 			terminalBind.setTerminalSn("%"+terminalBind.getTerminalSn()+"%");
 		}
+		if (!StringUtils.isNull(terminalBind.getUserId())) {
+			terminalBind.setUserId("%"+terminalBind.getUserId()+"%");
+		}
 		Map<String,Object> map = BeanUtil.bean2Map(terminalBind);
 		map.put("page", page);
 		return terminalBindMapper.query(map);

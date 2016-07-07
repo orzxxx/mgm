@@ -80,13 +80,13 @@ public class MenuTypeController {
 	
 	@RequestMapping("/del")
 	@ResponseBody()
-	public Object del(String menutpId) throws Exception {
+	public Object del(@ModelAttribute("menuTypeInf") MenuTypeInf menuType) throws Exception {
 		//伪删除
-		MenuTypeInf menuType = new MenuTypeInf();
-		menuType.setMenutpId(menutpId);
+		//MenuTypeInf menuType = new MenuTypeInf();
+		//menuType.setMenutpId(menutpId);
 		menuType.setStatus(-1);
 		
-		menuTypeServiceImpl.update(menuType);
+		menuTypeServiceImpl.del(menuType);
 		return null;
 	}
 	

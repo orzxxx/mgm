@@ -5,7 +5,7 @@
 		});
 </script>
 <div>
-		<form method="post" id="frchseInfo" class="easyui-form">
+		<form method="post" id="frchseInfo" class="easyui-form info_from">
 		<input id="frchseInfo_frchseCd" type="hidden" name="frchseCd">
 		<table class="table_info" border="0">
 		<tr>
@@ -17,7 +17,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userId" class="easyui-numberbox" disabled="disabled"
+				<input type="text" name="userId" class="easyui-numberbox" readonly unselectable="on"
 		 style="width:320px;"/>
 			</td>
 			<td class="hintspace">
@@ -33,7 +33,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="frchseName" maxlength="30" class="easyui-validatebox" disabled="disabled" style="width:320px;"/>
+				<input type="text" name="frchseName" maxlength="30" class="easyui-validatebox" readonly unselectable="on" style="width:320px;"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -47,7 +47,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" maxlength="30" class="easyui-validatebox" disabled="disabled" style="width:320px;"/>
+				<input type="text" name="userName" maxlength="30" class="easyui-validatebox" readonly unselectable="on" style="width:320px;"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -61,7 +61,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" maxlength="30" class="easyui-validatebox" disabled="disabled" style="width:320px;"/>
+				<input type="text" name="idCard" maxlength="30" class="easyui-validatebox" readonly unselectable="on" style="width:320px;"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -75,7 +75,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" maxlength="30" class="easyui-validatebox" disabled="disabled" style="width:320px;"/>
+				<input type="text" name="mchntAddr" maxlength="30" class="easyui-validatebox" readonly unselectable="on" style="width:320px;"/>
 			</td>
 			<td class="hintspace">
 			</td>

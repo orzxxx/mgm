@@ -13,6 +13,7 @@ import com.centerm.dao.menu.ComboDetailInfMapper;
 import com.centerm.dao.menu.ComboInfMapper;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuTypeInfMapper;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.ComboInf;
@@ -40,6 +41,16 @@ public class ComboServiceImpl implements IComboServiceImpl{
 	private GetSequenceService getSequenceService;
 	
 	private SysLogService sysLogService;
+	
+	private MenuVersionInfMapper menuVersionMapper;
+	
+	public MenuVersionInfMapper getMenuVersionMapper() {
+		return menuVersionMapper;
+	}
+	@Autowired
+	public void setMenuVersionMapper(MenuVersionInfMapper menuVersionMapper) {
+		this.menuVersionMapper = menuVersionMapper;
+	}
 	
 	public SysLogService getSysLogService() {
 		return sysLogService;
@@ -98,6 +109,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		//inventoryMapper.deleteByPrimaryKey(combo.getProductId());
 		comboMapper.updateByPrimaryKeySelective(combo);
 		comboDetailMapper.deleteByComboId(combo.getProductId());
+		menuVersionMapper.versionIncrement(combo.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuServiceImpl.del", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.DELETE);
 		logger.info("=====删除套餐开始:"+combo.getProductId());
@@ -146,6 +158,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		inventoryMapper.insert(combo.getInventory());
 		comboDetailMapper.insertbatch(comboDetails);
 		comboMapper.insert(combo);
+		menuVersionMapper.versionIncrement(combo.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("ComboServiceImpl.add", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.INSERT);
 		logger.info("=====添加套餐结束:"+combo.getProductId());
@@ -178,6 +191,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		
 		inventoryMapper.updateByPrimaryKeySelective(combo.getInventory());
 		comboMapper.updateByPrimaryKeySelective(combo);
+		menuVersionMapper.versionIncrement(combo.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("ComboServiceImpl.update", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.UPDATE);
 		logger.info("=====更新套餐结束:"+combo.getProductId());

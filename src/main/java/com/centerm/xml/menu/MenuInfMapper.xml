@@ -158,7 +158,7 @@
      <foreach collection="list" item="item" index="index" separator="," >
         (#{item.productId},#{item.productName},#{item.menutpId},#{item.mchntCd},#{item.price},
         #{item.pictureLink},#{item.productDetail},#{item.taste},#{item.status},
-        #{item.priority},#{item.specifications}, #{packingBoxNum,jdbcType=INTEGER})
+        #{item.priority},#{item.specifications}, #{item.packingBoxNum})
     </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.menu.MenuInf" >

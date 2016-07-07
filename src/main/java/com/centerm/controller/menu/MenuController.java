@@ -70,10 +70,10 @@ public class MenuController {
 	
 	@RequestMapping("/del")
 	@ResponseBody()
-	public Object del(String productId) throws Exception {
+	public Object del(@ModelAttribute("menuInf") MenuInf menu) throws Exception {
 		//伪删除
-		MenuInf menu = new MenuInf();
-		menu.setProductId(productId);
+		//MenuInf menu = new MenuInf();
+		//menu.setProductId(productId);
 		menu.setStatus(-1);
 		
 		menuServiceImpl.del(menu);

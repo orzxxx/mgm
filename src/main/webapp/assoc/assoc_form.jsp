@@ -10,7 +10,7 @@
 		<tr>
 			<td width="100">
 				<label>
-					关联账号
+					总部编号
 				</label>
 			</td>
 			<td class="tdspace">
@@ -44,8 +44,8 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="assocForm_userId" type="text" name="userId" class="easyui-numberbox" readonly="readonly"
-				style="width:260px;"/>
+				<input id="assocForm_userId" type="text" name="userId" class="easyui-numberbox" readonly="readonly" unselectable="on"
+				style="width:260px;border:0px;"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -59,7 +59,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="frchseName" readonly="readonly" maxlength="35" class="easyui-validatebox" style="width:260px;"/>
+				<input type="text" name="frchseName" readonly="readonly" maxlength="35" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -73,7 +73,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" readonly="readonly" maxlength="15" class="easyui-validatebox" style="width:260px;"/>
+				<input type="text" name="userName" readonly="readonly" maxlength="15" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -87,7 +87,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="idCard" readonly="readonly" maxlength="18" class="easyui-validatebox" style="width:260px;"/>
+				<input type="text" name="idCard" readonly="readonly" maxlength="18" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>
@@ -101,7 +101,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" readonly="readonly" maxlength="35" class="easyui-validatebox" style="width:260px;"/>
+				<input type="text" name="mchntAddr" readonly="readonly" maxlength="35" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>

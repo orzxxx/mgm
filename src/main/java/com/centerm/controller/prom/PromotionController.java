@@ -56,8 +56,8 @@ public class PromotionController {
 	
 	@RequestMapping("/del")
 	@ResponseBody()
-	public Object del(String productId) throws Exception {
-		promotionServiceImpl.del(productId);
+	public Object del(@ModelAttribute("promotionInf") PromotionInf promotion) throws Exception {
+		promotionServiceImpl.del(promotion);
 		return null;
 	}
 	

@@ -88,7 +88,7 @@ define(function () {
 		    title: '添加分类',    
 		    width: 350,    
 		    height: 150,    
-		    closed: false,    
+		    closable: false,    
 		    cache: false,    
 		    href: 'menu/menutype_form.jsp',    
 		    modal: true,
@@ -134,7 +134,7 @@ define(function () {
 			    title: '编辑分类',    
 			    width: 350,    
 			    height: 150,    
-			    closed: false,    
+			    closable: false,    
 			    cache: false,    
 			    href: 'menu/menutype_form.jsp',    
 			    modal: true,
@@ -190,6 +190,7 @@ define(function () {
 					}
 					var param = {};
 					param.menutpId = row.menutpId;
+					param.mchntCd = currentMchntCd;
 					$.post("menu/type/del",param,function(result){
 						if (result.code == 0) {
 							$.messager.alert("提示", "删除成功!");

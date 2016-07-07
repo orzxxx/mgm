@@ -27,6 +27,7 @@ define(function () {
 				columns:[[
 				   {field:'terminalSn',title:'SN号',width:150,sortable:true,align:'center'},
 				   {field:'mchntCd',title:'商户号',width:150,sortable:true,align:'center'},
+				   {field:'userId',title:'手机号',width:150,sortable:true,align:'center'},
 					{field:'date',title:'绑定日期',width:150,sortable:true,align:'center',formatter:function(value){
 						return value.substring(0,4)+"/"+value.substring(4,6)+"/"+value.substring(6,8);
 					}},

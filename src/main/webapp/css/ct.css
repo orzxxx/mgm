@@ -107,3 +107,14 @@
 .ct-total0{
 	color: red;
 }
+.info_from table td:first-child{
+	/* text-align:right; */
+}
+.info_from table td input{
+	border: 0px;
+}
+.info_from table td textarea{
+	border: 0px;
+	outline:none;
+	resize:none;
+}

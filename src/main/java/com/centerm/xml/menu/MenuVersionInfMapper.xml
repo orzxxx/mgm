@@ -41,6 +41,11 @@
       </if>
     </trim>
   </insert>
+  <update id="versionIncrement" parameterType="java.lang.String" >
+    update tbl_bkms_menu_version
+    set menu_version = menu_version + 1
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.MenuVersionInf" >
     update tbl_bkms_menu_version
     <set >

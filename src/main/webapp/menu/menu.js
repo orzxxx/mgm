@@ -428,6 +428,7 @@ define(function () {
 					var param = {};
 					
 					param.productId = row.productId;
+					param.mchntCd = currentMchntCd;
 					$.post("menu/menu/del",param,function(result){
 						if (result.code == 0) {
 							$.messager.alert("提示", "删除成功!");

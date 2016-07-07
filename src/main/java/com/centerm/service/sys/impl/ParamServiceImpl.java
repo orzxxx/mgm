@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.centerm.base.Page;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.sys.ParamInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.sys.ParamInf;
@@ -42,6 +43,16 @@ public class ParamServiceImpl implements IParamServiceImpl{
 		this.paramMapper = paramMapper;
 	}
 	
+	private MenuVersionInfMapper menuVersionMapper;
+	
+	public MenuVersionInfMapper getMenuVersionMapper() {
+		return menuVersionMapper;
+	}
+	@Autowired
+	public void setMenuVersionMapper(MenuVersionInfMapper menuVersionMapper) {
+		this.menuVersionMapper = menuVersionMapper;
+	}
+	
 	public List<ParamInf> list(ParamInf param, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(param);
 		map.put("page", page);
@@ -55,6 +66,7 @@ public class ParamServiceImpl implements IParamServiceImpl{
 	public ParamInf get(ParamInf param) throws Exception{
 		ParamInf result = paramMapper.getParam(param);
 		if (result == null) {
+			menuVersionMapper.versionIncrement(param.getMchntCd());//菜单版本自增
 			//未配置则添加
 			if (param.getParam().equals("discount_rate")) {
 				param.setData("10|20160101|20160101");
@@ -79,6 +91,7 @@ public class ParamServiceImpl implements IParamServiceImpl{
 		logger.info("=====修改参数开始:"+param.getMchntCd());
 		paramMapper.updateByPrimaryKeySelective(param);
 		//日志
+		menuVersionMapper.versionIncrement(param.getMchntCd());//菜单版本自增
 		sysLogService.add("ParamServiceImpl.update", "tbl_bkms_mchnt_param_inf", param, SysLogService.UPDATE);
 		logger.info("=====修改参数结束:"+param.getMchntCd());
 	}

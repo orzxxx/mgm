@@ -19,6 +19,7 @@ import com.centerm.dao.mchnt.FrchseMchntMapInfMapper;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuInfMapper;
 import com.centerm.dao.menu.MenuTypeInfMapper;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.menu.ProductAttrInfMapper;
 import com.centerm.dao.menu.ProductAttrTypeInfMapper;
 import com.centerm.dao.template.ProductAttrTypeTemplateInfMapper;
@@ -45,6 +46,16 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 	private GetSequenceService getSequenceService;
 	
 	private SysLogService sysLogService;
+	
+	private MenuVersionInfMapper menuVersionMapper;
+	
+	public MenuVersionInfMapper getMenuVersionMapper() {
+		return menuVersionMapper;
+	}
+	@Autowired
+	public void setMenuVersionMapper(MenuVersionInfMapper menuVersionMapper) {
+		this.menuVersionMapper = menuVersionMapper;
+	}
 
 	public GetSequenceService getGetSequenceService() {
 		return getSequenceService;
@@ -147,13 +158,14 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		param.put("needCombo", needCombo);
 		return menuTypeMapper.tree(param);
 	}	
-	
-	public void del(int id){
-		logger.info("=====删除分类开始:"+id);
-		menuTypeMapper.deleteByPrimaryKey(id);
+	//
+	public void del(MenuTypeInf menuType){
+		logger.info("=====删除分类开始:"+menuType.getMenutpId());
+		menuTypeMapper.updateByPrimaryKeySelective(menuType);
+		menuVersionMapper.versionIncrement(menuType.getMchntCd());//菜单版本自增
 		//日志
-		sysLogService.add("MenuTypeServiceImpl.del", "tbl_bkms_menu_type_inf", id, SysLogService.DELETE);
-		logger.info("=====删除分类结束:"+id);
+		sysLogService.add("MenuTypeServiceImpl.del", "tbl_bkms_menu_type_inf", menuType.getMenutpId(), SysLogService.UPDATE);
+		logger.info("=====删除分类结束:"+menuType.getMenutpId());
 	}
 	
 	public void add(MenuTypeInf menuType){
@@ -169,6 +181,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		menuType.setPriority(maxPriority+1);
 		logger.info("=====分类优先级:"+menuType.getPriority());
 		menuTypeMapper.insert(menuType);
+		menuVersionMapper.versionIncrement(menuType.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuTypeServiceImpl.add", "tbl_bkms_menu_type_inf", menuType, SysLogService.INSERT);
 		logger.info("=====添加分类结束:"+menuType.getMenutpId());
@@ -182,6 +195,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 			logger.info("=====分类型名已存在:"+menuType.getMenutpName());
 			throw new BusinessException("分类名已存在");
 		}
+		menuVersionMapper.versionIncrement(menuType.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuTypeServiceImpl.update", "tbl_bkms_menu_type_inf", menuType, SysLogService.UPDATE);
 		menuTypeMapper.updateByPrimaryKeySelective(menuType);
@@ -310,6 +324,7 @@ public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
 		if (inventorys.size() != 0) {
 			inventoryMapper.insertbatch(inventorys);
 		}
+		menuVersionMapper.versionIncrement(mchntCd);//菜单版本自增
 		logger.info("=====导入单品结束");
 	}
 }

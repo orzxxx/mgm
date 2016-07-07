@@ -90,7 +90,7 @@ define(function () {
 			var dlg = $('<div/>').dialog({    
 			    title: '审核界面',    
 			    width: 600,    
-			    height: 350,    
+			    height: 400,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'assoc/assoc_doaudit.jsp',    

@@ -176,6 +176,14 @@ define(function () {
 						for ( var i in data.rows) {
 							data.rows[i] = $.extend({}, data.rows[i].product, data.rows[i]);
 						}
+						data.rows.sort(function(a, b){
+							if (a.status == b.status) {
+								return a.inventory - b.inventory;
+							} else {
+								return a.status - b.status;
+							}
+							
+						});
 	            		$('#prom_pageList').datagrid('loadData',data);  
 					} else {
 						$.messager.alert("提示", result.message);
@@ -470,6 +478,7 @@ define(function () {
 				if (r){
 					var param = {};
 					param.productId = row.productId;
+					param.mchntCd = currentMchntCd;
 					$.post(contextPath+"/prom/prom/del",param,function(result){
 						if (result.code == 0) {
 							$.messager.alert("提示", "删除成功!");

@@ -29,7 +29,12 @@
 								<td>
 									<input type="text" name="terminalSn" maxlength="20" style="width:200px;">
 								</td>
-								
+								<td style="padding-left: 20px;">
+								</td>
+								<td width="100px">
+								</td>
+								<td width="290px">
+								</td>
 								<td class="hintspace"></td>
 							</tr>
 							<tr>
@@ -44,13 +49,24 @@
 								<td style="padding-left: 20px;">
 								</td>
 								<td width="60px">
+									<label>
+										手机号:
+									</label>
+								</td>
+								<td>
+									<%--<a id="terminal_query" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">查询</a>
+									<a id="terminal_clear" href="javascript:void(0);" class="easyui-linkbutton ct-rst-btn">重置</a>
+								--%>
+									<input type="text" name="userId" maxlength="20" style="width:200px;">
+								</td>
+								<td style="padding-left: 20px;">
+								</td>
+								<td width="60px">
 								</td>
 								<td>
 									<a id="terminal_query" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">查询</a>
 									<a id="terminal_clear" href="javascript:void(0);" class="easyui-linkbutton ct-rst-btn">重置</a>
 								</td>
-								
-								
 								<td class="hintspace"></td>
 							</tr>
 						</table>

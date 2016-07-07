@@ -98,7 +98,7 @@ define(function () {
 				var dlg = $('<div/>').dialog({    
 				    title: '订单详情',    
 				    width: 500,    
-				    height: 300,    
+				    height: 510,    
 				    closable: false,    
 				    cache: false,    
 				    href: 'trade/order_detail.jsp',    
@@ -111,7 +111,8 @@ define(function () {
 						}
 					}],
 					onLoad : function(){
-						$.post("trade/order/details",{orderNo: row.orderNo},function(result){
+						$("#order_form").form('load', format(row));
+						/*$.post("trade/order/details",{orderNo: row.orderNo},function(result){
 							if (result.code == 0) {
 								initView();
 								var details = result.data;
@@ -119,10 +120,34 @@ define(function () {
 							} else {
 								$.messager.alert("提示", result.message);
 							}
-						}, "json");
+						}, "json");*/
 					}
 				});  
 			}
+		}
+		
+		function format(obj){
+			obj.transdate = obj.transdate.substring(0,4)+"/"+obj.transdate.substring(4,6)+"/"+obj.transdate.substring(6,8);
+			obj.transtime = obj.transtime.substring(0,2)+":"+obj.transtime.substring(2,4)+":"+obj.transtime.substring(4,6);
+			obj.stdtrnsamt = obj.stdtrnsamt.toFixed(2);
+			if ('0'==obj.payTp){obj.payTp =  '现金';}
+ 	  		else if ('1'==obj.payTp){obj.payTp = '银行卡';}
+	  		else if ('2' == obj.payTp){obj.payTp = '拉卡拉扫码';}
+	  		else if ('3' == obj.payTp){obj.payTp = '微信扫码';}
+	  		else if ('4' == obj.payTp){obj.payTp = '支付宝扫码';}
+	  		else if ('5' == obj.payTp){obj.payTp = '微信被扫码';}
+	  		else if ('6' == obj.payTp){obj.payTp = '支付宝被扫码';}
+	  		else {obj.payTp =  '';};
+			
+	  		if ('-1'==obj.trnsflag){obj.trnsflag =  '交易失败';}
+	  		else if ('0' == obj.trnsflag){obj.trnsflag =  '交易初始化';}
+	  		else if ('1' == obj.trnsflag){obj.trnsflag =  '交易成功';}
+	  		else if ('2' == obj.trnsflag){obj.trnsflag =  '交易撤销';}
+	  		else if ('3' == obj.trnsflag){obj.trnsflag =  '退单成功';}
+	  		else {obj.trnsflag =  '';};
+	  		
+	  		return obj;
+	  		
 		}
 		
 		function initView(){

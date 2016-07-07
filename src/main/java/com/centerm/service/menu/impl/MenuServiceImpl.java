@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuInfMapper;
+import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.menu.ProductAttrInfMapper;
 import com.centerm.dao.menu.ProductAttrTypeInfMapper;
 import com.centerm.exception.BusinessException;
@@ -39,6 +40,15 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	
 	private SysLogService sysLogService;
 	
+	private MenuVersionInfMapper menuVersionMapper;
+	
+	public MenuVersionInfMapper getMenuVersionMapper() {
+		return menuVersionMapper;
+	}
+	@Autowired
+	public void setMenuVersionMapper(MenuVersionInfMapper menuVersionMapper) {
+		this.menuVersionMapper = menuVersionMapper;
+	}
 	public SysLogService getSysLogService() {
 		return sysLogService;
 	}
@@ -102,9 +112,11 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		productAttrMapper.deleteByProductId(menu.getProductId());
 		productAttrTypeMapper.deleteByProductId(menu.getProductId());
 		//inventoryMapper.deleteByPrimaryKey(menu.getProductId());
+		menuVersionMapper.versionIncrement(menu.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuServiceImpl.del", new String[]{"tbl_bkms_menu_inf"}, menu, SysLogService.UPDATE);
 		logger.info("=====删除单品结束:"+menu.getProductId());
+		
 	}
 	
 	public void add(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes){
@@ -136,6 +148,7 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			}
 			productAttrMapper.insertbatch(attrs);
 		}
+		menuVersionMapper.versionIncrement(menu.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuServiceImpl.add", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.INSERT);
 		if (productAttrTypes != null && productAttrTypes.size() != 0) {
@@ -171,6 +184,7 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			}
 			productAttrMapper.insertbatch(attrs);
 		}
+		menuVersionMapper.versionIncrement(menu.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuServiceImpl.update", new String[]{"tbl_bkms_menu_inf","tbl_bkms_product_inventory"}, menu, SysLogService.UPDATE);
 		if (productAttrTypes != null && productAttrTypes.size() != 0) {

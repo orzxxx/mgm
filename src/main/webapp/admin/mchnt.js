@@ -24,13 +24,25 @@ define(function () {
 				remoteSort : false,
 				pageList : [ 20, 30 ],
 				frozenColumns:[[
-	                {field:'mchntCd',title:'商户号',width:100,sortable:true}
+	                {field:'mchntCd',title:'商户号',width:90,sortable:true}
 				]],
 				columns:[[
-				    {field:'userId',title:'手机号',width:150,sortable:true,align:'center'},
-					{field:'mchntName',title:'商户名',width:120,sortable:true,align:'center'},
-					{field:'userName',title:'姓名',width:120,sortable:true,align:'center'},
-					{field:'idCard',title:'身份证号',width:150,sortable:true,align:'center'},
+				    {field:'userId',title:'手机号',width:120,sortable:true,align:'center'},
+					{field:'mchntName',title:'商户名',width:140,sortable:true,align:'center'},
+					{field:'userName',title:'姓名',width:100,sortable:true,align:'center'},
+					{field:'idCard',title:'身份证号',width:170,sortable:true,align:'center'},
+					{field:'licenseType',title:'证件类型',width:150,sortable:true,align:'center',formatter:function(value){
+						if (value == "1") {
+							return "营业执照";
+						} else if(value == "2"){
+							return "税务登记证";
+						} else if(value == "3"){
+							return "组织机构代码证";
+						} else {
+							return "";
+						}
+					}},
+					{field:'license',title:'证件号',width:150,sortable:true,align:'center'},
 					{field:'email',title:'邮箱',width:150,sortable:true,align:'center'},
 					{field:'mchntAddr',title:'商户地址',width:200,sortable:true,align:'center'}
 				]],

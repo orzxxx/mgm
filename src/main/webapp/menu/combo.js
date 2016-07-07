@@ -349,6 +349,7 @@ define(function () {
 				if (r){
 					var param = {};
 					param.productId = row.productId;
+					param.mchntCd = currentMchntCd;
 					$.post("menu/combo/del",param,function(result){
 						if (result.code == 0) {
 							$.messager.alert("提示", "删除成功!");
