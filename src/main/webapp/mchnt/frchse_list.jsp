@@ -55,7 +55,7 @@
 		<tr>
 			<td>
 				<label>
-					身份证号:
+					身份证:
 				</label>
 			</td>
 			<td class="tdspace">

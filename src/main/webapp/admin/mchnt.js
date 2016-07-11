@@ -30,7 +30,7 @@ define(function () {
 				    {field:'userId',title:'手机号',width:120,sortable:true,align:'center'},
 					{field:'mchntName',title:'商户名',width:140,sortable:true,align:'center'},
 					{field:'userName',title:'姓名',width:100,sortable:true,align:'center'},
-					{field:'idCard',title:'身份证号',width:170,sortable:true,align:'center'},
+					{field:'idCard',title:'身份证',width:170,sortable:true,align:'center'},
 					{field:'licenseType',title:'证件类型',width:150,sortable:true,align:'center',formatter:function(value){
 						if (value == "1") {
 							return "营业执照";

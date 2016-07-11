@@ -61,7 +61,11 @@ public class LoginController {
 	@ResponseBody
 	public Object register(@ModelAttribute("mchntInf") MchntInf mchnt, @RequestParam("passwd")String passwd, HttpSession session) throws Exception {
 		//地址拼接
-		String district = mchnt.getDistrict().replace("/", "");
+		String district = mchnt.getDistrict().replace("/", "")
+				.replace("北京市北京市", "北京市")
+				.replace("重庆市重庆市", "重庆市")
+				.replace("上海市上海市", "上海市")
+				.replace("天津市天津市", "天津市");
 		String detailedAddress = mchnt.getDetailedAddress();
 		mchnt.setMchntAddr(district+detailedAddress);
 		mchnt.setMobile(mchnt.getUserId());

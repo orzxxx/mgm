@@ -202,6 +202,7 @@ define(function () {
 			"pagination").options.total;
 		if (total >= 10) {
 			$.messager.alert("提示", "最多只能添加10个促销菜品");
+			return;
 		}
 		var dlg = $('<div/>').dialog({    
 		    title: '添加促销菜品',    

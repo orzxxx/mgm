@@ -55,7 +55,7 @@
 		<tr>
 			<td>
 				<label>
-					店名:
+					店铺名称:
 				</label>
 			</td>
 			<td class="tdspace">
@@ -85,7 +85,7 @@
 		<tr>
 			<td>
 				<label>
-					身份证号:
+					身份证:
 				</label>
 			</td>
 			<td class="tdspace">
@@ -115,7 +115,7 @@
 		<tr>
 			<td>
 				<label>
-					区域信息:
+					地区:
 				</label>
 			</td>
 			<td class="tdspace">
