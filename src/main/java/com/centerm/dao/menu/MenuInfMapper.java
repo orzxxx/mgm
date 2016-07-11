@@ -14,6 +14,8 @@ public interface MenuInfMapper extends BaseMapper<MenuInf>{
 	
 	public int insertbatch(List<MenuInf> menus);
 	
+	public List<MenuInf> queryByIds(List<MenuInf> menus);
+	
 	public List<MenuInf> isNamesExisted(Map param);
 	
 	public List<ComboInf> isUsedByCombo(String productId);

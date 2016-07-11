@@ -89,7 +89,10 @@ define(function () {
 						return value.toFixed(2);
 					}}
 				]],
-				toolbar:"#sales_toolbar"
+				toolbar:"#sales_toolbar",
+				rowStyler:function(index,row){
+					return 'background-color:white;';
+				}
 			});
 			//重写翻页事件
 			var pageOpts = $('#sales_pageList').datagrid('getPager').data("pagination").options;

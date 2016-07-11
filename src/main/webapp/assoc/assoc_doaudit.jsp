@@ -130,6 +130,7 @@
 						<textarea rows="5" name="auditInf" class="easyui-validatebox" maxlength="90"  style="width:320px;"></textarea>
 					</td>
 					<td class="hintspace">
+						<tt>*</tt> 
 					</td>
 				</tr>
 				<tr>

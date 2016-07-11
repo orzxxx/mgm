@@ -16,7 +16,7 @@ define(function () {
 		$("#menu_edit").click(edit);
 		$("#menu_query").click(query);
 		$("#menu_clear").click(clearForm);
-		$("#menu_import").click(menuImport);
+		$("#menu_import").click(checkImport);
 	}
 	/**
 	 * 库存输入框切换
@@ -24,8 +24,15 @@ define(function () {
 	function changeInventoryInput(status){
 		if (status == 1) {
 			$("#menu_inventory").numberbox("enable"); 
+			$('#menu_inventory').numberbox({    
+			    required: true
+			});
 		}else if(status == 0){
 			$("#menu_inventory").numberbox("disable"); 
+			$('#menu_inventory').numberbox({    
+			    required: false
+			});
+			$('#menu_inventory').numberbox('validate');
 		}
 	}
 	/**
@@ -311,6 +318,8 @@ define(function () {
 			            })
 					});
 		    		
+		    	}else{
+		    		$('#menu_tab').tabs('select', '基础信息');
 		    	}
 		    }
 			},{
@@ -373,6 +382,8 @@ define(function () {
 					    				}
 					    			}
 					            })
+					    	}else{
+					    		$('#menu_tab').tabs('select', '基础信息');
 					    	}
 						});
 			    	
@@ -450,7 +461,23 @@ define(function () {
 		query();
 	}
 	
+	function checkImport(){
+		//查询关联状态
+		$.post("mchnt/assoc/get",{mchntCd: currentMchntCd},function(result){
+			if (result.code == 0) {
+				if (result.data == null || result.data.auditStatus != "1") {
+					$.messager.alert("提示", "请先关联总部账号,才可导入单品！");
+				} else {
+					menuImport();
+				}
+			} else {
+				$.messager.alert("提示", result.message);
+			}
+		}, "json");
+	}
+	
 	function menuImport(){
+		
 		var dlg = $('<div/>').dialog({    
 		    title: '导入单品',    
 		    width: 500,    

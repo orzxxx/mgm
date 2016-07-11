@@ -1,8 +1,8 @@
 //@ sourceUrl=prom.js
 define(function () {
 	var currentMchntCd = userInfo.mchntCd;
-	var originalPicture;
 	var menuTypes = {};
+	var originalPicture = "images/default_menu.png";
 	function init(){
 		getAllMenuType(currentMchntCd);
 		initButton();
@@ -200,8 +200,8 @@ define(function () {
 	function add(){
 		var total = $('#prom_pageList').datagrid('getPager').data(
 			"pagination").options.total;
-		if (total >= 20) {
-			$.messager.alert("提示", "最多只能添加20个促销菜品");
+		if (total >= 10) {
+			$.messager.alert("提示", "最多只能添加10个促销菜品");
 		}
 		var dlg = $('<div/>').dialog({    
 		    title: '添加促销菜品',    
@@ -245,6 +245,7 @@ define(function () {
 				}
 			}],
 			onLoad : function(){
+				originalPicture = "images/default_menu.png";
 				initForm();
 			}
 		});  
@@ -308,8 +309,8 @@ define(function () {
 					}
 					row.inventory = inventory;
 					row.menutpName = convertMenutpId(row.menutpId);
-					row.taste = row.taste.replace(/\|/g, ",");
-					row.specifications = row.specifications.replace(/\|/g, ",");
+					//row.taste = row.taste.replace(/\|/g, ",");
+					//row.specifications = row.specifications.replace(/\|/g, ",");
 					$("#prom_form").form('load', row);
 					$("#prom_img").attr('src', row.pictureLink).show();
 					originalPicture = $("#prom_img").attr('src');

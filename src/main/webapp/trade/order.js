@@ -127,7 +127,8 @@ define(function () {
 			}
 		}
 		
-		function format(obj){
+		function format(oldobj){
+			var obj = $.extend(true, {}, oldobj);
 			obj.transdate = obj.transdate.substring(0,4)+"/"+obj.transdate.substring(4,6)+"/"+obj.transdate.substring(6,8);
 			obj.transtime = obj.transtime.substring(0,2)+":"+obj.transtime.substring(2,4)+":"+obj.transtime.substring(4,6);
 			obj.stdtrnsamt = obj.stdtrnsamt.toFixed(2);

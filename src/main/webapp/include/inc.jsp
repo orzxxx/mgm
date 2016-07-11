@@ -7,10 +7,13 @@
 <%@ page language="java" import="com.centerm.model.sys.FunctionInf"%>
 <%@ page language="java" import="java.util.*"%>
 <%@ page language="java" import="com.google.gson.*"%>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
+
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";

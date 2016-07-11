@@ -20,6 +20,7 @@ import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
+import com.centerm.model.template.MenuTemplateInf;
 import com.centerm.service.menu.IMenuServiceImpl;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
@@ -90,7 +91,8 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	public List<MenuInf> list(MenuInf menu, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
-		List<MenuInf> result = menuMapper.query(map);
+		List<MenuInf> ids = menuMapper.query(map);
+		List<MenuInf> result = menuMapper.queryByIds(ids);
 		page.setTotal(menuMapper.count(menu));
 		return result;
 	}

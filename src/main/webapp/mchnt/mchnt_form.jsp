@@ -32,7 +32,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntName" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
+				<input type="text" name="mchntName" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'realLength[20]'" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -108,10 +108,10 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="email" maxlength="60" class="easyui-validatebox" data-options="required:true" validType="email" style="width:220px;"/>
+				<input type="text" name="email" maxlength="60" class="easyui-validatebox"  validType="email" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
-				<tt>*</tt>
+				<tt>可选</tt>
 			</td>
 		</tr>
 		<tr>

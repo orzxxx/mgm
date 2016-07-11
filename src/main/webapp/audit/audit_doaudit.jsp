@@ -8,7 +8,7 @@
 	    	<form id="doaudit_form" method="post" id="auditInfo" class="easyui-form info_from" data-options="novalidate:true" >
 				<table class="table_info" border="0" style="width:500px;">
 				<tr>
-					<td width="120px;">
+					<td width="300px;">
 						<label>
 							手机号:
 						</label>
@@ -80,7 +80,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td valign='top'>
 						<label>
 							商店地址:
 						</label>
@@ -88,7 +88,7 @@
 					<td class="tdspace">
 					</td>
 					<td>
-						<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
+						<textarea rows='4'  name="mchntAddr" style="width:320px;" readonly unselectable="on"></textarea>
 					</td>
 					<td class="hintspace">
 					</td>
@@ -210,7 +210,7 @@
 				<input id="doaudit_mchntCd" type="hidden" name="mchntCd">
 				<table class="table_info" border="0">
 				<tr>
-					<td width="140px">
+					<td width="300px">
 						<label>
 							审核结果:
 						</label>
@@ -225,7 +225,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td width="100px">
+					<td width="100px" valign="top">
 						<label>
 							审核信息:
 						</label>
@@ -235,7 +235,8 @@
 					<td>
 						<textarea rows="5" name="auditInf" class="easyui-validatebox" maxlength="90" data-options="required:true" style="width:320px;"></textarea>
 					</td>
-					<td class="hintspace">
+					<td class="hintspace" >
+						<tt>*</tt> 
 					</td>
 				</tr>
 				<tr>

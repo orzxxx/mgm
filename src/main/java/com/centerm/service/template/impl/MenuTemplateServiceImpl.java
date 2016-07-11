@@ -81,7 +81,8 @@ public class MenuTemplateServiceImpl implements IMenuTemplateServiceImpl{
 	public List<MenuTemplateInf> list(MenuTemplateInf menu, Page page) throws Exception{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
-		List<MenuTemplateInf> result = menuTemplateMapper.query(map);
+		List<MenuTemplateInf> ids = menuTemplateMapper.query(map);
+		List<MenuTemplateInf> result = menuTemplateMapper.queryByIds(ids);
 		page.setTotal(menuTemplateMapper.count(menu));
 		return result;
 	}

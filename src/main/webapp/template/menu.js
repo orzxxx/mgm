@@ -231,6 +231,8 @@ define(function () {
 				    				}
 				    			}
 				            })
+				    	}else{
+				    		$('#menuTmpl_tab').tabs('select', '基础信息');
 				    	}
 					});
 		    	
@@ -295,6 +297,8 @@ define(function () {
 					    				}
 					    			}
 					            })
+					    	}else{
+					    		$('#menuTmpl_tab').tabs('select', '基础信息');
 					    	}
 						});
 			    }

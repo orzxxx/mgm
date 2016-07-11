@@ -63,7 +63,7 @@
 	text-align:left;
 }
 .ct-menu-from table input[type="text"]{
-	height:24px;
+	/* height:24px; */
 	padding-bottom: 4px;
 }
 .ct-menu-from table select{

@@ -7,7 +7,7 @@ requirejs(['audit-status'],function  (audit) {
 </script>
 <div>
 	<img id="auditStatus_img"/>
-	<form method="post" id="auditStatus_auditResult" class="easyui-form"   style="display:none;">
+	<form method="post" id="auditStatus_auditResult" class="easyui-form info_from"   style="display:none;">
 		<table>
 			<tr>
 				<td valign="top">

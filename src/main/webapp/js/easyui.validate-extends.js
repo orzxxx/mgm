@@ -34,7 +34,8 @@ $.extend($.fn.validatebox.defaults.rules, {
     //密码
     pwd: {
         validator: function (value, param) {
-            return /^\w{6,20}$/.test(value);
+            //return /^\w{6,20}$/.test(value);
+        	return /^.{6,20}$/.test(value);
         },
         message: '密码格式不正确'
     },

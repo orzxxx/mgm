@@ -1,5 +1,5 @@
 requirejs.config({
-	urlArgs: "v=" +  5,
+	urlArgs: "v=" +  new Date(),
 	baseUrl:contextPath+"/",
 	
     paths: {

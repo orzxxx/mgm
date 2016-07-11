@@ -82,7 +82,7 @@ requirejs(['audit-info'],function  (audit) {
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td valign='top'>
 				<label>
 					商店地址:
 				</label>
@@ -90,7 +90,7 @@ requirejs(['audit-info'],function  (audit) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntAddr" style="width:320px;" readonly unselectable="on"/>
+				<textarea rows='4' name="mchntAddr" style="width:320px;" readonly unselectable="on"></textarea>
 			</td>
 			<td class="hintspace">
 			</td>

@@ -33,7 +33,7 @@
 		<tr>
 			<td>
 				<label>
-					服务员号:
+					操作员号:
 				</label>
 			</td>
 			<td class="tdspace">

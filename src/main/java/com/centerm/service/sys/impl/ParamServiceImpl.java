@@ -79,6 +79,8 @@ public class ParamServiceImpl implements IParamServiceImpl{
 			param.setMchntCd(param.getMchntCd());
 			param.setUuid(UUID.randomUUID().toString());
 			paramMapper.insert(param);
+			//日志
+			sysLogService.add("ParamServiceImpl.get", "tbl_bkms_mchnt_param_inf", param, SysLogService.INSERT);
 		}
 		return paramMapper.getParam(param);
 	}

@@ -75,6 +75,22 @@
 	</where>
 	order by priority
 </select>
+ <select id="queryByIds" resultMap="BaseResultMap" parameterType="java.util.List">
+	select
+	<include refid="Model_Column_List" />
+	from tbl_bkms_menu_inf a
+	join tbl_bkms_product_inventory b
+	on a.product_id = b.product_id
+	left join tbl_bkms_product_attr_type_inf c
+	on a.product_id = c.product_id
+	left join tbl_bkms_product_attr_inf d
+	on c.attr_type_id = d.attr_type_id
+	where a.product_id in 
+	<foreach collection="list" item="item" index="index" separator=","  open="(" close=")">
+        #{item.productId}
+    </foreach>
+	order by a.priority
+</select>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Model_Column_List" />
@@ -123,7 +139,7 @@
 		AND specifications = #{specifications}
 	</if>
 	</where>
-	order by priority
+	group by a.product_id
 </select>
 <select id="queryMaxPriority" resultType="int" parameterType="java.util.Map">
 	select IFNULL(MAX(priority),0)

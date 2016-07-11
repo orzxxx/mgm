@@ -22,7 +22,7 @@
 				data-options="required:true" style="width:180px;" validType="pwd"/>
 			</td>
 			<td class="hintspace">
-				<tt>* 长度6到20位,允许输入数字和字母</tt>
+				<tt>* 长度6到20位<!-- ,允许输入数字和字母 --></tt>
 			</td>
 		</tr>
 		<tr>

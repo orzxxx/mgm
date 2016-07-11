@@ -455,8 +455,15 @@ define(function () {
 	function changeInventoryInput(status){
 		if (status == 1) {
 			$("#combo_inventory").numberbox("enable"); 
+			$('#combo_inventory').numberbox({    
+			    required: true
+			});
 		}else if(status == 0){
 			$("#combo_inventory").numberbox("disable"); 
+			$('#combo_inventory').numberbox({    
+			    required: false
+			});
+			$('#combo_inventory').numberbox('validate');
 		}
 	}
 	function setOriPrice(num){
@@ -728,7 +735,7 @@ define(function () {
 							return "<span style=\"color:red;\">未配置</span>";
 						}
 						var arr = value.productAttrs;
-						var attrType1 = value.attrTypeName+": ";
+						var attrType1 = value.attrTypeName+": <br/>";
 						for ( var i in arr) {
 							var isChecked = i == 0 ? "checked" : "";
 							attrType1 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 1)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
@@ -740,14 +747,14 @@ define(function () {
 							return "<span style=\"color:red;\">未配置</span>";
 						}
 						var arr = value.productAttrs;
-						var attrType2 = value.attrTypeName+": ";
+						var attrType2 = value.attrTypeName+": <br/>";
 						for ( var i in arr) {
 							var isChecked = i == 0 ? "checked" : "";
 							attrType2 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 2)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
 						}
 					    return attrType2;
 						}},
-				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
+				    {field:'price',title:'单价(元) ',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return (value+rec.attrPrice1+rec.attrPrice2).toFixed(2);
 						}},
 					{field:'num',title:'数量',width:60,sortable:true,align:'center',formatter:function(value, rec){
@@ -832,4 +839,5 @@ function combePackageAdd(obj){
 function setOriPrice(num){
 	var price = parseFloat($("#combo_oriPrice").text());
 	$("#combo_oriPrice").text((price+num).toFixed(2));
+	$("#combo_price").val($("#combo_oriPrice").text());
 }

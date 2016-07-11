@@ -60,7 +60,7 @@
 									</label>
 								</td>
 								<td>
-									<select id="order_trnsflag" name="trnsflag" style="width:200px;">
+									<select id="order_trnsflag" name="trnsflag" style="width:205px;">
 										<option value="">请选择</option>
 										<option value="-1">交易失败</option>
 										<option value="0">交易初始化</option>

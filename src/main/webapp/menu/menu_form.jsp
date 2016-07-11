@@ -61,7 +61,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<select id="menu_menutpId" name="menutpId" style="width:180px;" class="easyui-validatebox" data-options="required:true">
+					<select id="menu_menutpId" name="menutpId" style="width:185px;" class="easyui-validatebox" data-options="required:true">
 						<option value="">请选择</option>
 					</select>
 				</td>

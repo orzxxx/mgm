@@ -34,7 +34,7 @@
 				<input id="register_passwd" type="password" name="passwd" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="pwd" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
-				<tt>* 长度6到20位,允许输入数字和字母</tt>
+				<tt>* 长度6到20位<!-- ,允许输入数字和字母 --></tt>
 			</td>
 		</tr>
 		<tr>
@@ -61,7 +61,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="mchntName" maxlength="35" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
+				<input type="text" name="mchntName" maxlength="20" class="easyui-validatebox" data-options="required:true,validType:'realLength[20]'" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>
@@ -106,10 +106,10 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="email" maxlength="60" class="easyui-validatebox" data-options="required:true" validType="email" style="width:220px;"/>
+				<input type="text" name="email" maxlength="60" class="easyui-validatebox"  validType="email" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
-				<tt>*</tt>
+				<tt>可选</tt>
 			</td>
 		</tr>
 		<tr>

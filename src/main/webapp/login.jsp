@@ -7,6 +7,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!doctype html>
 <html lang="zh-CN">
 <head>
+		<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-COMPATIBLE" content="IE=edge,chrome=1"/>
+
     <meta charset="utf-8">
     <title>Q哥点餐后台管理系统</title>
     <%--<link id="easyuiTheme" rel="stylesheet" href="${pageContext.request.contextPath}/themes/default/centermui.css" type="text/css"></link>

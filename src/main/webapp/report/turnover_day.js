@@ -65,8 +65,9 @@ define(function () {
 				toolbar:"#turnoverDay_toolbar",
 				rowStyler : function(index, row) {
 					if (row.payTp == -9) {
-						return 'color:red;';
+						return 'color:red;background-color:white;';
 					}
+					return 'background-color:white;';
 				}
 			});
 			//重写翻页事件

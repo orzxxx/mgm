@@ -71,8 +71,8 @@ define(function () {
 		if(row){
 			var dlg = $('<div/>').dialog({    
 			    title: '审核界面',    
-			    width: 540,    
-			    height: 500,    
+			    width: 560,    
+			    height: 520,    
 			    closable: false,    
 			    cache: false,    
 			    href: 'audit/audit_doaudit.jsp',    
