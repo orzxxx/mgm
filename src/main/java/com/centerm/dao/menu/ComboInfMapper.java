@@ -7,4 +7,6 @@ public interface ComboInfMapper extends BaseMapper<ComboInf>{
 	public int queryMaxPriority(String mchntCd);
 	
 	public int isNameExisted(ComboInf combo);
+	
+	public int updatePackingBoxNumByMchntCd(ComboInf combo);
 }

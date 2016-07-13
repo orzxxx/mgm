@@ -7,6 +7,36 @@ define(function () {
 	}
 	function initButton(){
 		$("#discount_edit").click(edit);
+		$("#discount_startDate").click(function(){
+			var startDate = $("#discount_startDate").val();
+			var curDate = new Date().format('yyyy-MM-dd');
+			if (curDate > startDate) {
+				$("#discount_startDate").val(curDate);
+				WdatePicker({startDate:curDate, dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'}); 
+			} else {
+				WdatePicker({startDate:startDate, dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'}); 
+			}
+		});
+		$("#discount_endDate").click(function(){
+			var endDate = $("#discount_endDate").val();
+			var curDate = new Date().format('yyyy-MM-dd');
+			if (curDate > endDate) {
+				WdatePicker({startDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'});
+			} else {
+				WdatePicker({startDate:endDate,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'});
+			}
+		});
+		
+	}
+	/**
+	 * 设置日期小于当前日期时,设置时间为当前日期
+	 */
+	function setCurrentDate(){
+		var startDate = $("#discount_startDate").val();
+		var curDate = new Date().format('yyyy-MM-dd');
+		if (curDate > startDate) {
+			$("#discount_startDate").val(curDate);
+		}
 	}
 	/**
 	 * 根据分类id获取分类名

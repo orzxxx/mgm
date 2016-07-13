@@ -21,4 +21,6 @@ public interface MenuInfMapper extends BaseMapper<MenuInf>{
 	public List<ComboInf> isUsedByCombo(String productId);
 	
 	public int count (MenuInf menu);
+	
+	public int updatePackingBoxNumByMchntCd(MenuInf menu);
 }

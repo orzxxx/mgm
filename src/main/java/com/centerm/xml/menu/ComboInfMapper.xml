@@ -52,7 +52,12 @@
 	where mchnt_cd = #{mchntCd}
 	and status = 0
 </select>
- <select id="isNameExisted" resultType="int" parameterType="com.centerm.model.menu.MenuInf">
+<update id="updatePackingBoxNumByMchntCd" parameterType="com.centerm.model.menu.ComboInf" >
+    update tbl_bkms_menu_combo_inf
+    set packing_box_num = #{packingBoxNum,jdbcType=INTEGER}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+</update>
+ <select id="isNameExisted" resultType="int" parameterType="com.centerm.model.menu.ComboInf">
 	select count(*)
 	from tbl_bkms_menu_combo_inf
 	where mchnt_cd = #{mchntCd}

@@ -141,6 +141,11 @@
 	</where>
 	group by a.product_id
 </select>
+<update id="updatePackingBoxNumByMchntCd" parameterType="com.centerm.model.menu.MenuInf" >
+    update tbl_bkms_menu_inf
+    set packing_box_num = #{packingBoxNum,jdbcType=INTEGER}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+</update>
 <select id="queryMaxPriority" resultType="int" parameterType="java.util.Map">
 	select IFNULL(MAX(priority),0)
 	from tbl_bkms_menu_inf

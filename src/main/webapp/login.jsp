@@ -101,6 +101,8 @@ function doRegister() {
 		    		$.post("register",param,function(result){
 		    			if (result.code == 0) {
 		    				$.messager.alert("提示", "注册成功,将在24小时内告知审批结果,请耐心等待。 即将自动登入系统");
+						dlg.dialog('close');
+		    				dlg.remove();
 		    				setTimeout(function(){
 		    					window.location.href="<%=path%>/main.jsp";
 		    				}, 3000);

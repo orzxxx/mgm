@@ -1,5 +1,6 @@
 package com.centerm.service.template.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -82,8 +83,13 @@ public class MenuTemplateServiceImpl implements IMenuTemplateServiceImpl{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
 		List<MenuTemplateInf> ids = menuTemplateMapper.query(map);
-		List<MenuTemplateInf> result = menuTemplateMapper.queryByIds(ids);
-		page.setTotal(menuTemplateMapper.count(menu));
+		List<MenuTemplateInf> result = new ArrayList<MenuTemplateInf>();
+		if (ids != null && ids.size() > 0) {
+			result = menuTemplateMapper.queryByIds(ids);
+			page.setTotal(menuTemplateMapper.count(menu));
+		} else {
+			page.setTotal(0);
+		}
 		return result;
 	}
 	

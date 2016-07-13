@@ -36,8 +36,9 @@ requirejs(['discount'],function  (discount) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="discount_startDate" type="text" name="startDate" onfocus="WdatePicker({startDate:'%y-%M-%d',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'})"  class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
-			</td>
+				<input id="discount_startDate" type="text" name="startDate" class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
+				<%--<input id="discount_startDate" type="text" name="startDate" onfocus="WdatePicker({dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'})"  class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
+			--%></td>
 			<td class="hintspace">
 				<tt>*</tt>
 			</td>
@@ -51,8 +52,9 @@ requirejs(['discount'],function  (discount) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="discount_endDate" type="text" name="endDate" onfocus="WdatePicker({startDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'})"  class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
-			</td>
+				<input id="discount_endDate" type="text" name="endDate"  class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
+				<%--<input id="discount_endDate" type="text" name="endDate" onfocus="WdatePicker({startDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'})"  class="easyui-validatebox Wdate" data-options="required:true" style="width:180px;"/>
+			--%></td>
 			<td class="hintspace">
 				<tt>*</tt>
 			</td>

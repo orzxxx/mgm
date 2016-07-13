@@ -120,4 +120,14 @@ public class MenuController {
 		menuServiceImpl.update(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
 		return null;
 	}
+	
+	@RequestMapping("/setPackingBoxNum")
+	@ResponseBody()
+	public Object setPackingBoxNum(@ModelAttribute("menuInf") MenuInf menu) throws Exception {
+		if (StringUtils.isNull(menu.getPictureLink())) {
+			menu.setPictureLink(null);
+		}
+		menuServiceImpl.setPackingBoxNum(menu);
+		return null;
+	}
 }

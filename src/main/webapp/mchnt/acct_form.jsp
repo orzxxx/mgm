@@ -105,7 +105,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="detailedAddress" class="easyui-validatebox" maxlength="25" data-options="required:true" style="width:220px;"/>
+				<input type="text" name="detailedAddress" class="easyui-validatebox" maxlength="60" data-options="required:true" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>

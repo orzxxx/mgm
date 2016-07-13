@@ -1,5 +1,6 @@
 package com.centerm.service.menu.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.centerm.base.Page;
+import com.centerm.dao.menu.ComboInfMapper;
 import com.centerm.dao.menu.InventoryInfMapper;
 import com.centerm.dao.menu.MenuInfMapper;
 import com.centerm.dao.menu.MenuVersionInfMapper;
@@ -20,7 +22,6 @@ import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
-import com.centerm.model.template.MenuTemplateInf;
 import com.centerm.service.menu.IMenuServiceImpl;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
@@ -43,6 +44,15 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	
 	private MenuVersionInfMapper menuVersionMapper;
 	
+	private ComboInfMapper comboMapper;
+	
+	public ComboInfMapper getComboMapper() {
+		return comboMapper;
+	}
+	@Autowired
+	public void setComboMapper(ComboInfMapper comboMapper) {
+		this.comboMapper = comboMapper;
+	}
 	public MenuVersionInfMapper getMenuVersionMapper() {
 		return menuVersionMapper;
 	}
@@ -92,8 +102,13 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 		Map<String,Object> map = BeanUtil.bean2Map(menu);
 		map.put("page", page);
 		List<MenuInf> ids = menuMapper.query(map);
-		List<MenuInf> result = menuMapper.queryByIds(ids);
-		page.setTotal(menuMapper.count(menu));
+		List<MenuInf> result = new ArrayList<MenuInf>();
+		if (ids != null && ids.size() > 0) {
+			result = menuMapper.queryByIds(ids);
+			page.setTotal(menuMapper.count(menu));
+		} else {
+			page.setTotal(0);
+		}
 		return result;
 	}
 	
@@ -195,5 +210,17 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 			sysLogService.add("MenuServiceImpl.update", new String[]{"tbl_bkms_product_attr_type_inf","tbl_bkms_product_attr_inf"}, productAttrTypes, SysLogService.INSERT, "覆盖旧属性");
 		}
 		logger.info("=====修改单品结束:"+menu.getProductId());
+	}
+	@Override
+	public void setPackingBoxNum(MenuInf menu) {
+		logger.info("=====批量修改打包盒费开始:"+menu.getMchntCd()+" 打包盒数:"+menu.getPackingBoxNum());
+		menuMapper.updatePackingBoxNumByMchntCd(menu);
+		ComboInf combo = new ComboInf();
+		combo.setMchntCd(menu.getMchntCd());
+		combo.setPackingBoxNum(menu.getPackingBoxNum());
+		comboMapper.updatePackingBoxNumByMchntCd(combo);
+		//日志
+		sysLogService.add("MenuServiceImpl.setPackingBoxNum", new String[]{"tbl_bkms_menu_inf","tbl_bkms_menu_combo_inf"}, menu, SysLogService.UPDATE, "打包盒数:"+menu.getPackingBoxNum());
+		logger.info("=====批量修改打包盒费结束:"+menu.getMchntCd());
 	}
 }

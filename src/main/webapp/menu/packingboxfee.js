@@ -7,6 +7,42 @@ define(function () {
 	}
 	function initButton(){
 		$("#fee_edit").click(edit);
+		$("#num_switch").click(changeNumShow);
+		//默认灰显
+		$('#num_num').numberbox('disable');
+		$('#num_edit').linkbutton('disable');
+	}
+	
+	function changeNumShow(){
+		if ($("#num_switch").attr('checked')) {
+			$('#num_num').numberbox('enable');
+			$('#num_edit').linkbutton('enable');
+			$("#num_edit").click(batchPackingBoxNumUpdate);
+		} else {
+			$('#num_num').numberbox('disable');
+			$('#num_edit').linkbutton('disable');
+			$("#num_edit").unbind('click');
+		}
+	}
+	
+	function batchPackingBoxNumUpdate(){
+		var boxNum = $('#num_num').numberbox('getValue');
+		var param = {};
+		param.mchntCd = currentMchntCd;
+		param.packingBoxNum = boxNum;
+		$.messager.confirm('提示', '确定批量设置打包盒份数?', function(r){
+			if (r){
+				$.post("menu/menu/setPackingBoxNum", param, function(result){
+					if (result.code == 0) {
+					
+						$.messager.alert("提示", "批量设置成功!");
+					} else {
+						$.messager.alert("提示", result.message);
+					}
+				}, "json");
+			}
+		});
+		
 	}
 	
 		function check(){

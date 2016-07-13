@@ -16,4 +16,6 @@ public interface IMenuServiceImpl {
 	public void update(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes);
 
 	public void add(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes);
+
+	public void setPackingBoxNum(MenuInf menu);
 }

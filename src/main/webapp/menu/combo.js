@@ -839,5 +839,5 @@ function combePackageAdd(obj){
 function setOriPrice(num){
 	var price = parseFloat($("#combo_oriPrice").text());
 	$("#combo_oriPrice").text((price+num).toFixed(2));
-	$("#combo_price").val($("#combo_oriPrice").text());
+	$('#combo_price').numberbox('setValue', $("#combo_oriPrice").text());
 }
