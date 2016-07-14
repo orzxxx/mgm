@@ -73,17 +73,4 @@ requirejs(['discount'],function  (discount) {
 		</table>
 		
 	</form>
-	<script type="text/javascript">
-					$(function(){
-						$('#image').cropper({
-							  aspectRatio: 16 / 9,
-							  crop: function(e) {
-								  
-							  }
-							});
-					});
-					</script>
-					<div>
-					  <img id="image" style="max-width: 100%;" src="images/a_code.png">
-					</div>
 </div>

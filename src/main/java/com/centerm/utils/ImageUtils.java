@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -89,6 +90,15 @@ public class ImageUtils {
 		//return new File(filePath+"/"+newFileName);
 		return newPictFile;
 	}*/
+	public static File getTempImageFile() throws Exception{
+		try{
+			//重命名
+			String newFileName = PropertyUtils.getProperties("tempSavePath")+"/"+UUID.randomUUID()+".jpg";
+			return new File(newFileName);
+		}catch(Exception e){
+			throw new BusinessException("图片解析失败");	
+		}
+	}
 	public static File getImageFile(String mchntCd, InputStream is, int type) throws Exception{
 		try{
 			String filePath = "";
@@ -110,7 +120,7 @@ public class ImageUtils {
 			BufferedImage image = compress(is, width, height);
 		    
 		    //重命名
-			String newFileName = getFileName(mchntCd);
+			String newFileName = getFileName(mchntCd, false);
 			//保存图片
 			File newPictFile = new File(filePath+"/"+mchntCd+"/"+newFileName);
 			File dir = new File(filePath+"/"+mchntCd+"/");
@@ -125,10 +135,11 @@ public class ImageUtils {
 		}
 	}
 	
-	public static String getFileName(String mchntCd){
+	public static String getFileName(String mchntCd, boolean isTemp){
+		String temp = isTemp ? "_temp" : "";
 		Random random = new Random();
 		return mchntCd+"_"+DateUtils.getCurrentDate("yyyyMMddhhmmss")+"_"+
-				String.format("%04d",random.nextInt(9999))+".jpg";
+				String.format("%04d",random.nextInt(9999))+temp+".jpg";
 	}
 	
 	private static BufferedImage compress(InputStream is, int width, int height) throws Exception{

@@ -60,6 +60,7 @@
 <%--<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
 --%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/ct.css" type="text/css"></link>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/city-picker.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/cropper.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cropper.min.css" type="text/css"></link>

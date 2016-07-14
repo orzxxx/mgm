@@ -18,6 +18,62 @@ define(function () {
 		$("#menu_clear").click(clearForm);
 		$("#menu_import").click(checkImport);
 	}
+	
+	function toUpload(){
+		var dlg = $('<div/>').dialog({    
+		    title: '上传图片',    
+		    width: 700,    
+		    height: 700,    
+		    closable: false,    
+		    cache: false,    
+		    href: 'sys/img_upload.jsp',    
+		    modal: true,
+		    buttons : [ {
+				text : '添加',
+				handler :function(){
+		    	if($('#menu_form').form("validate")){
+		    		requirejs(['menu-attr'],function  (attr) {
+		    			var param = {};
+						param.productAttrTypeJson = attr.getAttrArr();
+						if (!param.productAttrTypeJson) {
+							return;
+						}
+						$('#menu_form').ajaxSubmit( {
+			    			url : contextPath+"/menu/menu/add",
+			    			data: param,
+			    			dataType : "json",
+			                success : function(result) {
+			                	if (result.code == 0) {
+			                		$.messager.alert("提示", "添加成功!");
+			                		//刷新
+			                		reload();
+			                		//关闭对话框
+			                		dlg.dialog('close');
+			    	        		dlg.remove();
+			    				} else {
+			    					$.messager.alert("提示", result.message);
+			    				}
+			    			}
+			            })
+					});
+		    
+		    	}
+		    }
+			},{
+				text : '关闭',
+				handler : function() {
+					dlg.dialog('close');
+		    		dlg.remove();
+				}
+			}],
+			onLoad : function(){
+				requirejs(['img-upload'],function(img) {
+					img.init();
+				});
+			}
+		});  
+	}
+	
 	/**
 	 * 库存输入框切换
 	 */
@@ -556,7 +612,7 @@ define(function () {
 		setMenuType("menu_menutpId");
 		//按钮事件
 		
-		$("#menu_picture").change(upload);
+		$("#menu_picture").click(toUpload);
 		$("#menu_unlimited, #menu_soldout").change({status:0},function(event){
 			changeInventoryInput(event.data.status);
 		});

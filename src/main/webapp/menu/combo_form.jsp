@@ -115,10 +115,10 @@
 				<table id="combo_package"></table>
 				<table>
 					<tr>
-						<td style="text-align: left;">原价:<span id="combo_oriPrice">0.00</span>元</td>
+						<td style="text-align: left;width:300px;">原价:<span id="combo_oriPrice">0.00</span>元</td>
 					</tr>
 					<tr>
-						<td style="text-align: left;">定价:<input id="combo_price" type="text" class="easyui-numberbox" data-options="min:0,max:99999,precision:2" name="price"/>元</td>
+						<td style="text-align: left;width:300px;">定价:<input id="combo_price" type="text" class="easyui-numberbox" data-options="min:0,max:99999,precision:2" name="price"/>元</td>
 					</tr>
 				</table>
 		</div>

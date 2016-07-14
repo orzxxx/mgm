@@ -31,8 +31,9 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input id="menu_picture" type="file" name="picture" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="image" style="width:180px;"/>
-				</td>
+					<a style="width: 110px;" id="menu_picture" href="javascript:void(0)" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true"">上传图片</a>
+					<%--<input id="menu_picture" type="file" name="picture" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="image" style="width:180px;"/>
+				--%></td>
 				<td class="hintspace">
 					<tt optional="true">*上传长宽比4:3的图片获取最佳显示效果</tt> 
 				</td>				

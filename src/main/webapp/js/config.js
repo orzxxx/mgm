@@ -31,6 +31,7 @@ requirejs.config({
         'admin-mchnt': 'admin/mchnt',
         'admin-order': 'admin/order',
         'assoc-list': 'assoc/assoc',
+        'img-upload': 'sys/img_upload',
         'assoc-apply': 'assoc/assoc_apply'
     }
 });
