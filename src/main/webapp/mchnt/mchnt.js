@@ -36,7 +36,7 @@ define(function () {
 				]],
 				columns:[[
 				    {field:'userId',title:'手机号',width:150,sortable:true,align:'center'},
-					{field:'mchntName',title:'商户名',width:120,sortable:true,align:'center'},
+					{field:'mchntName',title:'店铺名称',width:120,sortable:true,align:'center'},
 					{field:'userName',title:'姓名',width:120,sortable:true,align:'center'},
 					{field:'idCard',title:'身份证',width:150,sortable:true,align:'center'},
 					{field:'email',title:'邮箱',width:150,sortable:true,align:'center'},

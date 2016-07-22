@@ -12,7 +12,7 @@
 							<tr>
 								<td width="60px">
 									<label>
-										商户名:
+										店铺名称:
 									</label>
 								</td>
 								<td>

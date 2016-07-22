@@ -214,7 +214,7 @@ function hideLoading(){
             <ul style="">
                 <li class="title"></li>
                 <li><input type="text" name="userId" id="userId" class="textbox-user" maxlength="11"></li>
-                <li><input type="password" name="passwd" id="passwd" class="textbox-password"></li>
+                <li><input type="password" name="passwd" id="passwd" class="textbox-password" maxlength="20"></li>
                 <%--<li style="padding-bottom: 1px;"><a href="javascript:void(0);" onclick="doLogin()" class="btn">登录</a></li>
                 <br/> 
                 --%><li style="padding-top: 10px;">
@@ -226,7 +226,7 @@ function hideLoading(){
             <div class="code">
 				<img src="images/a_code.png"/>
 				<br/>
-				<span>安卓应用扫码下载</span>
+				<span>手机应用扫码下载</span>
 			</div>
             </form>
     	</div>

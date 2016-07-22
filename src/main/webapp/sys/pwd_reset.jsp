@@ -18,7 +18,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="password" name="oldPwd" class="easyui-validatebox"
+				<input type="password" name="oldPwd" class="easyui-validatebox" maxlength="20"
 				data-options="required:true" style="width:180px;"/>
 			</td>
 			<td class="hintspace">
@@ -34,7 +34,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="pwd_newPwd" type="password" name="newPwd" class="easyui-validatebox"
+				<input id="pwd_newPwd" type="password" name="newPwd" class="easyui-validatebox" maxlength="20"
 				data-options="required:true" style="width:180px;" validType="pwd"/>
 			</td>
 			<td class="hintspace">
@@ -44,13 +44,13 @@
 		<tr>
 			<td>
 				<label>
-					重复新密码:
+					确认密码:
 				</label>
 			</td>
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="password" name="reNewPwd" class="easyui-validatebox" validType="pwdEquals['#pwd_newPwd']"
+				<input type="password" name="reNewPwd" class="easyui-validatebox" validType="pwdEquals['#pwd_newPwd']" maxlength="20"
 				data-options="required:true" style="width:180px;"/>
 			</td>
 			<td class="hintspace">
