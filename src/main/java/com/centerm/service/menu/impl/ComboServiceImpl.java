@@ -112,7 +112,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 		menuVersionMapper.versionIncrement(combo.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("ComboServiceImpl.del", new String[]{"tbl_bkms_menu_combo_inf","tbl_bkms_menu_combo_detail_inf"}, combo, SysLogService.DELETE);
-		logger.info("=====删除套餐开始:"+combo.getProductId());
+		logger.info("=====删除套餐结束:"+combo.getProductId());
 	}
 	
 	public void add(ComboInf combo){

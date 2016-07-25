@@ -275,17 +275,40 @@ define(function () {
 							for ( var i in list) {
 								list[i].attrPrice1 = 0;
 								list[i].attrPrice2 = 0;
-								if (list[i].attrCmp != null && list[i].attrCmp != "") {
+								var selectedAttrs = list[i].attrCmp.split("|");
+								var attrTypes = list[i].product.productAttrTypes;
+								for ( var j in attrTypes) {
+									var attrs = attrTypes[j].productAttrs;
+									var isSelected = false;
+									for ( var k in attrs) {
+										if (selectedAttrs.indexOf(attrs[k].attrId+"") != -1) {
+											list[i]["attrPrice"+(j*1+1)] = attrs[k].attrPrice;
+											isSelected = true;
+										}
+									}
+									if (!isSelected) {
+										list[i]["attrPrice"+(j*1+1)] = attrs[0].attrPrice;
+									}
+								}
+								/*if (list[i].attrCmp != null && list[i].attrCmp != "") {
 									var attrArr = list[i].attrCmp.split("|");
 									for ( var j in attrArr) {
-											var attrs = list[i].product.productAttrTypes[j].productAttrs;
-											for ( var k in attrs) {
-												if (attrs[k].attrId == attrArr[j]) {
-													list[i]["attrPrice"+(j*1+1)] = attrs[k].attrPrice;
+											var attrTypes = list[i].product.productAttrTypes[j];
+											if (attrTypes != null) {
+												var attrs = attrTypes.productAttrs;
+												var isSelected = false;
+												for ( var k in attrs) {
+													if (attrs[k].attrId == attrArr[j]) {
+														list[i]["attrPrice"+(j*1+1)] = attrs[k].attrPrice;
+														isSelected = true;
+													}
+												}
+												if (!isSelected) {
+													list[i]["attrPrice"+(j*1+1)] = attrs[0].attrPrice;
 												}
 											}
 									}
-								}
+								}*/
 								list[i].product.productId = list[i].productId;
 								$.extend(true, list[i], list[i].product);
 								list[i].attrType1 = list[i].product.productAttrTypes[0];
