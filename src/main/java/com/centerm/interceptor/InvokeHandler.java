@@ -32,7 +32,8 @@ public class InvokeHandler{
 	
 	private static Logger logger = Logger.getLogger(InvokeHandler.class);
 
-	@Pointcut("execution(* com.centerm.controller..*(..))")  
+	@Pointcut("execution(* com.centerm.controller..*(..)) " +
+			"&& @annotation(org.springframework.web.bind.annotation.ResponseBody)")
 	public void controllerMethod(){}
 	
 	@Around("controllerMethod()")  

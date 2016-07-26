@@ -10,10 +10,25 @@ define(function () {
 	var mchntCd = "";
 	var picturePath = "";
 	var pictureLink = "";
+	var pictureAddr = "";
 	
 	function init(){
-		initForm();
+		//initForm();
 		initButton();
+	}
+	//清空数据
+	function dataClear(){
+		pictureLink = "";
+		pictureAddr = "";
+	}
+	
+	function getData(){
+		var cropperData = $('#img_picture').cropper('getData');
+		var param = cropperData;
+		param.mchntCd = userInfo.mchntCd;
+		param.path = picturePath;
+		
+		return param;
 	}
 	
 	function initForm(){
@@ -35,7 +50,6 @@ define(function () {
 	function upload(){
 		var cropperData = $('#img_picture').cropper('getData');
 		var param = cropperData;
-		param.mchntCd = userInfo.mchntCd;
 		param.path = picturePath;
 		
 		$('#img_form').ajaxSubmit( {
@@ -47,8 +61,10 @@ define(function () {
 					//图片回显
             		//$("#img_picture").attr('src', result.data.pictureAddr);
             		//
-            		//$('#img_picture').cropper('reset').cropper('replace', result.data.pictureAddr);
+            		$('#img_picture').cropper('reset').cropper('replace', result.data.pictureAddr);
 					$('#img_picture').cropper('reset').cropper('replace', result.data.pictureAddr);
+					//pictureLink = result.data.pictureAddr;
+					//pictureAddr = result.data.pictureAddr;
 				} else {
 					//待处理$("#menu_picture").val("");
 					$.messager.alert("提示", result.message);
@@ -69,6 +85,7 @@ define(function () {
     			dataType : "json",
                 success : function(result) {
 					if (result.code == 0) {
+						dataClear();
 						//图片回显
 	            		//$("#img_picture").attr('src', result.data.pictureAddr);
 	            		//
@@ -84,7 +101,8 @@ define(function () {
 	}
 	
     return {
-        init : init
+        init : init,
+        getData: getData
     };
     
 });

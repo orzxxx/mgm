@@ -84,7 +84,7 @@
 				//$.messager.progress('close');
 				if($.isFunction(s)){s.apply(setting.context,arguments);}
 			}catch(e){
-				
+				console.log(e);
 			}
 		};
 		ajaxBack(setting);
@@ -159,13 +159,17 @@
 				top.location.href = data.redirectUrl;
 				return;
 			}
-		} catch(e){}
+		} catch(e){
+			console.log(e);
+		}
 	},error : function(XMLHttpRequest, textStatus, errorThrown) {
 		try{
 			hideLoading();
 			//$.messager.progress('close');
 			$.messager.alert("错误", "连接超时,请重新登录");
-		}catch(e){}
+		}catch(e){
+			console.log(e);
+		}
 	}
 });
 $.fn.serializeObject = function()    

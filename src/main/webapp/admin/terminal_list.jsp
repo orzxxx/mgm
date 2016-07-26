@@ -44,7 +44,7 @@
 									</label>
 								</td>
 								<td width="290px">
-									<input type="text" name="mchntCd" maxlength="20" style="width:200px;">
+									<input type="text" name="mchntCd" maxlength="11" style="width:200px;">
 								</td>
 								<td style="padding-left: 20px;">
 								</td>
@@ -57,7 +57,7 @@
 									<%--<a id="terminal_query" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">查询</a>
 									<a id="terminal_clear" href="javascript:void(0);" class="easyui-linkbutton ct-rst-btn">重置</a>
 								--%>
-									<input type="text" name="userId" maxlength="20" style="width:200px;">
+									<input type="text" name="userId" maxlength="11" style="width:200px;">
 								</td>
 								<td style="padding-left: 20px;">
 								</td>

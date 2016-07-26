@@ -17,9 +17,14 @@ function getData(){
 <div>
 	<form method="post" id="img_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
 		<div>
-		  <img id="img_picture" style="max-width: 100%;width:400px;height:300px;" src="images/a_code.png">
-		  <input id="img_select" type="file" name="picture" style="width:180px;"/>
-		  <a id="img_upload" href="javascript:void(0)" class="easyui-linkbutton"  plain="true"">确定</a>
+		  <img id="img_picture" style="max-width: 100%;width:100%;height:300px;" src="images/default_menu.png">
+		 
+		</div>
+		<div id="img_buttons">
+			 <input id="img_select" type="file" name="picture" style="width:180px;"/>
+		 	 <%--<a id="img_upload" href="javascript:void(0)" class="easyui-linkbutton"  plain="true"">确定</a>
+		--%></div>
+		<div>
 		</div>
 	</form>
 </div>

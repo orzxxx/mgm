@@ -11,8 +11,10 @@ public class OrderJourInf {
     private String termTransTrc;
 
     private String mchntCd;
+    
+    private String mchntName;
 
-    private String terminalCd;
+	private String terminalCd;
 
     private String operId;
 
@@ -63,6 +65,14 @@ public class OrderJourInf {
     private String maxTransdate;
     
     private BigDecimal discount;
+    
+    public String getMchntName() {
+		return mchntName;
+	}
+
+	public void setMchntName(String mchntName) {
+		this.mchntName = mchntName;
+	}
     
     public BigDecimal getDiscount() {
 		return discount;

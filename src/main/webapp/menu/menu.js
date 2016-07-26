@@ -31,34 +31,31 @@ define(function () {
 		    buttons : [ {
 				text : '添加',
 				handler :function(){
-		    	if($('#menu_form').form("validate")){
-		    		requirejs(['menu-attr'],function  (attr) {
-		    			var param = {};
-						param.productAttrTypeJson = attr.getAttrArr();
-						if (!param.productAttrTypeJson) {
-							return;
-						}
-						$('#menu_form').ajaxSubmit( {
-			    			url : contextPath+"/menu/menu/add",
-			    			data: param,
-			    			dataType : "json",
-			                success : function(result) {
-			                	if (result.code == 0) {
-			                		$.messager.alert("提示", "添加成功!");
-			                		//刷新
-			                		reload();
-			                		//关闭对话框
+					var param = {};
+					requirejs(['img-upload'],function(img) {
+						param = img.getData();
+						param.mchntCd = currentMchntCd;
+						
+						$('#img_form').ajaxSubmit( {
+							url : "menu/menu/upload",
+							dataType : "json",
+							data: param,
+				            success : function(result) {
+								if (result.code == 0) {
+									$("#menuTmpl_img").attr('src', result.data.pictureAddr).show();
+				            		$("#menuTmpl_pictureLink").val(result.data.pictureLink);
+				            		//关闭对话框
 			                		dlg.dialog('close');
 			    	        		dlg.remove();
-			    				} else {
-			    					$.messager.alert("提示", result.message);
-			    				}
-			    			}
-			            })
+								} else {
+									//待处理$("#menu_picture").val("");
+									$.messager.alert("提示", result.message);
+								}
+							}
+				        });
 					});
-		    
-		    	}
-		    }
+					
+				}
 			},{
 				text : '关闭',
 				handler : function() {
