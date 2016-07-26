@@ -10,6 +10,7 @@ requirejs.config({
         'menuTmpl': 'template/menu',
         'menuTypeTmpl': 'template/menuType',
         'combo': 'menu/combo',
+        'combo-packages': 'menu/combo_packages',
         'acct': 'mchnt/acct',
         'frchse': 'mchnt/frchse',
         'oper': 'mchnt/oper',

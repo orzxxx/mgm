@@ -113,6 +113,20 @@ define(function () {
 	}
 
 	function add(){
+		$("#combo_form").load(contextPath+"/menu/combo_form.jsp", function(){
+			initForm();
+			requirejs(['combo-packages'],function  (pkg) {
+				pkg.init();
+			});
+		}).show();
+		$("#combo_list").hide();
+	}
+	
+	function back(){
+		$("#combo_form *").remove();
+		$("#combo_list").show();
+	}
+	/*function add(){
 		var dlg = $('<div/>').dialog({    
 		    title: '添加套餐',    
 		    width: 630,    
@@ -186,7 +200,7 @@ define(function () {
 				originalPicture = "images/default_menu.png";
 			}
 		});  
-	}
+	}*/
 
 	function edit(){
 		var row = $('#combo_pageList').datagrid("getSelected");
@@ -419,58 +433,8 @@ define(function () {
 	
 	function initForm(){
 		//表单赋值
-		$("#combo_mchntCd").val(userInfo.mchntCd);
-		initPackage();
-		$("#combo_select").click(select);
-		$("#combo_picture").change(upload);
-		
-		$("#comboPackage_del").click(packageDel);
-		
-		/*$(".btn-left").die().live("click", function(){
-			var row = $("#combo_package").datagrid("getSelected");
-			var index = $("#combo_package").datagrid("getRowIndex", row);
-			if (row.num == 1) {
-				$.messager.confirm('提示', '是否要删除该单品？', function(r){
-					if (r){
-						$('#combo_package').datagrid('deleteRow', index);
-						setOriPrice(-row.price*1);
-					}
-				});
-			}else{
-				row.num = row.num-1;
-				row.total = (parseFloat(row.total) - parseFloat(row.price)).toFixed(2);
-				$(this).siblings("span").text(row.num);
-				$(this).parents("td").siblings("td[field='total']").find("div").text(row.total);
-				//$('#combo_package').datagrid('beginEdit', index);
-				//$('#combo_package').datagrid('updateRow', {index:index,row:row});
-				//$('#combo_package').datagrid('endEdit', index);
-				setOriPrice(-row.price*1);
-			}
-			
-		});
-		$(".btn-right").die().live("click", function(){
-			var row = $("#combo_package").datagrid("getSelected");
-			var index = $("#combo_package").datagrid("getRowIndex", row);
-			row.num = (row.num+1)>999 ? 999 : row.num+1;
-			row.total = (parseFloat(row.total) + parseFloat(row.price)).toFixed(2);
-			$(this).siblings("span").text(row.num);
-			$(this).parents("td").siblings("td[field='total']").find("div").text(row.total);
-			//$('#combo_package').datagrid('beginEdit', index);
-			//$('#combo_package').datagrid('updateRow', {index:index,row:row});
-			//$('#combo_package').datagrid('endEdit', index);
-			setOriPrice(row.price*1);
-		});*/
-		
 		//按钮事件
-		$("#combo_unlimited, #combo_soldout").change({status:0},function(event){
-			changeInventoryInput(event.data.status);
-		});
-		$("#combo_custom").change({status:1},function(event){
-			changeInventoryInput(event.data.status);
-		});
-		$("#combo_inventory").numberbox({onChange:function(newValue, oldValue){
-			$("#combo_custom").val(newValue);
-		}});
+		$("#combo_back").click(back);
 	}
 	/**
 	 * 库存输入框切换

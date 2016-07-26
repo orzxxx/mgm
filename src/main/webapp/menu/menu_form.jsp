@@ -93,7 +93,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="packingBoxNum" maxlength="30" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
+					<input type="text" name="packingBoxNum" maxlength="2" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
 				</td>
 				<td class="hintspace">
 					<tt>*</tt> 

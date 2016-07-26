@@ -84,7 +84,7 @@
 				
 			}
 		};
-		ajaxBack(setting);
+		return ajaxBack(setting);
 	};
 	
 	$(function(){
