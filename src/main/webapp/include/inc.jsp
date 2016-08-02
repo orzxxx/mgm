@@ -87,7 +87,7 @@
 				console.log(e);
 			}
 		};
-		ajaxBack(setting);
+		return ajaxBack(setting);
 	};
 	
 	$(function(){

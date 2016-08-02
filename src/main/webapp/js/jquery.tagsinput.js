@@ -104,16 +104,27 @@
 				}
 				
 				if (value !='' && skipTag != true) {
-                    $('<span>').addClass('tag').append(
-                        $('<span>').text(value).append('&nbsp;&nbsp;'),
-                        $('<a>', {
-                            href  : '#',
-                            title : '移除标签',
-                            text  : 'x'
-                        }).click(function () {
-                            return $('#' + id).removeTag(escape(value));
-                        })
-                    ).insertBefore('#' + id + '_addTag');
+					if (options.removable) {
+						$('<span>').addClass('tag').append(
+		                        $('<span>').text(value).append('&nbsp;&nbsp;'),
+		                        $('<a>', {
+		                            href  : 'javascript:void(0)',
+		                            title : '移除标签',
+		                            text  : 'x'
+		                        }).click(function () {
+		                            //return $('#' + id).removeTag(escape(value));
+		                        	$(this).parent('span').remove();
+		                        	if (options.callback) {
+		                        		options.callback.call(this);
+									}
+		                        })
+		                    ).insertBefore('#' + id + '_addTag');
+					}else{
+						$('<span>').addClass('tag').append(
+		                        $('<span>').text(value).append('&nbsp;&nbsp;')
+		                    ).insertBefore('#' + id + '_addTag');
+					}
+                    
 
 					tagslist.push(value);
 
@@ -197,7 +208,8 @@
       placeholderColor:'#666666',
       autosize: true,
       comfortZone: 20,
-      inputPadding: 6*2
+      inputPadding: 6*2,
+      removable: true
     },options);
 
     	var uniqueIdCounter = 0;

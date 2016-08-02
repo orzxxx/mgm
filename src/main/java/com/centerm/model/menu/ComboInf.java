@@ -34,7 +34,17 @@ public class ComboInf {
     
     private Integer packingBoxNum;
     
-    public Integer getPackingBoxNum() {
+    private List<ChildComboTypeInf> childComboTypes;
+    
+    public List<ChildComboTypeInf> getChildComboTypes() {
+		return childComboTypes;
+	}
+
+	public void setChildComboTypes(List<ChildComboTypeInf> childComboTypes) {
+		this.childComboTypes = childComboTypes;
+	}
+
+	public Integer getPackingBoxNum() {
 		return packingBoxNum;
 	}
 

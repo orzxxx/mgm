@@ -76,7 +76,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" maxlength="15" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
+				<input type="text" name="userName" maxlength="4" class="easyui-validatebox" data-options="required:true" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>

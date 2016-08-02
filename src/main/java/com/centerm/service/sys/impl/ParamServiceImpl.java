@@ -68,8 +68,8 @@ public class ParamServiceImpl implements IParamServiceImpl{
 		if (result == null) {
 			menuVersionMapper.versionIncrement(param.getMchntCd());//菜单版本自增
 			//未配置则添加
-			if (param.getParam().equals("discount_rate")) {
-				param.setData("10|20160101|20160101");
+			if (param.getParam().equals("discount_mode")) {
+				param.setData("000");
 			} else if (param.getParam().equals("packing_box_price")) {
 				param.setData("0");
 			} else {

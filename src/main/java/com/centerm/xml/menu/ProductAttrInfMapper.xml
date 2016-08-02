@@ -24,6 +24,19 @@
     )
     
   </delete>
+  <delete id="deleteByComboId" parameterType="java.lang.String" >
+    DELETE FROM tbl_bkms_product_attr_inf
+    WHERE attr_type_id in (
+	   	SELECT attr_type_id FROM tbl_bkms_product_attr_type_inf
+	    WHERE product_id in (
+	    	SELECT id FROM tbl_bkms_child_combo_inf
+		    WHERE combo_type_id in (
+		    	SELECT id FROM tbl_bkms_child_combo_type_inf
+		    	WHERE product_id = #{productId,jdbcType=INTEGER}
+		    )
+	    )
+    )
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_bkms_product_attr_inf
     where attr_id = #{attrId,jdbcType=INTEGER}
