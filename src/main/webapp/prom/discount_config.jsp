@@ -9,9 +9,6 @@ requirejs(['discount'],function  (discount) {
 	.readonly{
 		border: 0px;
 	}
-.tagsinput{
-	border: 1px solid black;
-}
 </style>
 <div>
 	<%--全品打折--%>
