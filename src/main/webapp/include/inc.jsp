@@ -81,7 +81,7 @@
 				//$.messager.progress('close');
 				if($.isFunction(s)){s.apply(setting.context,arguments);}
 			}catch(e){
-				
+				console.log(e);
 			}
 		};
 		return ajaxBack(setting);

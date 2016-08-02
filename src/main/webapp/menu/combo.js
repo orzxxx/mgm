@@ -8,9 +8,9 @@ define(function () {
 		query();
 	}
 	function initButton(){
-		$("#combo_add").click(add);
+		$("#combo_toAdd").click(toAdd);
 		$("#combo_del").click(del);
-		$("#combo_edit").click(edit);
+		$("#combo_toEdit").click(toEdit);
 		$("#combo_query").click(query);
 		$("#combo_clear").click(clearForm);
 	}
@@ -63,7 +63,7 @@ define(function () {
 				]],
 				toolbar:"#combo_toolbar",
 				onDblClickRow:function(index, row){
-					edit();
+					toEdit();
 				}
 			});
 			//重写翻页事件
@@ -112,20 +112,138 @@ define(function () {
 		//$('#combo_pageList').datagrid('loadData',{ total: 0, rows: [] });
 	}
 
-	function add(){
+	function toAdd(){
 		$("#combo_form").load(contextPath+"/menu/combo_form.jsp", function(){
-			initForm();
 			requirejs(['combo-packages'],function  (pkg) {
 				pkg.init();
+				initForm();
+				$("#combo_add").click(add);
 			});
 		}).show();
 		$("#combo_list").hide();
 	}
 	
+	function toEdit(){
+		var row = $('#combo_pageList').datagrid("getSelected");
+		if(row){
+			$("#combo_form").load(contextPath+"/menu/combo_form.jsp", function(){
+				var param = {};
+				param.comboId = row.productId;
+				$('#combo_baseform').ajaxSubmit( {
+	    			url : contextPath+"/menu/combo/details",
+	    			data: param,
+	    			dataType : "json",
+	                success : function(result) {
+	                	if (result.code == 0) {
+	                		requirejs(['combo-packages'],function  (pkg) {
+	        					pkg.init();
+	        					initForm();
+	        					$("#combo_add").click(edit);
+	        					$("#combo_list").hide();
+	        					//数据回显
+	        					$('#combo_picture').validatebox({    
+	        					    required: false,    
+	        					    validType: ''   
+	        					});
+	        					
+	        					requirejs(['combo-packages'],function  (packages) {
+	        						packages.loadAttr(result.data);
+	        					});
+	        					
+	        					$("#combo_baseform").form('load', row);
+	        					if (row.inventory.inventory == "0") {
+	        						$("#combo_soldout").attr('checked',true);
+	        					}else if(row.inventory.inventory == "-1"){
+	        						$("#combo_unlimited").attr('checked',true);
+	        					}else{
+	        						$("#combo_custom").attr('checked',true);
+	        						$("#combo_inventory").numberbox("enable"); 
+	        						$("#combo_inventory").numberbox('setValue', row.inventory.inventory);
+	        					}
+	        					$("#combo_img").attr('src', row.pictureLink).show();
+	        					originalPicture = $("#combo_img").attr('src');
+	        					$('#combo_pictureLink').val('');
+	        					$("#combo_productId, #combo_inventoryId").val(row.productId);
+	        					$("#combo_baseform tt[optional='true']").remove();
+	        				});
+	    				} else {
+	    					$.messager.alert("提示", result.message);
+	    				}
+	    			}
+	            })
+			}).show();
+			
+		}else{
+			$.messager.alert('提示', '请选择要修改的记录！', 'info');
+		}
+		
+	}
+	
+	function add(){
+		if($('#combo_baseform').form("validate")){
+			requirejs(['combo-packages'],function  (pkg) {
+				var param = {};
+				param.childComboTypeJson = {};
+				param.childComboTypeJson = pkg.getAttrArr();
+				if (!param.childComboTypeJson) {
+					return;
+				}
+				$('#combo_baseform').ajaxSubmit( {
+	    			url : contextPath+"/menu/combo/add",
+	    			data: param,
+	    			dataType : "json",
+	                success : function(result) {
+	                	if (result.code == 0) {
+	                		$.messager.alert("提示", "添加成功!");
+	                		//刷新
+	                		reload();
+	                		//关闭对话框
+	                		back();
+	    				} else {
+	    					$.messager.alert("提示", result.message);
+	    				}
+	    			}
+	            })
+			});
+    	}
+	}
+	
+	function edit(){
+		if($('#combo_baseform').form("validate")){
+			requirejs(['combo-packages'],function  (pkg) {
+				var param = {};
+				param.childComboTypeJson = {};
+				param.childComboTypeJson = pkg.getAttrArr();
+				if (!param.childComboTypeJson) {
+					return;
+				}
+				$('#combo_baseform').ajaxSubmit( {
+	    			url : contextPath+"/menu/combo/update",
+	    			data: param,
+	    			dataType : "json",
+	                success : function(result) {
+	                	if (result.code == 0) {
+	                		$.messager.alert("提示", "修改成功!");
+	                		//刷新
+	                		reload();
+	                		//关闭对话框
+	                		back();
+	    				} else {
+	    					$.messager.alert("提示", result.message);
+	    				}
+	    			}
+	            })
+			});
+    	}
+	}
+	
 	function back(){
 		$("#combo_form *").remove();
 		$("#combo_list").show();
+		//界面渲染
+		$.parser.parse('#combo_pageList');
 	}
+	
 	/*function add(){
 		var dlg = $('<div/>').dialog({    
 		    title: '添加套餐',    
@@ -202,7 +320,7 @@ define(function () {
 		});  
 	}*/
 
-	function edit(){
+	/*function edit(){
 		var row = $('#combo_pageList').datagrid("getSelected");
 		if(row){
 			var dlg = $('<div/>').dialog({    
@@ -248,7 +366,7 @@ define(function () {
 				    		return;
 				    	}
 			    		
-			    		$('#combo_form').ajaxSubmit( {
+			    		$('#combo_baseform').ajaxSubmit( {
 			    			url : contextPath+"/menu/combo/update",
 			    			dataType : "json",
 			    			data: param,
@@ -304,7 +422,7 @@ define(function () {
 										list[i]["attrPrice"+(j*1+1)] = attrs[0].attrPrice;
 									}
 								}
-								/*if (list[i].attrCmp != null && list[i].attrCmp != "") {
+								if (list[i].attrCmp != null && list[i].attrCmp != "") {
 									var attrArr = list[i].attrCmp.split("|");
 									for ( var j in attrArr) {
 											var attrTypes = list[i].product.productAttrTypes[j];
@@ -322,7 +440,7 @@ define(function () {
 												}
 											}
 									}
-								}*/
+								}
 								list[i].product.productId = list[i].productId;
 								$.extend(true, list[i], list[i].product);
 								list[i].attrType1 = list[i].product.productAttrTypes[0];
@@ -349,7 +467,7 @@ define(function () {
 								//list[i].total = list[i].price * list[i].num;
 							}
 							//数据填充
-							$("#combo_form").form('load', row);
+							$("#combo_baseform").form('load', row);
 							$("#combo_oriPrice").text(parseFloat(oriPrice).toFixed(2));
 							tagsInit();
 							if (row.inventory.inventory == "0") {
@@ -366,7 +484,7 @@ define(function () {
 							$('#combo_pictureLink').val('');
 							//$('#combo_picture').validatebox('disableValidation');
 							$("#combo_productId, #combo_inventoryId").val(row.productId);
-							$("#combo_form tt[optional='true']").remove();
+							$("#combo_baseform tt[optional='true']").remove();
 						} else {
 							$.messager.alert("提示", result.message);
 						}
@@ -377,7 +495,7 @@ define(function () {
 		}else{
 			$.messager.alert('提示', '请选择要修改的记录！', 'info');
 		}
-	}
+	}*/
 
 	function del(){
 		var row = $('#combo_pageList').datagrid("getSelected");
@@ -410,7 +528,7 @@ define(function () {
 			return;
 		}
 		if($("#combo_picture").validatebox('isValid') && $("#combo_picture").val() != ""){
-			$('#combo_form').ajaxSubmit( {
+			$('#combo_baseform').ajaxSubmit( {
     			url : "menu/combo/upload",
     			dataType : "json",
                 success : function(result) {
@@ -432,9 +550,30 @@ define(function () {
 	}
 	
 	function initForm(){
+		//滚动条
+		//图片居中
+		var pHeight = $("#mainPanle").height();
+		$("#combo_packages").height(pHeight);
 		//表单赋值
+		originalPicture = "images/default_menu.png";
+		$("#combo_mchntCd").val(userInfo.mchntCd);
+		$("#combo_select").click(select);
+		$("#combo_picture").change(upload);
+		
 		//按钮事件
+		$("#combo_unlimited, #combo_soldout").change({status:0},function(event){
+			changeInventoryInput(event.data.status);
+		});
+		$("#combo_custom").change({status:1},function(event){
+			changeInventoryInput(event.data.status);
+		});
+		$("#combo_inventory").numberbox({onChange:function(newValue, oldValue){
+			$("#combo_custom").val(newValue);
+		}});
+		
 		$("#combo_back").click(back);
+		//界面渲染
+		$.parser.parse('#combo_form');
 	}
 	/**
 	 * 库存输入框切换
@@ -616,215 +755,9 @@ define(function () {
 		return treeData;
 	}
 	
-	function tagsInit(){
-		//标签功能
-		var t = $('#combo_taste').tagsInput({
-			'height':'65px',
-			'width':'170px',
-			'interactive':false,
-			'defaultText':'',
-			'delimiter': ['|'],
-			'onBeforeAddTag':function(value){
-				if (value.replace(/[^\x00-\xff]/g,"aa").length > 12) {
-					$.messager.alert("提示", "单个口味最多支持12个字符!");
-					return false;
-				}
-				//个数校验
-				var tags = $("#combo_form [name='taste']").val().split("|");
-				if (tags.length >= 5) {
-					$.messager.alert("提示", "口味最多添加5个!");
-					return false;
-				}
-				return true;
-			}
-		});
-		var s = $('#combo_specifications').tagsInput({
-			'height':'65px',
-			'width':'170px',
-			'interactive':false,
-			'defaultText':'',
-			'delimiter': ['|'],
-			'onBeforeAddTag':function(value){
-				if (value.replace(/[^\x00-\xff]/g,"aa").length > 8) {
-					$.messager.alert("提示", "单个规格最多支持8个字符!");
-					return false;
-				}
-				//个数校验
-				var tags = $("#combo_form [name='specifications']").val().split("|");
-				if (tags.length >= 5) {
-					$.messager.alert("提示", "规格最多添加5个!");
-					return false;
-				}
-				return true;
-			}
-		});
-		$("#combo_addSpec").click(function(){
-			addSpec(s);
-		});
-		$("#combo_addTaste").click(function(){
-			addTaste(t);
-		});
-	}
-	function addSpec(s){
-		var spec = $("#combo_forSpec").val();
-		if (spec == "") {
-			$.messager.alert("提示", "请输入规格");
-			return;
-		}
-		if ($(s).tagExist(spec)) {
-			$.messager.alert("提示", "重复的规格:"+spec);
-			return;
-		}
-		$(s).addTag(spec);
-		$("#combo_forSpec").val("");
-	}
-	function addTaste(t){
-		var taste = $("#combo_forTaste").val();
-		if (taste == "") {
-			$.messager.alert("提示", "请输入口味");
-			return;
-		}
-		if ($(t).tagExist(taste)) {
-			$.messager.alert("提示", "重复的口味:"+taste);
-			return;
-		}
-		$(t).addTag(taste);
-		$("#combo_forTaste").val("");
-	}
-	function packageDel(){
-		var row = $('#combo_package').datagrid("getSelected");
-		var index = $("#combo_package").datagrid("getRowIndex", row);
-		if(row){
-			$.messager.confirm('提示', '确定删除该记录?', function(r){
-				if (r){
-					$('#combo_package').datagrid('deleteRow', index);
-					setOriPrice(-row.total*1);
-				}
-			});
-			
-		}else{
-			$.messager.alert('提示', '请选择要删除的记录!', 'info');
-		}
-	}
-	
-	function initPackage(){
-		$('#combo_package').datagrid({
-				nowrap: true,
-				striped: true,
-				singleSelect:true,
-				remoteSort : false,
-				idField:"productId",
-				columns:[[
-				    {field:'productId',title:'商品号',hidden:true},
-					{field:'productName',title:'商品名',width:100,sortable:true,align:'center'},
-					{field:'attrType1',title:'属性1',width:150,sortable:true,align:'center',formatter:function(value, rec){
-						if (value == null) {
-							return "<span style=\"color:red;\">未配置</span>";
-						}
-						var arr = value.productAttrs;
-						var attrType1 = value.attrTypeName+": <br/>";
-						for ( var i in arr) {
-							var isChecked = i == 0 ? "checked" : "";
-							attrType1 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 1)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
-						}
-					    return attrType1;
-						}},
-					{field:'attrType2',title:'属性2',width:150,sortable:true,align:'center',formatter:function(value, rec){
-						if (value == null) {
-							return "<span style=\"color:red;\">未配置</span>";
-						}
-						var arr = value.productAttrs;
-						var attrType2 = value.attrTypeName+": <br/>";
-						for ( var i in arr) {
-							var isChecked = i == 0 ? "checked" : "";
-							attrType2 += "<input type=\'radio\' "+isChecked+" name=\""+value.attrTypeId+"\" onchange='combePackageChangePrice(this, "+arr[i].attrPrice+", 2)' value=\""+arr[i].attrId+"\" attrName='"+arr[i].attrName+"'/>"+arr[i].attrName;
-						}
-					    return attrType2;
-						}},
-				    {field:'price',title:'单价(元) ',width:70,sortable:true,align:'center',formatter:function(value, rec){
-					    return (value+rec.attrPrice1+rec.attrPrice2).toFixed(2);
-						}},
-					{field:'num',title:'数量',width:60,sortable:true,align:'center',formatter:function(value, rec){
-						var leftBtn = "<a class=\"btn-left\" onclick=\"combePackageSub(this)\"></a>";
-						var rightBtn = "<a class=\"btn-right\" onclick=\"combePackageAdd(this)\"></a>";
-
-						return 	leftBtn +" <span>"+value +"</span> "+rightBtn;
-					}},
-					{field:'total',title:'合计(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
-					    return value.toFixed(2);
-					}}
-				]],
-				toolbar : "#comboPackage_toolbar"
-			});
-		}
 	
     return {
         init : init
     }
     
 });
-
-function combePackageChangePrice(obj, price, i){
-	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
-	$("#combo_package").datagrid("selectRecord", id);
-	var row = $("#combo_package").datagrid("getSelected");
-	var index = $("#combo_package").datagrid("getRowIndex", row);
-	row["attrPrice"+i] = price;
-	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);  
-	var oriTotal = row.total;
-	row.total = (newPrice * Number(row.num)).toFixed(2);
-	$(obj).parents("td").siblings("td[field='price']").find("div").text(newPrice);
-	$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
-	//$('#combo_package').datagrid('beginEdit', index);
-	//$('#combo_package').datagrid('updateRow', {index:index,row:row});
-	//$('#combo_package').datagrid('endEdit', index);
-	setOriPrice(parseFloat(row.total-oriTotal));
-}
-
-function combePackageSub(obj){
-	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
-	$("#combo_package").datagrid("selectRecord", id);
-	var row = $("#combo_package").datagrid("getSelected");
-	var index = $("#combo_package").datagrid("getRowIndex", row);
-	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);
-	if (row.num == 1) {
-		$.messager.confirm('提示', '是否要删除该单品？', function(r){
-			if (r){
-				$('#combo_package').datagrid('deleteRow', index);
-				setOriPrice(-newPrice*1);
-			}
-		});
-	}else{
-		row.num = row.num-1;
-		row.total = (parseFloat(row.total) - parseFloat(newPrice)).toFixed(2);
-		$(obj).siblings("span").text(row.num);
-		$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
-		//$('#combo_package').datagrid('beginEdit', index);
-		//$('#combo_package').datagrid('updateRow', {index:index,row:row});
-		//$('#combo_package').datagrid('endEdit', index);
-		setOriPrice(-newPrice*1);
-	}
-}	
-
-
-function combePackageAdd(obj){
-	var id = $(obj).parents("td").siblings("td[field='productId']").find("div").text();
-	$("#combo_package").datagrid("selectRecord", id);
-	var row = $("#combo_package").datagrid("getSelected");
-	var index = $("#combo_package").datagrid("getRowIndex", row);
-	var newPrice = (parseFloat(row.price + row.attrPrice1 + row.attrPrice2)).toFixed(2);
-	row.num = (row.num+1)>999 ? 999 : row.num+1;
-	row.total = (parseFloat(row.total) + parseFloat(newPrice)).toFixed(2);
-	$(obj).siblings("span").text(row.num);
-	$(obj).parents("td").siblings("td[field='total']").find("div").text(row.total);
-	//$('#combo_package').datagrid('beginEdit', index);
-	//$('#combo_package').datagrid('updateRow', {index:index,row:row});
-	//$('#combo_package').datagrid('endEdit', index);
-	setOriPrice(newPrice*1);
-}	
-//设置原价
-function setOriPrice(num){
-	var price = parseFloat($("#combo_oriPrice").text());
-	$("#combo_oriPrice").text((price+num).toFixed(2));
-	$('#combo_price').numberbox('setValue', $("#combo_oriPrice").text());
-}

@@ -9,4 +9,6 @@ public interface ProductAttrTypeInfMapper extends BaseMapper<ProductAttrTypeInf>
     public void insertbatch(List<ProductAttrTypeInf> productAttrTypes);
 
 	public void deleteByProductId(String productId);
+	
+	public void deleteByComboId(String ComboId);
 }

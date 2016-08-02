@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.alibaba.fastjson.JSON;
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
+import com.centerm.model.menu.ChildComboTypeInf;
 import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.ComboInf;
 import com.centerm.service.menu.IComboServiceImpl;
@@ -72,8 +73,8 @@ public class ComboController {
 	
 	@RequestMapping("/details")
 	@ResponseBody()
-	public Object list(String comboId) throws Exception {
-		return comboServiceImpl.getDetails(comboId);
+	public Object getChildren(String comboId) throws Exception {
+		return comboServiceImpl.geChildren(comboId);
 	}
 	
 	@RequestMapping("/del")
@@ -109,25 +110,21 @@ public class ComboController {
 	
 	@RequestMapping("/add")
 	@ResponseBody()
-	public Object add(@ModelAttribute("comboInf") ComboInf combo, @RequestParam("comboDetailsJson")String comboDetailsJson, HttpServletRequest request) throws Exception {
-		List<ComboDetailInf> comboDetails = JSON.parseArray(comboDetailsJson, ComboDetailInf.class);
-		combo.setComboDetails(comboDetails);
+	public Object add(@ModelAttribute("comboInf") ComboInf combo, @RequestParam("childComboTypeJson")String childComboTypeJson, HttpServletRequest request) throws Exception {
 		combo.setProductId(getSequenceService.GetNewProductId(true));
 		combo.setStatus(0);
        (combo.getInventory()).setProductId(combo.getProductId());
-		comboServiceImpl.add(combo);
+		comboServiceImpl.add(combo, JSON.parseArray(childComboTypeJson, ChildComboTypeInf.class));
 		return null;
 	}
 	
 	@RequestMapping("/update")
 	@ResponseBody()
-	public Object update(@ModelAttribute("comboInf") ComboInf combo, @RequestParam("comboDetailsJson")String comboDetailsJson, HttpServletRequest request) throws Exception {
+	public Object update(@ModelAttribute("comboInf") ComboInf combo, @RequestParam("childComboTypeJson")String childComboTypeJson, HttpServletRequest request) throws Exception {
 		if (StringUtils.isNull(combo.getPictureLink())) {
 			combo.setPictureLink(null);
 		}
-		List<ComboDetailInf> comboDetails = JSON.parseArray(comboDetailsJson, ComboDetailInf.class);
-		combo.setComboDetails(comboDetails);
-		comboServiceImpl.update(combo);
+		comboServiceImpl.update(combo, JSON.parseArray(childComboTypeJson, ChildComboTypeInf.class));
 		return null;
 	}
 }

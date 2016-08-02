@@ -78,7 +78,7 @@
 				<td class="tdspace">
 				</td>
 				<td>
-					<input type="text" name="price" maxlength="30" class="easyui-numberbox" data-options="required:true,min:0,max:99999,precision:2" style="width:180px;"/>
+					<input type="text" name="price" maxlength="8" class="easyui-numberbox" data-options="required:true,min:0,max:99999.99,precision:2" style="width:180px;"/>
 				</td>
 				<td class="hintspace">
 					<tt>*</tt> 
@@ -123,7 +123,7 @@
 				<td valign="top" class="tdspace">
 				</td>
 				<td>
-					<input id="menu_inventory" type="text" maxlength="30" class="easyui-numberbox" data-options="required:true,min:0,max:999,precision:0" disabled="true" style="width:180px;"/>
+					<input id="menu_inventory" type="text" maxlength="3" class="easyui-numberbox" data-options="required:true,min:0,max:999,precision:0" disabled="true" style="width:180px;"/>
 				</td>
 				<td class="hintspace"></td>				
 			</tr>

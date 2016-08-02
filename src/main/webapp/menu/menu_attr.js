@@ -146,7 +146,7 @@ define(function () {
 		"</tr>");
 		
 		var $attrVal = $("<input count='"+i+"' type=\"text\" value='"+val+"' maxlength=\"8\" class=\"easyui-validatebox\" data-options=\"required:true\" style=\"width:100px;\"/>");
-		var $priceVal = $("<input count='"+i+"' type=\"text\" value='"+price+"' maxlength=\"8\" class=\"easyui-numberbox\" min='0' max='9999.99' precision='2' style=\"width:60px;\"/> ");
+		var $priceVal = $("<input count='"+i+"' type=\"text\" value='"+price+"' maxlength=\"7\" class=\"easyui-numberbox\" min='0' max='9999.99' precision='2' style=\"width:60px;\"/> ");
 		var $delBtn = $("<a href=\"javascript:void(0)\" class=\"easyui-linkbutton ct-rst-btn\" iconCls=\"icon-remove\" plain=\"true\">删除</a>");
 		var n = i;
 		

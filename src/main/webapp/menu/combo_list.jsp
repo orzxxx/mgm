@@ -55,9 +55,9 @@
 					<table id="combo_pageList"></table>
 			</div>
 			<div id="combo_toolbar">        
-				<a id="combo_edit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">修改</a>
+				<a id="combo_toEdit" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">修改</a>
 				<a id="combo_del" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"">删除</a>
-				<a id="combo_add" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"">添加</a>
+				<a id="combo_toAdd" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"">添加</a>
 			</div>
 	</div>
 	<div id="combo_form" style="display: none;">

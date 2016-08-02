@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.prom.DiscountTimeInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.prom.DiscountTimeInf" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="discount_mode" property="discountMode" jdbcType="INTEGER" />
+    <result column="param1" property="param1" jdbcType="VARCHAR" />
+    <result column="param2" property="param2" jdbcType="VARCHAR" />
+    <collection property="rules" ofType="com.centerm.model.prom.DiscountRuleInf">
+    	<result column="r_discount_mode" property="discountMode" jdbcType="INTEGER" />
+	    <result column="r_param1" property="param1" jdbcType="VARCHAR" />
+	    <result column="r_param2" property="param2" jdbcType="VARCHAR" />
+	    <result column="r_param3" property="param3" jdbcType="VARCHAR" />
+	    <result column="r_param4" property="param4" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mchnt_cd, discount_mode, param1, param2
+  </sql>
+  <select id="getModeParamByMchntCd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    a.id, a.mchnt_cd, a.discount_mode, a.param1, a.param2, b.discount_mode r_discount_mode,
+    b.param1 r_param1, b.param2 r_param2, b.param3 r_param3, b.param4 r_param4
+    FROM tbl_bkms_discount_time_config_inf a
+    LEFT JOIN tbl_bkms_discount_rule_config_inf b
+    ON a.mchnt_cd = b.mchnt_cd AND a.discount_mode = b.discount_mode
+    WHERE a.mchnt_cd = #{id,jdbcType=VARCHAR}
+    ORDER BY a.discount_mode
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_discount_time_config_inf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByMchntCd" parameterType="java.lang.String" >
+    delete from tbl_bkms_discount_time_config_inf
+    where mchnt_cd = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_bkms_discount_time_config_inf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+   <insert id="insertbatch" parameterType="java.util.List" >
+    insert into tbl_bkms_discount_time_config_inf (mchnt_cd, discount_mode, param1, param2)
+    values
+     <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.mchntCd,jdbcType=VARCHAR}, #{item.discountMode,jdbcType=INTEGER}, 
+      #{item.param1,jdbcType=VARCHAR}, #{item.param2,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insert" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    insert into tbl_bkms_discount_time_config_inf (id, mchnt_cd, discount_mode, 
+      param1, param2)
+    values (#{id,jdbcType=INTEGER}, #{mchntCd,jdbcType=VARCHAR}, #{discountMode,jdbcType=INTEGER}, 
+      #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    insert into tbl_bkms_discount_time_config_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mchntCd != null" >
+        mchnt_cd,
+      </if>
+      <if test="discountMode != null" >
+        discount_mode,
+      </if>
+      <if test="param1 != null" >
+        param1,
+      </if>
+      <if test="param2 != null" >
+        param2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mchntCd != null" >
+        #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMode != null" >
+        #{discountMode,jdbcType=INTEGER},
+      </if>
+      <if test="param1 != null" >
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null" >
+        #{param2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    update tbl_bkms_discount_time_config_inf
+    <set >
+      <if test="mchntCd != null" >
+        mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMode != null" >
+        discount_mode = #{discountMode,jdbcType=INTEGER},
+      </if>
+      <if test="param1 != null" >
+        param1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null" >
+        param2 = #{param2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    update tbl_bkms_discount_time_config_inf
+    set mchnt_cd = #{mchntCd,jdbcType=VARCHAR},
+      discount_mode = #{discountMode,jdbcType=INTEGER},
+      param1 = #{param1,jdbcType=VARCHAR},
+      param2 = #{param2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

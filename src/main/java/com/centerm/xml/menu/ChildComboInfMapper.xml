@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.centerm.dao.menu.ChildComboInfMapper" >
+  <resultMap id="BaseResultMap" type="com.centerm.model.menu.ChildComboInf" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="combo_type_id" property="comboTypeId" jdbcType="INTEGER" />
+    <result column="single_name" property="singleName" jdbcType="VARCHAR" />
+    <result column="single_price" property="singlePrice" jdbcType="DECIMAL" />
+    <result column="exchange_product_flag" property="exchangeProductFlag" jdbcType="INTEGER" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+    <collection property="productAttrTypes" ofType="com.centerm.model.menu.ProductAttrTypeInf">
+	    <id column="attr_type_id" property="attrTypeId" jdbcType="INTEGER" />
+	    <result column="attr_type_name" property="attrTypeName" jdbcType="VARCHAR" />
+	    <collection property="productAttrs" ofType="com.centerm.model.menu.ProductAttrInf">
+			<id column="attr_id" property="attrId" jdbcType="INTEGER" />
+		    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+		    <result column="attr_price" property="attrPrice" jdbcType="DECIMAL" />
+		</collection>
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, combo_type_id, single_name, single_price, exchange_product_flag, priority
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_bkms_child_combo_inf
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByProductId" parameterType="java.lang.String" >
+    DELETE FROM tbl_bkms_child_combo_inf
+    WHERE combo_type_id in (
+    	SELECT id FROM tbl_bkms_child_combo_type_inf
+    	WHERE product_id = #{productId,jdbcType=INTEGER}
+    )
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_bkms_child_combo_inf
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.centerm.model.menu.ChildComboInf" useGeneratedKeys="true" keyProperty="id">
+    insert into tbl_bkms_child_combo_inf (id, combo_type_id, single_name, 
+      single_price, exchange_product_flag, priority
+      )
+    values (#{id,jdbcType=INTEGER}, #{comboTypeId,jdbcType=INTEGER}, #{singleName,jdbcType=VARCHAR}, 
+      #{singlePrice,jdbcType=DECIMAL}, #{exchangeProductFlag,jdbcType=INTEGER}, #{priority,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.centerm.model.menu.ChildComboInf" >
+    insert into tbl_bkms_child_combo_inf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="comboTypeId != null" >
+        combo_type_id,
+      </if>
+      <if test="singleName != null" >
+        single_name,
+      </if>
+      <if test="singlePrice != null" >
+        single_price,
+      </if>
+      <if test="exchangeProductFlag != null" >
+        exchange_product_flag,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="comboTypeId != null" >
+        #{comboTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="singleName != null" >
+        #{singleName,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePrice != null" >
+        #{singlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeProductFlag != null" >
+        #{exchangeProductFlag,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.centerm.model.menu.ChildComboInf" >
+    update tbl_bkms_child_combo_inf
+    <set >
+      <if test="comboTypeId != null" >
+        combo_type_id = #{comboTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="singleName != null" >
+        single_name = #{singleName,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePrice != null" >
+        single_price = #{singlePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="exchangeProductFlag != null" >
+        exchange_product_flag = #{exchangeProductFlag,jdbcType=INTEGER},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.centerm.model.menu.ChildComboInf" >
+    update tbl_bkms_child_combo_inf
+    set combo_type_id = #{comboTypeId,jdbcType=INTEGER},
+      single_name = #{singleName,jdbcType=VARCHAR},
+      single_price = #{singlePrice,jdbcType=DECIMAL},
+      exchange_product_flag = #{exchangeProductFlag,jdbcType=INTEGER},
+      priority = #{priority,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

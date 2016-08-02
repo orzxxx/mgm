@@ -5,8 +5,8 @@
 </script>
 
 <style type="text/css">
-#combo_form table tr td:first-child{
-	width:100px;
+#combo_baseform table tr td:first-child{
+	width:120px;
 }
 div.tagsinput{
 	border: 1px solid;
@@ -14,16 +14,24 @@ div.tagsinput{
 }
 </style>
 
-<div>
+<div style='overflow:auto;'>
 	<div id="combo_baseInfo" style="float: left;width:400px;">
-		<a id="combo_back" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">返回</a>
 		<br/>
-		<form method="post" id="combo_form" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
+		<form method="post" id="combo_baseform" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
 			<input id="combo_mchntCd" type="hidden" name="mchntCd">
 			<input id="combo_productId" type="hidden" name="productId">
 			<input id="combo_pictureLink" type="hidden" name="pictureLink">
 			<input id="combo_inventoryId" type="hidden" name="inventory.productId">
 			<table class="table_info" border="0">
+			<tr>
+					<td colspan="3">
+						<a id="combo_back" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">返回</a>
+						<a id="combo_add" href="javascript:void(0);" class="easyui-linkbutton ct-qry-btn">保存</a>
+					</td>
+					<td class="hintspace">
+					</td>				
+				</tr>
+			<tr>
 			<tr>
 					<td>
 					</td>
@@ -88,7 +96,7 @@ div.tagsinput{
 					<td valign="top" class="tdspace">
 					</td>
 					<td>
-						<input id="combo_inventory" type="text" maxlength="30" class="easyui-numberbox" data-options="required:true,min:0,max:999,precision:0" disabled="true" style="width:180px;"/>
+						<input id="combo_inventory" type="text" maxlength="3" class="easyui-numberbox" data-options="required:true,min:0,max:999,precision:0" disabled="true" style="width:180px;"/>
 					</td>
 					<td class="hintspace"></td>				
 				</tr>
@@ -116,7 +124,7 @@ div.tagsinput{
 					<td class="tdspace">
 					</td>
 					<td>
-						<input id="combo_price" type="text" class="easyui-numberbox" data-options="min:0,max:99999,precision:2" name="price"/>
+						<input id="combo_price" type="text" class="easyui-numberbox" maxlength='7' data-options="min:0,max:99999.99,precision:2" name="price" style="width:180px;"/>
 					</td>
 					<td class="hintspace">
 						<tt>*</tt> 
@@ -140,20 +148,20 @@ div.tagsinput{
 			</table>
 		</form>
 	</div>
-	<div id="combo_packages" style="float: left;width:400px;">
+	<div id="combo_packages" style="float: left;">
 		<form method="post" id="comboPkg_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
-		<table class="table_info" border="0" style="width:370px;">
+		<table class="table_info" border="0">
 			<tr>
 				<td valign="top" >
 					<label style='width: 60px;'>
-						属性名
+						组合配置
 					</label>
 				</td>
 				<td valign="top" class="tdspace">
 				</td>
 				<td style="width:420px;text-align: left;">
-					<input id="comboPkg_newAttr" type="text" maxlength="8" class="easyui-validatebox" style="width:120px;"/>
-					<a id="comboPkg_addAttr" href="javascript:void(0)" style="width:100px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新属性</a>
+					<input id="comboPkg_newAttr" type="text" maxlength="16" class="easyui-validatebox" style="width:120px;"/>
+					<a id="comboPkg_addAttr" href="javascript:void(0)" style="width:120px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新组合配置</a>
 				</td>
 			</tr>
 		</table>

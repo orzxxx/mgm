@@ -1,5 +1,5 @@
 requirejs.config({
-	urlArgs: "v=" +  new Date(),
+	urlArgs: "v=" +  9,
 	baseUrl:contextPath+"/",
 	
     paths: {
@@ -18,6 +18,8 @@ requirejs.config({
         'order': 'trade/order',
         'prom': 'prom/prom',
         'discount': 'prom/discount',
+        'discount-date': 'prom/discount_date',
+        'discount-reduction': 'prom/discount_reduction',
         'turnover': 'report/turnover',
         'turnover-day': 'report/turnover_day',
         'turnover-month': 'report/turnover_month',

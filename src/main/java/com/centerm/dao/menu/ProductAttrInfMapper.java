@@ -11,4 +11,6 @@ public interface ProductAttrInfMapper extends BaseMapper<ProductAttrInf>{
 
 	public void deleteByProductId(String productId);
 	
+	public void deleteByComboId(String ComboId);
+	
 }

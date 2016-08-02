@@ -108,11 +108,15 @@
 						$('<span>').addClass('tag').append(
 		                        $('<span>').text(value).append('&nbsp;&nbsp;'),
 		                        $('<a>', {
-		                            href  : '#',
+		                            href  : 'javascript:void(0)',
 		                            title : '移除标签',
 		                            text  : 'x'
 		                        }).click(function () {
-		                            return $('#' + id).removeTag(escape(value));
+		                            //return $('#' + id).removeTag(escape(value));
+		                        	$(this).parent('span').remove();
+		                        	if (options.callback) {
+		                        		options.callback.call(this);
+									}
 		                        })
 		                    ).insertBefore('#' + id + '_addTag');
 					}else{
