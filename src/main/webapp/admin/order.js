@@ -9,6 +9,7 @@ define(function () {
 	function initButton(){
 		$("#order_query").click(query);
 		$("#order_clear").click(clearForm);
+		$("#order_export").click(exportExcel);
 	}
 	function initDatagrid(){
 		$('#order_pageList').datagrid({
@@ -82,6 +83,25 @@ define(function () {
 				
 		}
 
+		function exportExcel(){
+			var form = $("<form/>");//定义一个form表单
+			form.attr("style", "display:none");
+			form.attr("target", "");
+			form.attr("method", "post");
+			form.attr("action", contextPath+"/trade/order/export");
+			
+			$("#order_searchForm input, #order_searchForm select").each(function(){
+				var propertyNode =$("<input/>");
+				propertyNode.attr("type", "hidden");
+				propertyNode.attr("name", $(this).attr('name'));
+				propertyNode.attr("value", $(this).val());
+				
+				form.append(propertyNode);
+			});
+			$("body").append(form);//将表单放置在web中
+			form.submit();//表单提交
+		}
+	
 		function check(){
 			if ($("#order_minTransdate").val() != "" && $("#order_maxTransdate").val() != "") {
 				if($("#order_minTransdate").val() > $("#order_maxTransdate").val()){

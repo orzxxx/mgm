@@ -37,7 +37,7 @@
 									</label>
 								</td>
 								<td width="290px">
-									<input type="text" name="mchntCd" id="mchntCd" maxlength="8" style="width:200px;">
+									<input type="text" name="mchntCd" id="mchntCd" maxlength="11" style="width:200px;">
 								</td>
 								<td class="hintspace"></td>
 							</tr>
@@ -112,5 +112,6 @@
 				<table id="order_pageList"></table>
 		</div>
 		<div id="order_toolbar">        
+			<a id="order_export" href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"">导出</a>
 		</div>
 </div>

@@ -21,6 +21,7 @@ import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
+import com.centerm.model.menu.Sreenshot;
 import com.centerm.service.menu.IMenuServiceImpl;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.ImageUtils;
@@ -90,7 +91,7 @@ public class MenuController {
 		return null;
 	}
 	
-	@RequestMapping("/upload")
+	/*@RequestMapping("/upload")
 	@ResponseBody()
 	public Object upload(@ModelAttribute("menuInf") MenuInf menu, HttpServletRequest request) throws Exception {
 		//保存图片
@@ -109,6 +110,49 @@ public class MenuController {
 		}else{
 			throw new BusinessException("非法的图片格式");
 		}
+	}*/
+	/**
+	 * 上传临时图片,供前台截取
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/uploadTemp")
+	@ResponseBody()
+	public Object uploadTemp(HttpServletRequest request) throws Exception {
+		MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;  
+        MultipartFile picture =  multipartRequest.getFile("picture"); 
+        if (ImageUtils.imageFormatValidate(picture)) {
+        	//获取临时图片
+        	File imageFile = ImageUtils.getTempImageFile();
+        	//保存图片
+        	picture.transferTo(imageFile);
+        	//保存图片链接
+        	Map<String, String> data = new HashMap<String, String>();
+        	data.put("picturePath", PropertyUtils.getProperties("tempSavePath")+"/"+imageFile.getName());
+        	data.put("pictureAddr", PropertyUtils.getProperties("tempServerAddress")+"/"+imageFile.getName());
+        	return data;
+		}else{
+			throw new BusinessException("非法的图片格式");
+		}
+	}
+	
+	/**
+	 * 上传图片
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/upload")
+	@ResponseBody()
+	public Object upload(@ModelAttribute("Sreenshot") Sreenshot ss, HttpServletRequest request) throws Exception {
+        //图片保存截取和压缩
+        File imageFile = ImageUtils.getImageFile(ss.getMchntCd(), ss, ImageUtils.MENU);
+        //保存图片链接
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("pictureLink", imageFile.getName());
+        data.put("pictureAddr", PropertyUtils.getProperties("serverAddress")+"/"+ss.getMchntCd()+"/"+imageFile.getName());
+        return data;
 	}
 	
 	@RequestMapping("/update")

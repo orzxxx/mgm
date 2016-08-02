@@ -159,9 +159,8 @@ div.tagsinput{
 				</td>
 				<td valign="top" class="tdspace">
 				</td>
-				<td style="width:420px;text-align: left;">
-					<input id="comboPkg_newAttr" type="text" maxlength="16" class="easyui-validatebox" style="width:120px;"/>
-					<a id="comboPkg_addAttr" href="javascript:void(0)" style="width:120px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新组合配置</a>
+				<td>
+					<input type="text" name="packingBoxNum" maxlength="2" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
 				</td>
 			</tr>
 		</table>

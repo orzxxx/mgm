@@ -31,7 +31,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="register_passwd" type="password" name="passwd" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="pwd" style="width:220px;"/>
+				<input id="register_passwd" type="password" name="passwd" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="pwd" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>* 长度6到20位<!-- ,允许输入数字和字母 --></tt>
@@ -40,13 +40,13 @@
 		<tr>
 			<td>
 				<label>
-					重复密码:
+					确认密码:
 				</label>
 			</td>
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="password" name="repasswd" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="pwdEquals['#register_passwd']" style="width:220px;"/>
+				<input type="password" name="repasswd" maxlength="20" class="easyui-validatebox" data-options="required:true" validType="pwdEquals['#register_passwd']" style="width:220px;"/>
 			</td>
 			<td class="hintspace">
 				<tt>*</tt>

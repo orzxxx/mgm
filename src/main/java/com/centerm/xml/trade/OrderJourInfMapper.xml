@@ -6,6 +6,7 @@
     <result column="pseq" property="pseq" jdbcType="VARCHAR" />
     <result column="term_trans_trc" property="termTransTrc" jdbcType="VARCHAR" />
     <result column="mchnt_cd" property="mchntCd" jdbcType="VARCHAR" />
+    <result column="mchnt_name" property="mchntName" jdbcType="VARCHAR" />
     <result column="terminal_cd" property="terminalCd" jdbcType="VARCHAR" />
     <result column="oper_id" property="operId" jdbcType="VARCHAR" />
     <result column="term_datetime" property="termDatetime" jdbcType="VARCHAR" />
@@ -54,9 +55,7 @@
     a.transdate, a.datetime, a.stdtrnsamt, a.totalnum, a.order_detail, a.pay_no, a.pay_tp, a.chnl_seq, 
     a.trnsflag, a.setdate, a.trnsdatetime, a.stdrspcod, a.print_info, a.chnl_mchntcd, a.chnl_termcd, 
     a.batchno, a.chnl_systraceno, a.authcode, a.orderid_scan, a.discount,
-    b.uuid as d_uuid, b.order_no as d_order_no, b.product_id as d_product_id, b.product_name as d_product_name,
-    b.price as d_price, b.taste as d_taste, b.num as d_num, b.transtime as d_transtime, 
-    b.transdate as d_transdate, b.specifications as d_specifications
+    b.mchnt_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -68,6 +67,106 @@
     delete from tbl_bkms_order_oldjour
     where order_no = #{orderNo,jdbcType=VARCHAR}
   </delete>
+  <select id="queryForExcel" resultMap="BaseResultMap" parameterType="com.centerm.model.trade.OrderJourInf">
+	SELECT
+	<include refid="Model_Column_List" />
+	FROM tbl_bkms_order_oldjour a
+	INNER JOIN tbl_bkms_mchnt_inf b
+	ON a.mchnt_cd = b.mchnt_cd
+	<where>
+	<if test="orderNo != null and orderNo != ''">
+		 a.order_no like #{orderNo}
+	</if>
+	<if test="pseq != null and pseq != ''">
+		AND a.pseq like #{pseq}
+	</if>
+	<if test="termTransTrc != null and termTransTrc != ''">
+		AND a.term_trans_trc = #{termTransTrc}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND a.mchnt_cd like #{mchntCd}
+	</if>
+	<if test="terminalCd != null and terminalCd != ''">
+		AND a.terminal_cd = #{terminalCd}
+	</if>
+	<if test="operId != null and operId != ''">
+		AND a.oper_id = #{operId}
+	</if>
+	<if test="termDatetime != null and termDatetime != ''">
+		AND a.term_datetime = #{termDatetime}
+	</if>
+	<if test="transtime != null and transtime != ''">
+		AND a.transtime = #{transtime}
+	</if>
+	<if test="discount != null and discount != ''" >
+        AND a.discount = #{discount},
+    </if>
+	<if test="transdate != null and transdate != ''">
+		AND a.transdate = #{transdate}
+	</if>
+	<if test="datetime != null and datetime != ''">
+		AND a.datetime = #{datetime}
+	</if>
+	<if test="stdtrnsamt != null and stdtrnsamt != ''">
+		AND a.stdtrnsamt = #{stdtrnsamt}
+	</if>
+	<if test="totalnum != null and totalnum != ''">
+		AND a.totalnum = #{totalnum}
+	</if>
+	<if test="orderDetail != null and orderDetail != ''">
+		AND a.order_detail = #{orderDetail}
+	</if>
+	<if test="payNo != null and payNo != ''">
+		AND a.pay_no = #{payNo}
+	</if>
+	<if test="payTp != null and payTp != ''">
+		AND a.pay_tp = #{payTp}
+	</if>
+	<if test="chnlSeq != null and chnlSeq != ''">
+		AND a.chnl_seq = #{chnlSeq}
+	</if>
+	<if test="trnsflag != null and trnsflag != '' or trnsflag == 0">
+		AND a.trnsflag = #{trnsflag}
+	</if>
+	<if test="setdate != null and setdate != ''">
+		AND a.setdate = #{setdate}
+	</if>
+	<if test="trnsdatetime != null and trnsdatetime != ''">
+		AND a.trnsdatetime = #{trnsdatetime}
+	</if>
+	<if test="stdrspcod != null and stdrspcod != ''">
+		AND a.stdrspcod = #{stdrspcod}
+	</if>
+	<if test="printInfo != null and printInfo != ''">
+		AND a.print_info = #{printInfo}
+	</if>
+	<if test="chnlMchntcd != null and chnlMchntcd != ''">
+		AND a.chnl_mchntcd = #{chnlMchntcd}
+	</if>
+	<if test="chnlTermcd != null and chnlTermcd != ''">
+		AND a.chnl_termcd = #{chnlTermcd}
+	</if>
+	<if test="batchno != null and batchno != ''">
+		AND a.batchno = #{batchno}
+	</if>
+	<if test="chnlSystraceno != null and chnlSystraceno != ''">
+		AND a.chnl_systraceno = #{chnlSystraceno}
+	</if>
+	<if test="authcode != null and authcode != ''">
+		AND a.authcode = #{authcode}
+	</if>
+	<if test="orderidScan != null and orderidScan != ''">
+		AND a.orderid_scan = #{orderidScan}
+	</if>
+	<if test="minTransdate != null and minTransdate != ''">
+	    AND a.transdate >= #{minTransdate}
+	</if>
+	<if test="maxTransdate != null and maxTransdate != ''">
+	    AND a.transdate &lt;= #{maxTransdate}
+    </if>
+	</where>
+	order by mchnt_cd, datetime desc 
+</select>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Base_Column_List" />
@@ -98,7 +197,7 @@
 		AND transtime = #{transtime}
 	</if>
 	<if test="discount != null and discount != ''" >
-        discount = #{discount},
+        AND discount = #{discount},
     </if>
 	<if test="transdate != null and transdate != ''">
 		AND transdate = #{transdate}

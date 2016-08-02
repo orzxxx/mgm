@@ -61,6 +61,9 @@
 
 --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ct.css" type="text/css"></link>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/city-picker.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/cropper.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/cropper.min.css" type="text/css"></link>
 <style>
 
 </style>
@@ -156,13 +159,17 @@
 				top.location.href = data.redirectUrl;
 				return;
 			}
-		} catch(e){}
+		} catch(e){
+			console.log(e);
+		}
 	},error : function(XMLHttpRequest, textStatus, errorThrown) {
 		try{
 			hideLoading();
 			//$.messager.progress('close');
 			$.messager.alert("错误", "连接超时,请重新登录");
-		}catch(e){}
+		}catch(e){
+			console.log(e);
+		}
 	}
 });
 $.fn.serializeObject = function()    

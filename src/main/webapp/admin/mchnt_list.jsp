@@ -12,7 +12,7 @@
 							<tr>
 								<td width="60px">
 									<label>
-										商户名:
+										店铺名称:
 									</label>
 								</td>
 								<td>
@@ -27,7 +27,7 @@
 									</label>
 								</td>
 								<td>
-									<input id="mchntSearch_cd" type="text" name="mchntCd"  maxlength="20" style="width:200px;">
+									<input id="mchntSearch_cd" type="text" name="mchntCd"  maxlength="11" style="width:200px;">
 								</td>
 								<td style="padding-left: 20px;">
 								</td>

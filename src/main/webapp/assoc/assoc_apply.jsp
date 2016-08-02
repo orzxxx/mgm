@@ -51,7 +51,7 @@ requirejs(['assoc-apply'],function  (assoc) {
 		<tr>
 			<td>
 				<label>
-					商户名:
+					店铺名称:
 				</label>
 			</td>
 			<td class="tdspace">

@@ -55,8 +55,8 @@ define(function () {
 	//添加新属性值
 	function addNewAttrValue(div, attr, val, price){
 		var length = $(div).find("table tr").length-1;
-		if (length >= 3) {
-			$.messager.alert("提示", "最多添加3个属性值");
+		if (length >= 7) {
+			$.messager.alert("提示", "最多添加7个属性值");
 			return;
 		}
 		//插入

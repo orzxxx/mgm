@@ -145,7 +145,7 @@ public class MchntAuditController {
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
-        	String imageName = ImageUtils.getFileName(mchntCd);
+        	String imageName = ImageUtils.getFileName(mchntCd, false);
         	File imageFile = new File(imagePath+imageName);
         	//保存图片
         	picture.transferTo(imageFile);
