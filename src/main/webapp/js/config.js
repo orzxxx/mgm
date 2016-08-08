@@ -7,6 +7,7 @@ requirejs.config({
         'menu-attr': 'menu/menu_attr',
         'menuType': 'menu/menuType',
         'packingboxfee': 'menu/packingboxfee',
+        'on-off-shelves': 'menu/on_off_shelves',
         'menuTmpl': 'template/menu',
         'menuTypeTmpl': 'template/menuType',
         'combo': 'menu/combo',

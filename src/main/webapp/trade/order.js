@@ -162,7 +162,7 @@ define(function () {
 				idField:"productId",
 				columns:[[
 					{field:'productName',title:'菜名',width:100,sortable:true,align:'center'},
-				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
+				    {field:'price',title:'价格(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return value.toFixed(2);
 						}},
 					{field:'num',title:'数量',width:60,sortable:true,align:'center'},

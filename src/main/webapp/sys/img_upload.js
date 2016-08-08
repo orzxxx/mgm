@@ -11,8 +11,12 @@ define(function () {
 	var picturePath = "";
 	var pictureLink = "";
 	var pictureAddr = "";
+	var g_ratio = 4/3;
 	
-	function init(){
+	function init(ratio){
+		if (ratio != null && ratio != "") {
+			g_ratio = ratio;
+		}
 		//initForm();
 		initButton();
 	}
@@ -23,6 +27,14 @@ define(function () {
 	}
 	
 	function getData(){
+		if ($("#img_select").val() == "") {
+			$.messager.alert("提示", "请先上传图片!");
+			return;
+		}
+		if ($("#img_select").val() != "" && !/^.+\.(gif|jpg|jpeg|png)$/.test($("#img_select").val())) {
+			$.messager.alert("提示", "非法的图片格式");
+			return;
+		}
 		var cropperData = $('#img_picture').cropper('getData');
 		var param = cropperData;
 		param.mchntCd = userInfo.mchntCd;
@@ -31,23 +43,78 @@ define(function () {
 		return param;
 	}
 	
+	function setData(data){
+		//imgShow();
+		//$("#img_tips").hide();
+	}
+	
 	function initForm(){
-		$('#img_picture').cropper({
-			  aspectRatio: 16 / 9,
+		/*$('#img_picture').cropper({
+			  aspectRatio: g_ratio,
 			  viewMode: 1,
 			  checkCrossOrigin: false,
 			  crop: function(e) {
 				  
 			  }
-			});
+			});*/
+		
+		var $previews = $('.preview');
+
+	      $('#img_picture').cropper({
+	    	  aspectRatio: g_ratio,
+			  viewMode: 1,
+			  checkCrossOrigin: false,
+	          build: function (e) {
+	            var $clone = $(this).clone();
+
+	            $clone.css({
+	              display: 'block',
+	              width: '200px',
+	              minWidth: 0,
+	              minHeight: 0,
+	              maxWidth: 'none',
+	              maxHeight: 'none'
+	            });
+
+	            $clone.attr("id", "img_preview");
+	            
+	            $previews.css({
+	              width: '200px',
+	              overflow: 'hidden'
+	            }).html($clone);
+	          },
+
+	          crop: function (e) {
+	            var imageData = $(this).cropper('getImageData');
+	            var previewAspectRatio = e.width / e.height;
+
+	            $previews.each(function () {
+	              var $preview = $(this);
+	              var previewWidth = $preview.width();
+	              var previewHeight = previewWidth / previewAspectRatio;
+	              var imageScaledRatio = e.width / previewWidth;
+
+	              $preview.height(previewHeight).find('img').css({
+	                width: imageData.naturalWidth / imageScaledRatio,
+	                height: imageData.naturalHeight / imageScaledRatio,
+	                marginLeft: -e.x / imageScaledRatio,
+	                marginTop: -e.y / imageScaledRatio
+	              });
+	            });
+	            
+	            $previews.width(200).hide();
+			     $('.cropper-container').hide();
+	          }
+	        });
+	      
 	}
 	
 	function initButton(){
 		$("#img_select").change(select);
-		$("#img_upload").click(upload);
+		//$("#img_upload").click(upload);
 	}
 	
-	function upload(){
+	/*function upload(){
 		var cropperData = $('#img_picture').cropper('getData');
 		var param = cropperData;
 		param.path = picturePath;
@@ -71,29 +138,87 @@ define(function () {
 				}
 			}
         });
+	}*/
+	
+	function imgHide(){
+		$('#img_preview').hide().removeClass("cropper-hidden");
+		$('#img_picture').cropper('destroy').hide();
+		$("#img_tips").show();
+	}
+	
+	function imgShow(){
+		var $previews = $('.preview');
+
+	      $('#img_picture').cropper({
+	    	  aspectRatio: g_ratio,
+			  viewMode: 1,
+			  checkCrossOrigin: false,
+	          build: function (e) {
+	            var $clone = $(this).clone();
+
+	            $clone.css({
+	              display: 'block',
+	              width: '200px',
+	              minWidth: 0,
+	              minHeight: 0,
+	              maxWidth: 'none',
+	              maxHeight: 'none'
+	            });
+
+	            $clone.attr("id", "img_preview");
+	            
+	            $previews.css({
+	              width: '200px',
+	              overflow: 'hidden'
+	            }).html($clone);
+	          },
+
+	          crop: function (e) {
+	            var imageData = $(this).cropper('getImageData');
+	            var previewAspectRatio = e.width / e.height;
+
+	            $previews.each(function () {
+	              var $preview = $(this);
+	              var previewWidth = $preview.width();
+	              var previewHeight = previewWidth / previewAspectRatio;
+	              var imageScaledRatio = e.width / previewWidth;
+
+	              $preview.height(previewHeight).find('img').css({
+	                width: imageData.naturalWidth / imageScaledRatio,
+	                height: imageData.naturalHeight / imageScaledRatio,
+	                marginLeft: -e.x / imageScaledRatio,
+	                marginTop: -e.y / imageScaledRatio
+	              });
+	            });
+	            
+	            $previews.width(200).removeClass('cropper-hidden');
+	          }
+	        });
 	}
 	
 	function select(){
 		if ($("#img_select").val() == "") {
-			//待处理
-			//$("#img_picture").attr('src', "");
+			imgHide();
 			return;
 		}
-		//添加图片类型校验
+		if (!/^.+\.(gif|jpg|jpeg|png)$/.test($("#img_select").val())) {
+			$.messager.alert("提示", "非法的图片格式");
+			imgHide();
+			return;
+		}
 			$('#img_form').ajaxSubmit( {
     			url : "menu/menu/uploadTemp",
     			dataType : "json",
                 success : function(result) {
 					if (result.code == 0) {
 						dataClear();
-						//图片回显
-	            		//$("#img_picture").attr('src', result.data.pictureAddr);
 	            		//
-	            		//$('#img_picture').cropper('reset').cropper('replace', result.data.pictureAddr);
 						picturePath = result.data.picturePath;
-						$('#img_picture').cropper('reset').cropper('replace', result.data.pictureAddr);
+						$("#img_tips").hide();
+						imgShow();
+						$('#img_picture').show().cropper('reset').cropper('replace', result.data.pictureAddr);
+						$('#img_preview').width(200).removeClass('cropper-hidden');
 					} else {
-						//待处理$("#menu_picture").val("");
 						$.messager.alert("提示", result.message);
 					}
     			}
@@ -102,7 +227,8 @@ define(function () {
 	
     return {
         init : init,
-        getData: getData
+        getData: getData,
+        setData: setData
     };
     
 });

@@ -8,13 +8,13 @@
 #combo_baseform table tr td:first-child{
 	width:120px;
 }
-div.tagsinput{
+#combo_packages div.tagsinput{
 	border: 1px solid;
     float: left;
 }
 </style>
 
-<div style='overflow:auto;'>
+<div id="comboForm" style='overflow-y:auto; overflow-x:auto;'>
 	<div id="combo_baseInfo" style="float: left;width:400px;">
 		<br/>
 		<form method="post" id="combo_baseform" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
@@ -51,8 +51,8 @@ div.tagsinput{
 					</td>
 					<td class="tdspace">
 					</td>
-					<td>
-						<input id="combo_picture" type="file" name="picture" maxlength="30" class="easyui-validatebox"  optional='true' data-options="required:true" validType="image" style="width:180px;"/>
+					<td style="text-align:center;">
+						<a style="width: 110px;" id="combo_picture" href="javascript:void(0)" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true"">上传图片</a>
 					</td>
 					<td class="hintspace">
 						<tt optional="true">*</tt> 
@@ -150,17 +150,18 @@ div.tagsinput{
 	</div>
 	<div id="combo_packages" style="float: left;">
 		<form method="post" id="comboPkg_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
-		<table class="table_info" border="0">
+		<table class="table_info" border="0" style="width:370px;">
 			<tr>
 				<td valign="top" >
-					<label style='width: 60px;'>
-						组合配置
+					<label>
+						组合名
 					</label>
 				</td>
 				<td valign="top" class="tdspace">
 				</td>
-				<td>
-					<input type="text" name="packingBoxNum" maxlength="2" value='0' class="easyui-numberbox" data-options="required:true,min:0,max:99,precision:0" style="width:180px;"/>
+				<td style="width:420px;text-align: left;">
+					<input id="comboPkg_newAttr" type="text" maxlength="8" class="easyui-validatebox" style="width:120px;"/>
+					<a id="comboPkg_addAttr" href="javascript:void(0)" style="width:100px;" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true">添加新组合</a>
 				</td>
 			</tr>
 		</table>

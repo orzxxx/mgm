@@ -23,4 +23,6 @@ public interface MenuInfMapper extends BaseMapper<MenuInf>{
 	public int count (MenuInf menu);
 	
 	public int updatePackingBoxNumByMchntCd(MenuInf menu);
+	
+	public List<MenuInf> queryMenuAndCombo(Map param);
 }

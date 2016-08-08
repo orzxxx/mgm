@@ -73,7 +73,7 @@
 			<td class="tdspace">
 			</td>
 			<td>
-				<input type="text" name="userName" readonly="readonly" maxlength="4" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
+				<input type="text" name="userName" readonly="readonly" maxlength="15" class="easyui-validatebox" style="width:260px;border:0px;" unselectable="on"/>
 			</td>
 			<td class="hintspace">
 			</td>

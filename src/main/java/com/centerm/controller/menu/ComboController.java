@@ -60,8 +60,9 @@ public class ComboController {
 			@RequestParam int pageSize, 
 			HttpSession session) throws Exception {
 		Page page = new Page(currentPage, pageSize);
-		//只查找未删除的
-		combo.setStatus(0);
+		if (combo.getStatus() == null) {
+			combo.setStatus(9);//0+1
+		}
 		List<ComboInf> combos = comboServiceImpl.list(combo, page);
 		String serverAddress = PropertyUtils.getProperties("serverAddress")+"/"+combo.getMchntCd()+"/";
 		for (ComboInf comboInf : combos) {
@@ -87,7 +88,7 @@ public class ComboController {
 		return null;
 	}
 	
-	@RequestMapping("/upload")
+	/*@RequestMapping("/upload")
 	@ResponseBody()
 	public Object upload(@ModelAttribute("comboInf") ComboInf combo, HttpServletRequest request) throws Exception {
 		//保存图片
@@ -106,7 +107,7 @@ public class ComboController {
 		}else{
 			throw new BusinessException("非法的图片格式");
 		}
-	}
+	}*/
 	
 	@RequestMapping("/add")
 	@ResponseBody()

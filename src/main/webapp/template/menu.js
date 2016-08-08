@@ -88,7 +88,7 @@ define(function () {
 				    {field:'menutpId',title:'单品分类',width:70,sortable:true,align:'center', formatter:function(value, rec){
 						return convertMenutpId(value);
 					    }},
-					    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
+					    {field:'price',title:'价格(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 						    return value.toFixed(2);
 							}},
 							/*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
@@ -260,7 +260,7 @@ define(function () {
 		var row = $('#menuTmpl_pageList').datagrid("getSelected");
 		if(row){
 			var dlg = $('<div/>').dialog({    
-			    title: '编辑菜品',    
+			    title: '编辑单品',    
 			    width: 420,    
 			    height: 530,    
 			    closable: false,    
@@ -379,7 +379,8 @@ define(function () {
 		$("#menuTmpl_mchntCd").val(userInfo.mchntCd);
 		setMenuType("menuTmpl_menutpId");
 		
-		$("#menuTmpl_picture").change(upload);
+		//$("#menuTmpl_picture").change(upload);
+		$("#menuTmpl_picture").click(toUpload);
 		//按钮事件
 		/*$("#menuTmpl_unlimited, #menuTmpl_soldout").change({status:0},function(event){
 			changeInventoryInput(event.data.status);
@@ -392,6 +393,58 @@ define(function () {
 		}});*/
 	}
 
+	function toUpload(){
+		var dlg = $('<div/>').dialog({    
+		    title: '上传图片',    
+		    width: 700,    
+		    height: 500,    
+		    closable: false,    
+		    cache: false,    
+		    href: 'sys/img_upload.jsp',    
+		    modal: true,
+		    buttons : [ {
+				text : '确定',
+				handler :function(){
+					var param = {};
+					requirejs(['img-upload'],function(img) {
+						param = img.getData();
+						param.mchntCd = currentMchntCd;
+						
+						$('#img_form').ajaxSubmit( {
+							url : "menu/menu/upload",
+							dataType : "json",
+							data: param,
+				            success : function(result) {
+								if (result.code == 0) {
+									$("#menuTmpl_img").attr('src', result.data.pictureAddr).show();
+				            		$("#menuTmpl_pictureLink").val(result.data.pictureLink);
+				            		//关闭对话框
+			                		dlg.dialog('close');
+			    	        		dlg.remove();
+								} else {
+									//待处理$("#menu_picture").val("");
+									$.messager.alert("提示", result.message);
+								}
+							}
+				        });
+					});
+					
+				}
+			},{
+				text : '关闭',
+				handler : function() {
+					dlg.dialog('close');
+		    		dlg.remove();
+				}
+			}],
+			onLoad : function(){
+				requirejs(['img-upload'],function(img) {
+					img.init();
+				});
+			}
+		});  
+	}
+	
 	function tagsInit(){
 		//标签功能
 		var t = $('#menuTmpl_taste').tagsInput({

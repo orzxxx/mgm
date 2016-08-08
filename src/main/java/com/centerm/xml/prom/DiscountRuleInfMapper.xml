@@ -9,9 +9,15 @@
     <result column="param2" property="param2" jdbcType="VARCHAR" />
     <result column="param3" property="param3" jdbcType="VARCHAR" />
     <result column="param4" property="param4" jdbcType="VARCHAR" />
+    <result column="param5" property="param5" jdbcType="VARCHAR" />
+    <association property="product" javaType="com.centerm.model.menu.MenuInf">
+	    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+	    <result column="menutp_id" property="menutpId" jdbcType="VARCHAR" />
+	    <result column="price" property="price" jdbcType="DECIMAL" />
+	</association>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, mchnt_cd, discount_mode, param1, param2, param3, param4
+    id, mchnt_cd, discount_mode, param1, param2, param3, param4, param5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -19,30 +25,36 @@
     from tbl_bkms_discount_rule_config_inf
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <delete id="deleteByMchntCdAndProductId" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    delete from tbl_bkms_discount_rule_config_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+    AND param1 =  #{param2,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByMchntCd" parameterType="java.lang.String" >
     delete from tbl_bkms_discount_rule_config_inf
-    where mchnt_cd = #{id,jdbcType=VARCHAR}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+    AND discount_mode != 3
   </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_bkms_discount_rule_config_inf
     where id = #{id,jdbcType=INTEGER}
   </delete>
    <insert id="insertbatch" parameterType="java.util.List" >
-    insert into tbl_bkms_discount_rule_config_inf (mchnt_cd, discount_mode, param1, param2, param3, param4)
+    insert into tbl_bkms_discount_rule_config_inf (mchnt_cd, discount_mode, param1, param2, param3, param4, param5)
     values
      <foreach collection="list" item="item" index="index" separator="," >
         (#{item.mchntCd,jdbcType=VARCHAR}, #{item.discountMode,jdbcType=INTEGER}, 
       #{item.param1,jdbcType=VARCHAR}, #{item.param2,jdbcType=VARCHAR}, #{item.param3,jdbcType=VARCHAR}, 
-      #{item.param4,jdbcType=VARCHAR})
+      #{item.param4,jdbcType=VARCHAR},#{item.param5,jdbcType=VARCHAR})
     </foreach>
   </insert>
   <insert id="insert" parameterType="com.centerm.model.prom.DiscountRuleInf" >
     insert into tbl_bkms_discount_rule_config_inf (id, mchnt_cd, discount_mode, 
       param1, param2, param3, 
-      param4)
+      param4, param5)
     values (#{id,jdbcType=INTEGER}, #{mchntCd,jdbcType=VARCHAR}, #{discountMode,jdbcType=INTEGER}, 
       #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, 
-      #{param4,jdbcType=VARCHAR})
+      #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.centerm.model.prom.DiscountRuleInf" >
     insert into tbl_bkms_discount_rule_config_inf
@@ -68,6 +80,9 @@
       <if test="param4 != null" >
         param4,
       </if>
+      <if test="param5 != null" >
+        param5,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -90,6 +105,9 @@
       </if>
       <if test="param4 != null" >
         #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null" >
+        #{param5,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -114,6 +132,9 @@
       <if test="param4 != null" >
         param4 = #{param4,jdbcType=VARCHAR},
       </if>
+      <if test="param5 != null" >
+        param5 = #{param5,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -124,7 +145,8 @@
       param1 = #{param1,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=VARCHAR},
       param3 = #{param3,jdbcType=VARCHAR},
-      param4 = #{param4,jdbcType=VARCHAR}
+      param4 = #{param4,jdbcType=VARCHAR},
+      param5 = #{param5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

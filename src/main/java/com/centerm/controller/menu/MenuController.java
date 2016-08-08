@@ -58,13 +58,28 @@ public class MenuController {
 			@RequestParam int currentPage, 
 			@RequestParam int pageSize) throws Exception {
 		Page page = new Page(currentPage, pageSize);
-		//只查找未删除的
-		menu.setStatus(0);
+		if (menu.getStatus() == null) {
+			menu.setStatus(9);//0+1
+		}
 		List<MenuInf> menus = menuServiceImpl.list(menu, page);
 		String serverAddress = PropertyUtils.getProperties("serverAddress")+"/"+menu.getMchntCd()+"/";;
 		for (MenuInf menuInf : menus) {
 			menuInf.setPictureLink(serverAddress+menuInf.getPictureLink());
 		}
+		page.setRows(menus);
+		return page;
+	}
+	
+	@RequestMapping("/menuAndCombo")
+	@ResponseBody()
+	public Object queryMenuAndCombo(@ModelAttribute("menuInf") MenuInf menu, 
+			@RequestParam int currentPage, 
+			@RequestParam int pageSize) throws Exception {
+		Page page = new Page(currentPage, pageSize);
+		if (menu.getStatus() == null) {
+			menu.setStatus(9);//0+1
+		}
+		List<MenuInf> menus = menuServiceImpl.queryMenuAndCombo(menu, page);
 		page.setRows(menus);
 		return page;
 	}
@@ -162,6 +177,13 @@ public class MenuController {
 			menu.setPictureLink(null);
 		}
 		menuServiceImpl.update(menu, JSON.parseArray(productAttrTypeJson, ProductAttrTypeInf.class));
+		return null;
+	}
+	
+	@RequestMapping("/shelve")
+	@ResponseBody()
+	public Object update(@ModelAttribute("menuInf") MenuInf menu) throws Exception {
+		menuServiceImpl.shelve(menu);
 		return null;
 	}
 	

@@ -60,8 +60,11 @@
 	<if test="taste != null and taste != ''">
 		AND taste = #{taste}
 	</if>
-	<if test="status != null and status != '' or status == 0">
-		AND status = #{status}
+	<if test="status == 9">
+		AND (a.status = 0 OR a.status = 1)
+	</if>
+	<if test="status == 0 or status == 1">
+		AND a.status = #{status}
 	</if>
 	<if test="priority != null and priority != ''">
 		AND priority = #{priority}
@@ -91,6 +94,57 @@
     </foreach>
 	order by a.priority
 </select>
+
+<select id="queryMenuAndCombo" resultMap="BaseResultMap" parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_menu_inf a
+	<where>
+	<if test="productId != null and productId != ''">
+		a.product_id = #{productId}
+	</if>
+	<if test="productName != null and productName != ''">
+		AND a.product_name like '%${productName}%'
+	</if>
+	<if test="menutpId != null and menutpId != ''">
+		AND a.menutp_id = #{menutpId}
+	</if>
+	<if test="status == 9">
+		AND (a.status = 0 OR a.status = 1)
+	</if>
+	<if test="status == 0 or status == 1">
+		AND a.status = #{status}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND a.mchnt_cd = #{mchntCd}
+	</if>
+	</where>
+	union
+	select
+	<include refid="Base_Column_List" />
+	from tbl_bkms_menu_combo_inf a
+	<where>
+	<if test="productId != null and productId != ''">
+		a.product_id = #{productId}
+	</if>
+	<if test="productName != null and productName != ''">
+		AND a.product_name like '%${productName}%'
+	</if>
+	<if test="menutpId != null and menutpId != ''">
+		AND a.menutp_id = #{menutpId}
+	</if>
+	<if test="status == 9">
+		AND (a.status = 0 OR a.status = 1)
+	</if>
+	<if test="status == 0 or status == 1">
+		AND a.status = #{status}
+	</if>
+	<if test="mchntCd != null and mchntCd != ''">
+		AND a.mchnt_cd = #{mchntCd}
+	</if>
+	</where>
+</select>
+
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
 	select
 	<include refid="Model_Column_List" />
@@ -126,8 +180,11 @@
 	<if test="taste != null and taste != ''">
 		AND taste = #{taste}
 	</if>
-	<if test="status != null and status != '' or status == 0">
-		AND status = #{status}
+	<if test="status == 9">
+		AND (a.status = 0 OR a.status = 1)
+	</if>
+	<if test="status == 0 or status == 1">
+		AND a.status = #{status}
 	</if>
 	<if test="priority != null and priority != ''">
 		AND priority = #{priority}

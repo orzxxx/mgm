@@ -80,7 +80,7 @@ define(function () {
 			    }
 			}, {
 				field : 'price',
-				title : '单价(元)',
+				title : '价格(元)',
 				width : 70,
 				sortable : true,
 				align : 'center',
@@ -130,7 +130,7 @@ define(function () {
 				align : 'center',
 				formatter : function(value, rec) {
 					if (rec.status == -1) {
-						return "菜品已删除";
+						return "单品已删除";
 					}else if(rec.inventory == null || rec.inventory == ""){
 						return "已售罄";
 					}
@@ -201,11 +201,11 @@ define(function () {
 		var total = $('#prom_pageList').datagrid('getPager').data(
 			"pagination").options.total;
 		if (total >= 10) {
-			$.messager.alert("提示", "最多只能添加10个促销菜品");
+			$.messager.alert("提示", "最多只能添加10个促销单品");
 			return;
 		}
 		var dlg = $('<div/>').dialog({    
-		    title: '添加促销菜品',    
+		    title: '添加促销单品',    
 		    width: 500,    
 		    height: 500,    
 		    closable: false,    
@@ -217,7 +217,7 @@ define(function () {
 				handler :function(){
 		    	if($('#prom_form').form("validate")){
 		    		if($("#prom_productName").val() == ""){
-		    			$.messager.alert("提示", "请选择促销菜品");
+		    			$.messager.alert("提示", "请选择促销单品");
 		    			return;
 		    		}
 		    		$('#prom_form').ajaxSubmit( {
@@ -256,7 +256,7 @@ define(function () {
 		var row = $('#prom_pageList').datagrid("getSelected");
 		if(row){
 			var dlg = $('<div/>').dialog({    
-			    title: '编辑促销菜品',    
+			    title: '编辑促销单品',    
 			    width: 500,    
 			    height: 500,    
 			    closable: false,    
@@ -435,7 +435,7 @@ define(function () {
 	function setMenuTree(data){
 		var treeData = getTreeDate(data);
 		$("#combo_tree").tree('loadData', treeData);
-		//已添加为促销菜品标记
+		//已添加为促销单品标记
 		var rows = $('#prom_pageList').datagrid('getRows');
 		for ( var i in rows) {
 			var node = $('#combo_tree').tree('find', rows[i].productId);
@@ -497,6 +497,59 @@ define(function () {
 			$.messager.alert('提示', '请选择要删除的记录!', 'info');
 		}
 	}
+	
+	function toUpload(){
+		var dlg = $('<div/>').dialog({    
+		    title: '上传图片',    
+		    width: 700,    
+		    height: 500,    
+		    closable: false,    
+		    cache: false,    
+		    href: 'sys/img_upload.jsp',    
+		    modal: true,
+		    buttons : [ {
+				text : '确定',
+				handler :function(){
+					var param = {};
+					requirejs(['img-upload'],function(img) {
+						param = img.getData();
+						param.mchntCd = currentMchntCd;
+						
+						$('#img_form').ajaxSubmit( {
+							url : "prom/prom/upload",
+							dataType : "json",
+							data: param,
+				            success : function(result) {
+								if (result.code == 0) {
+									$("#prom_img").attr('src', result.data.pictureAddr).show();
+				            		$("#prom_pictureLink").val(result.data.pictureLink);
+				            		//关闭对话框
+			                		dlg.dialog('close');
+			    	        		dlg.remove();
+								} else {
+									//待处理$("#menu_picture").val("");
+									$.messager.alert("提示", result.message);
+								}
+							}
+				        });
+					});
+					
+				}
+			},{
+				text : '关闭',
+				handler : function() {
+					dlg.dialog('close');
+		    		dlg.remove();
+				}
+			}],
+			onLoad : function(){
+				requirejs(['img-upload'],function(img) {
+					img.init(3/4);
+				});
+			}
+		});  
+	}
+	
 	function upload(){
 		if ($("#prom_picture").val() == "") {
 			$("#prom_img").attr('src', originalPicture);
@@ -530,7 +583,8 @@ define(function () {
 		$("#prom_mchntCd").val(userInfo.mchntCd);
 		$("#prom_select").click(select);
 		
-		$("#prom_picture").change(upload);
+		$("#prom_picture").click(toUpload);
+		
 	}
 
     return {

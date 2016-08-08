@@ -11,4 +11,8 @@ public interface DiscountTimeInfMapper extends BaseMapper<DiscountTimeInfMapper>
 	public void insertbatch(List<DiscountTimeInf> discountTimes);
 	
 	public void deleteByMchntCd(String mchntCd);
+
+	public void deleteByMchntCdAndProductId(DiscountTimeInf discountTime);
+
+	public List<DiscountTimeInf> findDiscountOfMode3(String mchntCd);
 }

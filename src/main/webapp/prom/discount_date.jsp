@@ -19,7 +19,7 @@ requirejs(['discount-date'],function  (date) {
 					模式一
 				</label>
 				<span style="color: #cc0000;font-size: 12px;font-weight: bold;">
-					*该起始时间段内折扣生效
+					*该起始日期的时间段内折扣生效
 				</span>
 			</td>
 		</tr>
@@ -72,15 +72,19 @@ requirejs(['discount-date'],function  (date) {
 		</tr>
 		<tr>
 			<td colspan="4">
-				<input type="checkbox" name="week" value="1">星期一
-				<input type="checkbox" name="week" value="2">星期二
-				<input type="checkbox" name="week" value="3">星期三
-				<input type="checkbox" name="week" value="4">星期四<br/>
-				<input type="checkbox" name="week" value="5">星期五
-				<input type="checkbox" name="week" value="6">星期六
-				<input type="checkbox" name="week" value="7">星期日
+				<input type="checkbox" name="week" value="2">星期一
+				<input type="checkbox" name="week" value="3">星期二
+				<input type="checkbox" name="week" value="4">星期三
+				<input type="checkbox" name="week" value="5">星期四<br/>
+				<input type="checkbox" name="week" value="6">星期五
+				<input type="checkbox" name="week" value="7">星期六
+				<input type="checkbox" name="week" value="1">星期日
 			</td>
 		</tr>
+		</table>
+	</form>
+	<hr size="1" color="#95B8E7"> 
+		<table class="table_info" border="0" style="width:500px;">
 		<tr>
 			<td width="100px">
 				<label>
@@ -99,5 +103,4 @@ requirejs(['discount-date'],function  (date) {
 			</td>
 		</tr>
 		</table>
-	</form>
 </div>

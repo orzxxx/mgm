@@ -23,13 +23,13 @@ define(function () {
 		var dlg = $('<div/>').dialog({    
 		    title: '上传图片',    
 		    width: 700,    
-		    height: 700,    
+		    height: 500,    
 		    closable: false,    
 		    cache: false,    
 		    href: 'sys/img_upload.jsp',    
 		    modal: true,
 		    buttons : [ {
-				text : '添加',
+				text : '确定',
 				handler :function(){
 					var param = {};
 					requirejs(['img-upload'],function(img) {
@@ -42,8 +42,8 @@ define(function () {
 							data: param,
 				            success : function(result) {
 								if (result.code == 0) {
-									$("#menuTmpl_img").attr('src', result.data.pictureAddr).show();
-				            		$("#menuTmpl_pictureLink").val(result.data.pictureLink);
+									$("#menu_img").attr('src', result.data.pictureAddr).show();
+				            		$("#menu_pictureLink").val(result.data.pictureLink);
 				            		//关闭对话框
 			                		dlg.dialog('close');
 			    	        		dlg.remove();
@@ -240,10 +240,18 @@ define(function () {
 				    {field:'menutpId',title:'单品分类',width:80,sortable:true,align:'center', formatter:function(value, rec){
 						return convertMenutpId(value);
 					    }},
-				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
+				    {field:'price',title:'价格(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return value.toFixed(2);
 						}},
 					{field:'packingBoxNum',title:'打包盒份数',width:70,sortable:true,align:'center'},
+					{field:'status',title:'状态',width:70,sortable:true,align:'center',formatter:function(value, rec){
+					    if (value == 0) {
+							return "正常";
+						}if (value == 1) {
+							return "<span style=\"color:red;\">下架</span>";
+						}
+						return "<span style=\"color:red;\">异常</span>";
+						}},
 					{field:'inventory',title:'库存',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    if (value.inventory == -1) {
 							return "无限制";
@@ -398,7 +406,7 @@ define(function () {
 		var row = $('#menu_pageList').datagrid("getSelected");
 		if(row){
 			var dlg = $('<div/>').dialog({    
-			    title: '编辑菜品',    
+			    title: '编辑单品',    
 			    width: 420,    
 			    height: 520,    
 			    closable: false,    

@@ -30,11 +30,11 @@
 				</td>
 				<td class="tdspace">
 				</td>
-				<td>
-					<input id="menuTmpl_picture" type="file" name="picture" maxlength="30" class="easyui-validatebox" data-options="required:true" validType="image" style="width:180px;"/>
+				<td style="text-align:center;">
+					<a style="width: 110px;" id="menuTmpl_picture" href="javascript:void(0)" class="easyui-linkbutton ct-rst-btn" iconCls="icon-add" plain="true"">上传图片</a>
 				</td>
 				<td class="hintspace">
-					<tt optional="true">*上传长宽比4:3的图片获取最佳显示效果</tt>  
+					<tt optional="true">*</tt>  
 				</td>				
 			</tr>
 			<tr>

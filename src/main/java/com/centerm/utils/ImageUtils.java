@@ -116,6 +116,7 @@ public class ImageUtils {
 		}catch(BusinessException e){
 			throw new BusinessException(e.getMessage());	
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new BusinessException("图片解析失败");	
 		}
 	}
@@ -165,12 +166,6 @@ public class ImageUtils {
 		}
 	}*/
 	
-	public static String getFileName(String mchntCd, boolean isTemp){
-		String temp = isTemp ? "_temp" : "";
-		Random random = new Random();
-		return mchntCd+"_"+DateUtils.getCurrentDate("yyyyMMddhhmmss")+"_"+
-				String.format("%04d",random.nextInt(9999))+temp+".jpg";
-	}
 	/**
 	 * 图片截取
 	 */
@@ -239,4 +234,54 @@ public class ImageUtils {
 	    
 	    return bi;
 	}
+
+	public static File getImageFile(String mchntCd, InputStream is, int type)
+			throws Exception {
+		try {
+			String filePath = "";
+			int width = 0;
+			int height = 0;
+			if (type == 1) {
+				filePath = PropertyUtils.getProperties("imageSavePath");
+				width = 540;
+				height = 405;
+			} else if (type == 2) {
+				filePath = PropertyUtils.getProperties("imageSavePath");
+				width = 450;
+				height = 600;
+			} else {
+				filePath = PropertyUtils.getProperties("logoSavePath");
+				width = 100;
+				height = 100;
+			}
+			BufferedImage image = compress(is, width, height);
+
+			String newFileName = getFileName(mchntCd);
+
+			File newPictFile = new File(filePath + "/" + mchntCd + "/"
+					+ newFileName);
+			File dir = new File(filePath + "/" + mchntCd + "/");
+			if (!dir.exists()) {
+				dir.mkdir();
+			}
+			ImageIO.write(image, "jpg", newPictFile);
+
+			return newPictFile;
+		} catch (Exception e) {
+		}
+		throw new BusinessException("图片解析失败");
+	}
+
+	public static String getFileName(String mchntCd) {
+		return getFileName(mchntCd, false);
+	}
+	
+	public static String getFileName(String mchntCd, boolean isTemp){
+		String temp = isTemp ? "_temp" : "";
+		Random random = new Random();
+		return mchntCd+"_"+DateUtils.getCurrentDate("yyyyMMddhhmmss")+"_"+
+				String.format("%04d",random.nextInt(9999))+temp+".jpg";
+	}
 }
+
+	

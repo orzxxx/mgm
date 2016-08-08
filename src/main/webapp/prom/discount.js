@@ -5,25 +5,128 @@ define(function () {
 	var $tagInput;
 	var paramId = "";
 	var curMode = "000";//当前模式
-	var discountParam = [{
-	            	 discountMode: 1,
-	            	 param1: "",
-	            	 rules: []
-	             },{
-	            	 discountMode: 2,
-	            	 param1: "",
-	            	 rules: []
-	             },{
-	            	 discountMode: 3,
-	            	 param1: "",
-	            	 rules: []
-	             }];
+	var discountParam = [];
 	
 	function init(){
+		initVariables();
 		initForm();
 		initButton();
+		initDatagrid();
 		
 		getParam();
+		query();
+	}
+	
+	function initVariables(){
+		 paramId = "";
+		 curMode = "000";
+		discountParam = [{
+		   	 discountMode: 1,
+			 param1: "",
+			 rules: []
+		 },{
+			 discountMode: 2,
+			 param1: "",
+			 rules: []
+		 },{
+			 discountMode: 3,
+			 param1: "",
+			 rules: []
+		 }];
+	}
+	
+	function initDatagrid(){
+		$('#discount_pageList').datagrid({
+				fitColumns:false,
+				fit:true,
+				fitColumns:true,
+				nowrap: true,
+				striped: true,
+				singleSelect:true,
+				remoteSort : false,
+				pageList : [30],
+				frozenColumns:[[
+	                {field:'param1',title:'商品号',width:70,sortable:true}
+				]],
+				columns:[[
+				    {field:'productName',title:'商品名',width:100,sortable:true,align:'center'},
+				    {field:'menutpId',title:'单品分类',width:80,sortable:true,align:'center', formatter:function(value, rec){
+						return convertMenutpId(value);
+					    }},
+				    {field:'price',title:'价格(元)',width:60,sortable:true,align:'center',formatter:function(value, rec){
+					    return parseFloat(value).toFixed(2);
+					}},
+					{field:'dates',title:'有效日期',width:200,sortable:true,align:'center',formatter:function(value, rec){
+						var datas = rec.time.split("|");
+						if (datas.length == 3) {
+							var startDate = datas[1].substring(0,4)+"-"+datas[1].substring(4,6)+"-"+datas[1].substring(6,8);
+							var endDate = datas[2].substring(0,4)+"-"+datas[2].substring(4,6)+"-"+datas[2].substring(6,8);
+							return startDate + "至" + startDate; 
+						} else if (datas.length == 4){
+							var week = "";
+							var weeks = datas[1].split(/./);
+							if (datas[1].indexOf("1") != -1) {
+								week += "星期日,";
+							}
+							if (datas[1].indexOf("2") != -1) {
+								week += "星期一,";
+							}
+							if (datas[1].indexOf("3") != -1) {
+								week += "星期二,";
+							}
+							if (datas[1].indexOf("4") != -1) {
+								week += "星期三,";
+							}
+							if (datas[1].indexOf("5") != -1) {
+								week += "星期四,";
+							}
+							if (datas[1].indexOf("6") != -1) {
+								week += "星期五,";
+							}
+							if (datas[1].indexOf("7") != -1) {
+								week += "星期六,";
+							}
+							return week.substring(0, week.length-1);
+						}
+						return "";
+					}},
+					{field:'times',title:'有效时间段',width:150,sortable:true,align:'center',formatter:function(value, rec){
+						var datas = rec.time.split("|");
+						var startTime = "";
+						var endTime = "";
+						if (datas.length == 3) {
+							startTime = datas[1].substring(8,10)+":"+datas[1].substring(10,12)+":"+datas[1].substring(12,14);
+							endTime = datas[2].substring(8,10)+":"+datas[2].substring(10,12)+":"+datas[2].substring(12,14);
+						} else if (datas.length == 4){
+							startTime = datas[2].substring(0,2)+":"+datas[2].substring(2,4)+":"+datas[2].substring(4,6);
+							endTime = datas[3].substring(0,2)+":"+datas[3].substring(2,4)+":"+datas[3].substring(4,6);
+						}
+						return startTime + "至" + endTime;
+					}},
+				    {field:'param2',title:'优惠所需份数',width:60,sortable:true,align:'center'},
+				    {field:'param3',title:'优惠(元)',width:60,sortable:true,align:'center',formatter:function(value, rec){
+					    return parseFloat(value).toFixed(2);
+					}},
+				    {field:'param4',title:'最大优惠(元)',width:60,sortable:true,align:'center',formatter:function(value, rec){
+					    return parseFloat(value).toFixed(2);
+					}},
+				    {field:'param5',title:'优惠描述',width:100,sortable:true,align:'center',
+						formatter : function(value, rec) {
+							var info = value.length > 13 ? value.substring(0,13)+"..." : value;
+							return "<span title=\""+value+".\" " +
+									"class=\"easyui-tooltip\">"+info+"</span>";
+						}}
+				]],
+				toolbar:"#discount_toolbar",
+				onDblClickRow:function(index, row){
+					edit();
+				}
+			});
+		}
+	
+	function toMenu(){
+		$('#discount_tab').tabs('enableTab', 1);   
+		$('#discount_tab').tabs('select', 1);   
 	}
 	
 	function getParam(){
@@ -37,8 +140,8 @@ define(function () {
 				curMode = result.data.data;
 				var data = Number(result.data.data);
 				changeMenusForm(data % 10);
-				changeReductionForm(data /10 % 10);
-				changeAllForm(data /100 % 10);
+				changeReductionForm(Math.floor(data /10) % 10);
+				changeAllForm(Math.floor(data /100) % 10);
 			} else {
 				$.messager.alert("提示", result.message);
 			}
@@ -76,7 +179,15 @@ define(function () {
 					});
 				}
 				//模式三赋值
-				setDate("discount_menuForm", discountParam[2].param1);
+				if (discountParam.length > 2) {
+					var discountMenus = [];
+					//setDate("discount_menuForm", discountParam[2].param1);
+					for ( var i = 2; i < discountParam.length; i++) {
+						discountMenus.push($.extend({}, discountParam[i] ,discountParam[i].rules));
+					}
+					$('#discount_pageList').datagrid('discountMenus',data); 
+				}
+				
 			} else {
 				$.messager.alert("提示", result.message);
 			}
@@ -123,7 +234,7 @@ define(function () {
 			$("#discount_allDate").linkbutton('disable');
 			$("#discount_allDate").unbind('click');
 			$("#discount_rate").attr('disabled', 'disabled');
-		} else if (type == 1){
+		} else if (type == 1 || type == 2){
 			$("#discount_allSwitch").attr('checked', 'checked');
 			$("#discount_allDate").linkbutton('enable');
 			$("#discount_allDate").click(function(){
@@ -146,7 +257,7 @@ define(function () {
 			//标签不可移除
 			var tagId = "#"+$tagInput.attr('id')+"_tagsinput";
 			$(tagId).find('a').hide();
-		} else if (type == 1){
+		} else if (type == 1 || type == 2){
 			$("#discount_reductionSwitch").attr('checked', 'checked');
 			$("#discount_reductionDate").linkbutton('enable');
 			$("#discount_reductionDate").click(function(){
@@ -168,19 +279,21 @@ define(function () {
 			$("#discount_menuSwitch").attr('checked', false);
 			$("#discount_menuDate").linkbutton('disable');
 			$("#discount_menuDate").unbind('click');
-			$("#discount_seletcMenus").linkbutton('disable');
-			$("#discount_seletcMenus").unbind('click');
+			$("#discount_toMenu").linkbutton('disable');
+			$("#discount_toMenu").unbind('click');
 			$("#discount_mutex").attr('disabled', 'disabled');
 			$("#discount_mutex").attr('checked', false);
+			$('#discount_tab').tabs('disableTab', 1);
 		} else if (type == 1){
 			$("#discount_menuSwitch").attr('checked', 'checked');
 			$("#discount_menuDate").linkbutton('enable');
 			$("#discount_menuDate").click(function(){
 				toEditDate("discount_menuForm");
 			});
-			$("#discount_seletcMenus").linkbutton('enable');
-			$("#discount_seletcMenus").click(toSelectMenus);
+			$("#discount_toMenu").linkbutton('enable');
+			$("#discount_toMenu").click(toMenu);
 			$("#discount_mutex").attr('disabled', false);
+			$('#discount_tab').tabs('enableTab', 1);            
 		} else if (type == 2){
 			changeMenusForm(1);
 			$("#discount_mutex").attr('checked', 'checked');
@@ -206,7 +319,17 @@ define(function () {
 		changeMenusForm(0);
 	}
 	
+	function initMenuForm(){
+		$("#discountMenu_select").click(toSelectMenus);
+		//$("#discountMenu_date").load(contextPath+"/prom/discount_date.jsp");
+		
+	}
+	
 	function initButton(){
+		$("#discount_add").click(add);
+		$("#discount_del").click(del);
+		$("#discount_edit").click(edit);
+		$("#discount_toMenu").click(toMenu);
 		/*$("#discount_allDate").click(function(){
 			toEditDate("discount_allForm");
 		});
@@ -232,6 +355,151 @@ define(function () {
 		});
 		
 	}
+	
+	function edit(){
+		var row = $('#discount_pageList').datagrid("getSelected");
+		if(row){
+			var dlg = $('<div/>').dialog({    
+			    title: '编辑优惠单品',    
+			    width: 520,    
+			    height: 500,    
+			    closable: false,    
+			    cache: false,    
+			    href: 'prom/discount_menu.jsp',    
+			    modal: true,
+			    buttons : [ {
+					text : '保存',
+					handler : function(){
+						if($('#discountMenu_form').form("validate")){
+				    		requirejs(['discount-date'],function  (date) {
+								if (!date.getValue()) {
+									$('#discountMenu_tab').tabs('select', '有效时间');
+									return;
+								}
+								var discount = $("#discountMenu_form input[name='param3']").val();
+								var num = $("#discountMenu_form input[name='param2']").val();
+								var price = $("#discountMenu_form input[name='price']").val();
+								if (discount > num*price) {
+									$.messager.alert("提示", "优惠不得大于【"+num*price+"】!(价格X份数)");
+									return;
+								}
+								
+								var param = {};
+								param.id = row.id;
+					    		param.param1 = date.getValue();
+					    		param.param2 = $("#discountMenu_productId").val();
+					    		param.discountMode = 3;
+					    		param.mchntCd = currentMchntCd;
+					    		var rule = {};
+					    		rule.id = row.r_id;
+					    		rule.mchntCd = currentMchntCd;
+					    		rule.discountMode = 3;
+					    		rule.param1 = $("#discountMenu_productId").val();
+					    		rule.param2 = $("#discountMenu_form input[name='param2']").val();
+					    		rule.param3 = $("#discountMenu_form input[name='param3']").val();
+					    		rule.param4 = $("#discountMenu_form input[name='param4']").val();
+					    		rule.param5 = $("#discountMenu_form textarea[name='param5']").val();
+					    		param.discountRuleJson = JSON.stringify([].concat(rule));
+					    		$.post("prom/discount/update", param, function(result){
+									if (result.code == 0) {
+										$.messager.alert("提示", "修改成功!");
+				                		//刷新
+				                		reload();
+				                		//关闭对话框
+				                		dlg.dialog('close');
+				    	        		dlg.remove();
+									} else {
+										$.messager.alert("提示", result.message);
+									}
+								}, "json");
+							});
+				    	} else {
+				    		$('#discountMenu_tab').tabs('select', '基础信息');
+				    	}
+				    }
+				},{
+					text : '关闭',
+					handler : function() {
+						dlg.dialog('close');
+		        		dlg.remove();
+					}
+				}],
+				onLoad : function(){
+					requirejs(['discount-date'],function  (date) {
+						initMenuForm();
+						date.setValue(row.time);
+						//数据填充
+						var data = $.extend(true, {}, row);
+						data.menutpName = convertMenutpId(row.menutpId);
+						data.price = Number(data.price).toFixed(2);
+						$("#discountMenu_form").form('load', data);
+						$("#discountMenu_select").hide();
+					});
+				}
+			}); 
+		}else{
+			$.messager.alert('提示', '请选择要修改的记录！', 'info');
+		}
+	}
+	
+	function del(){
+		var row = $('#discount_pageList').datagrid("getSelected");
+		if(row){
+			$.messager.confirm('提示', '确定删除该记录?', function(r){
+				if (r){
+					var param = {};
+					param.param2 = row.param1;
+					param.mchntCd = currentMchntCd;
+					$.post("prom/discount/del",param,function(result){
+						if (result.code == 0) {
+							$.messager.alert("提示", "删除成功!");
+							//重新刷新
+							reload();
+						}else{
+							$.messager.alert("提示", result.message);
+						}
+					},"json");
+				}
+			});
+			
+		}else{
+			$.messager.alert('提示', '请选择要删除的记录!', 'info');
+		}
+	}
+	
+	function reload(){
+		query();
+	}
+	
+	function check(){
+		return true;
+	}
+	
+	function query(){
+		if(check()){
+			var param = {};
+			param.mchntCd = currentMchntCd;
+			
+			$.post("prom/discount/list",param,function(result){
+				if (result.code == 0) {
+					var data = result.data;
+					for ( var i in data) {
+						var tempId = data[i].id;
+						data[i].time = data[i].param1;
+						data[i] = $.extend({}, data[i], data[i].rules[0], data[i].rules[0].product);
+						data[i].r_id = data[i].id;
+						data[i].id = tempId;
+						data[i].productId = data[i].param1;
+					}
+					$("#discount_total").text(data.length);
+            		$('#discount_pageList').datagrid('loadData',data);  
+				} else {
+					$.messager.alert("提示", result.message);
+				}
+			}, "json");
+		}
+}
+	
 	function toAddReduction(){
 		//最大个数校验
 		var rules = discountParam[1].rules;
@@ -314,10 +582,89 @@ define(function () {
 		}); 
 	}
 	
+	function add(){
+		var rows = $('#discount_pageList').datagrid('getRows');
+		if (rows >= 20) {
+			$.messager.alert("提示", "最多只能添加20个优惠单品");
+			return;
+		}
+		var dlg = $('<div/>').dialog({    
+		    title: '添加优惠单品',    
+		    width: 520,    
+		    height: 500,    
+		    closable: false,    
+		    cache: false,    
+		    href: 'prom/discount_menu.jsp',    
+		    modal: true,
+		    buttons : [ {
+				text : '添加',
+				handler :function(){
+		    	if($('#discountMenu_form').form("validate")){
+		    		if($("#discountMenu_productName").val() == ""){
+		    			$.messager.alert("提示", "请选择优惠单品");
+		    			return;
+		    		}
+		    		requirejs(['discount-date'],function  (date) {
+						if (!date.getValue()) {
+							$('#discountMenu_tab').tabs('select', '有效时间');
+							return;
+						}
+						var discount = $("#discountMenu_form input[name='param3']").val();
+						var num = $("#discountMenu_form input[name='param2']").val();
+						var price = $("#discountMenu_form input[name='price']").val();
+						if (discount > num*price) {
+							$.messager.alert("提示", "优惠不得大于【"+num*price+"】!(价格X份数)");
+							return;
+						}
+						
+						var param = {};
+			    		param.param1 = date.getValue();
+			    		param.param2 = $("#discountMenu_productId").val();
+			    		param.discountMode = 3;
+			    		param.mchntCd = currentMchntCd;
+			    		var rule = {};
+			    		rule.mchntCd = currentMchntCd;
+			    		rule.discountMode = 3;
+			    		rule.param1 = $("#discountMenu_productId").val();
+			    		rule.param2 = $("#discountMenu_form input[name='param2']").val();
+			    		rule.param3 = $("#discountMenu_form input[name='param3']").val();
+			    		rule.param4 = $("#discountMenu_form input[name='param4']").val();
+			    		rule.param5 = $("#discountMenu_form textarea[name='param5']").val();
+			    		param.discountRuleJson = JSON.stringify([].concat(rule));
+			    		$.post("prom/discount/add", param, function(result){
+							if (result.code == 0) {
+								$.messager.alert("提示", "添加成功!");
+		                		//刷新
+		                		reload();
+		                		//关闭对话框
+		                		dlg.dialog('close');
+		    	        		dlg.remove();
+							} else {
+								$.messager.alert("提示", result.message);
+							}
+						}, "json");
+					});
+		    	} else {
+		    		$('#discountMenu_tab').tabs('select', '基础信息');
+		    	}
+		    }
+			},{
+				text : '关闭',
+				handler : function() {
+					dlg.dialog('close');
+		    		dlg.remove();
+				}
+			}],
+			onLoad : function(){
+				initMenuForm();
+			}
+		});  
+	}
+	
 	function toSelectMenus(){
 		//个数校验
 		var dlg = $('<div/>').dialog({    
-		    title: '选择优惠单品(多选)',    
+		    title: '选择优惠单品(单选)',    
 		    width: 500,    
 		    height: 500,    
 		    closable: false,    
@@ -336,33 +683,40 @@ define(function () {
 					}
 		    		
 		    		if(selectedNodes == null || length == 0){
-		    			$.messager.alert("提示", "请至少选择1个单品");
+		    			$.messager.alert("提示", "请选择1个单品");
 		    			return;
 		    		}
-		    		if(length > 20){
-		    			$.messager.alert("提示", "一次最多选择20个单品");
+		    		if(length > 1){
+		    			$.messager.alert("提示", "一次只能选择1个单品");
 		    			return;
 		    		}
 		    		//拼接参数
-		    		discountParam[2].rules = [];
-		    		$("#discount_menus tr:gt(0)").remove();
+		    		var menu = {};
+		    		//discountParam[2].rules = [];
+		    		//$("#discount_menus tr:gt(0)").remove();
 		    		for ( var i in selectedNodes) {
 		    			var node = selectedNodes[i];
 		    			//只处理子节点
 		    			if ($("#combo_tree").tree('isLeaf',node.target)) {
-		    				var menu = {};
+		    				
 							menu = node.attributes;
-							if (!menu.param1) {
+							var pNode = $("#combo_tree").tree('getParent',node.target);
+							menu.menutpName = pNode.attributes.menutpName;
+							/*if (!menu.param1) {
 								menu.param1 = 0;
 							}
 							menu.param2 = menu.productId;
 							$menuTr = $("<tr><td align='center'><span>"+menu.productName+"</span></td>"+
 									"<td align='center'><span>"+convertMenutpId(menu.menutpId)+"</span></td>"+
 				    				"<td align='center'><span>"+menu.price+"</span></td>"+
-				    				"<td align='center'><span>" +
-				    						"</span></td></tr>");
-							$discount = $("<input type='text' name='discount' maxlength='8' class=\"easyui-numberbox\" data-options=\"min:0,max:99999.99,precision:2\" value='"+(menu.discount||0)+"'/>");
+				    				"<td align='center'><span></span></td>"+
+				    				"<td align='center'><span></span></td></tr>");
+							$discount = $("<input style='width:80px;' type='text' name='discount' maxlength='8' class=\"easyui-numberbox\" " +
+									"data-options=\"min:0,max:99999.99,precision:2\" value='"+(menu.discount||0)+"'/>");
+							$num = $("<input style='width:60px;' type='text' name='num' maxlength='2' class=\"easyui-numberbox\" " +
+									"data-options=\"min:0,max:99,precision:0\" value='"+(menu.num||0)+"'/>");
 							$delBtn = $("<td align='center'><img src='themes/icons/edit_remove.png'/></td>");
+							
 							$delBtn.click((function(productId, $menuTr){
 								return function(){
 									$.messager.confirm('提示', '确定移除该优惠单品?', function(r){
@@ -378,15 +732,16 @@ define(function () {
 			            			});
 								};
 							})(menu.productId, $menuTr));
-							$menuTr.find('td:eq(3) span').append($discount);
+							$menuTr.find('td:eq(3) span').append($num);
+							$menuTr.find('td:eq(4) span').append($discount);
 							$menuTr.append($delBtn);
 							$("#discount_menus").append($menuTr);
-							discountParam[2].rules.push(menu);
+							discountParam[2].rules.push(menu);*/
 						}
 					}
-		    		$.parser.parse('#discount_menus');
+		    		//$.parser.parse('#discount_menus');
 		    		//赋值
-		    		
+		    		$("#discountMenu_form").form('load', menu);
 		    		//关闭
 		    		dlg.dialog('close');
 		    		dlg.remove();
@@ -422,7 +777,20 @@ define(function () {
 	}
 	function initMenuTree(data){
 		$('#combo_tree').tree({
-			checkbox:true
+			checkbox:true,
+			onBeforeCheck: function(node, checked){
+				//只能选择叶节点
+				if(!$("#combo_tree").tree('isLeaf',node.target)){
+					return false;
+				}
+				//一次只能选中一个，先把选中的都取消
+				if(checked){
+					var selectedNodes = $('#combo_tree').tree("getChecked");
+					for ( var i in selectedNodes) {
+						$('#combo_tree').tree("uncheck", selectedNodes[i].target);
+					}
+				}
+			}
 		}); 
 		getAllMenuTypeTree(currentMchntCd);
 		
@@ -462,15 +830,15 @@ define(function () {
 		var treeData = getTreeDate(data);
 		$("#combo_tree").tree('loadData', treeData);
 		//已添加回显
-		var menus = discountParam[2].rules;
+		var menus = $('#discount_pageList').datagrid('getRows');
 		for ( var i in menus) {
-			var node = $('#combo_tree').tree('find', menus[i].productId);
+			var node = $('#combo_tree').tree('find', menus[i].param1);
 			if (node != null) {
 				$('#combo_tree').tree('update', {
 					target: node.target,
 					text: menus[i].productName+"<img src='themes/icons/ok.png' style='width:14px;height:14px;border:0;'/>"
 				});
-				$('#combo_tree').tree('check', node.target);
+				//$('#combo_tree').tree('check', node.target);
 			}
 		}
 	}
@@ -559,6 +927,8 @@ define(function () {
 			$("#"+id+" tr[type='date']").show();
 			$("#"+id+" input[name='startDate']").val(convertDateTime(values[1]));
 			$("#"+id+" input[name='endDate']").val(convertDateTime(values[2]));
+			$("#"+id+" input[name='startTime']").val(convertTime(values[1].substring(8, 14)));
+			$("#"+id+" input[name='endTime']").val(convertTime(values[2].substring(8, 14)));
 			$("#"+id+" tr[type='date']").show();
 			$("#"+id+" tr[type='time']").hide();
 		} else {
@@ -584,15 +954,17 @@ define(function () {
 			var m3 = "0";
 			if ($("#discount_allSwitch").attr('checked')) {
 				m1 = "1";
+				m2 = "0";
 			}
 			if ($("#discount_reductionSwitch").attr('checked')) {
 				m2 = "1";
+				m1 = "0";
 			}
 			if ($("#discount_menuSwitch").attr('checked')) {
 				if ($("#discount_mutex").attr('checked')) {
-					m3 = "2";
-				} else {
 					m3 = "1";
+				} else {
+					m3 = "2";
 				}
 			}
 			var data = m1+m2+m3;
@@ -600,8 +972,11 @@ define(function () {
 			param.uuid = paramId;
 			param.data = data;
 			param.mchntCd = currentMchntCd;
-			param.discountTimeJson = JSON.stringify(discountParam);
-			$.post("prom/discount/add", param, function(result){
+			var timeForSave = [];//排除折扣3
+			timeForSave[0] = discountParam[0];
+			timeForSave[1] = discountParam[1];
+			param.discountTimeJson = JSON.stringify(timeForSave);
+			$.post("prom/discount/save", param, function(result){
 				if (result.code == 0) {
 					$.messager.alert("提示", "保存成功!");
 				} else {
@@ -636,12 +1011,13 @@ define(function () {
 			}
 		}
 		if ($("#discount_menuSwitch").attr('checked')) {
-			if (discountParam[2].param1 == null || discountParam[2].param1 == "") {
+			/*if (discountParam[2].param1 == null || discountParam[2].param1 == "") {
 				$.messager.alert("提示", "单品优惠时间未配置!");
 				return false;
-			}
-			if (discountParam[2].rules == null || discountParam[2].rules.length == 0) {
-				$.messager.alert("提示", "至少配置1个单品优惠!");
+			}*/
+			var rows = $('#discount_pageList').datagrid('getRows');
+			if (rows == null || rows.length == 0) {
+				$.messager.alert("提示", "至少配置1个优惠单品!");
 				return false;
 			}
 		}
@@ -655,8 +1031,8 @@ define(function () {
 	
 	function convertDateTime(value){
 		var date = value.substring(0, 4)+"-"+value.substring(4, 6)+"-"+value.substring(6, 8);
-		var time = value.substring(8, 10)+":"+value.substring(10, 12)+":"+value.substring(12, 14);
-		return date +" "+ time;
+		//var time = value.substring(8, 10)+":"+value.substring(10, 12)+":"+value.substring(12, 14);
+		return date;
 	}
 	
     return {

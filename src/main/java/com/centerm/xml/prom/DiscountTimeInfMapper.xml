@@ -8,11 +8,18 @@
     <result column="param1" property="param1" jdbcType="VARCHAR" />
     <result column="param2" property="param2" jdbcType="VARCHAR" />
     <collection property="rules" ofType="com.centerm.model.prom.DiscountRuleInf">
+    	<id column="r_id" property="id" jdbcType="INTEGER" />
     	<result column="r_discount_mode" property="discountMode" jdbcType="INTEGER" />
 	    <result column="r_param1" property="param1" jdbcType="VARCHAR" />
 	    <result column="r_param2" property="param2" jdbcType="VARCHAR" />
 	    <result column="r_param3" property="param3" jdbcType="VARCHAR" />
 	    <result column="r_param4" property="param4" jdbcType="VARCHAR" />
+	    <result column="r_param5" property="param5" jdbcType="VARCHAR" />
+	    <association property="product" javaType="com.centerm.model.menu.MenuInf">
+		    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+		    <result column="menutp_id" property="menutpId" jdbcType="VARCHAR" />
+		    <result column="price" property="price" jdbcType="DECIMAL" />
+		</association>
 	</collection>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -21,12 +28,37 @@
   <select id="getModeParamByMchntCd" resultMap="BaseResultMap" parameterType="java.lang.String" >
     SELECT 
     a.id, a.mchnt_cd, a.discount_mode, a.param1, a.param2, b.discount_mode r_discount_mode,
-    b.param1 r_param1, b.param2 r_param2, b.param3 r_param3, b.param4 r_param4
+    b.param1 r_param1, b.param2 r_param2, b.param3 r_param3, b.param4 r_param4, b.param5 r_param5
     FROM tbl_bkms_discount_time_config_inf a
     LEFT JOIN tbl_bkms_discount_rule_config_inf b
     ON a.mchnt_cd = b.mchnt_cd AND a.discount_mode = b.discount_mode
     WHERE a.mchnt_cd = #{id,jdbcType=VARCHAR}
     ORDER BY a.discount_mode
+  </select>
+   <select id="findDiscountOfMode3" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    a.id r_id, a.mchnt_cd, a.discount_mode, a.param1 r_param1, a.param2 r_param2, a.param3 r_param3, 
+    a.param4 r_param4, a.param5 r_param5, 
+    product_name, menutp_id, price, c.param1, c.id
+    from tbl_bkms_discount_time_config_inf c
+    join tbl_bkms_discount_rule_config_inf a
+    on c.param2 = a.param1
+    join tbl_bkms_menu_inf b
+    on a.param1 = b.product_id
+    where c.discount_mode = 3
+	and c.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+	union 
+    select 
+    a.id r_id, a.mchnt_cd, a.discount_mode, a.param1 r_param1, a.param2 r_param2, a.param3 r_param3, 
+    a.param4 r_param4, a.param5 r_param5, 
+    product_name, menutp_id, price, c.param1, c.id
+    from tbl_bkms_discount_time_config_inf c
+    join tbl_bkms_discount_rule_config_inf a
+    on c.param2 = a.param1
+    join tbl_bkms_menu_combo_inf b
+    on a.param1 = b.product_id
+    where c.discount_mode = 3
+    and a.mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -36,7 +68,13 @@
   </select>
   <delete id="deleteByMchntCd" parameterType="java.lang.String" >
     delete from tbl_bkms_discount_time_config_inf
-    where mchnt_cd = #{id,jdbcType=VARCHAR}
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+    AND discount_mode != 3
+  </delete>
+  <delete id="deleteByMchntCdAndProductId" parameterType="com.centerm.model.prom.DiscountTimeInf" >
+    delete from tbl_bkms_discount_time_config_inf
+    where mchnt_cd = #{mchntCd,jdbcType=VARCHAR}
+    AND param2 =  #{param2,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_bkms_discount_time_config_inf

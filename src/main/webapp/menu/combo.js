@@ -30,7 +30,7 @@ define(function () {
 				]],
 				columns:[[
 					 {field:'productName',title:'商品名',width:150,sortable:true,align:'center'},
-				    {field:'price',title:'单价(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
+				    {field:'price',title:'价格(元)',width:70,sortable:true,align:'center',formatter:function(value, rec){
 					    return value.toFixed(2);
 						}},
 						{field:'packingBoxNum',title:'打包盒份数',width:70,sortable:true,align:'center'},
@@ -42,6 +42,14 @@ define(function () {
 							}
 							return value.inventory;
 							}},
+							{field:'status',title:'状态',width:70,sortable:true,align:'center',formatter:function(value, rec){
+							    if (value == 0) {
+									return "正常";
+								}if (value == 1) {
+									return "<span style=\"color:red;\">下架</span>";
+								}
+								return "<span style=\"color:red;\">异常</span>";
+								}},
 							/*{field:'specifications',title:'规格',width:100,sortable:true,align:'center',formatter:function(value, rec){
 								if (value == "") {
 									return "<span style=\"color:red;\">不可选</span>";
@@ -72,6 +80,59 @@ define(function () {
 				
 		}
 
+	
+	function toUpload(){
+		var dlg = $('<div/>').dialog({    
+		    title: '上传图片',    
+		    width: 700,    
+		    height: 500,    
+		    closable: false,    
+		    cache: false,    
+		    href: 'sys/img_upload.jsp',    
+		    modal: true,
+		    buttons : [ {
+				text : '确定',
+				handler :function(){
+					var param = {};
+					requirejs(['img-upload'],function(img) {
+						param = img.getData();
+						param.mchntCd = currentMchntCd;
+						
+						$('#img_form').ajaxSubmit( {
+							url : "menu/menu/upload",
+							dataType : "json",
+							data: param,
+				            success : function(result) {
+								if (result.code == 0) {
+									$("#combo_img").attr('src', result.data.pictureAddr).show();
+				            		$("#combo_pictureLink").val(result.data.pictureLink);
+				            		//关闭对话框
+			                		dlg.dialog('close');
+			    	        		dlg.remove();
+								} else {
+									//待处理$("#menu_picture").val("");
+									$.messager.alert("提示", result.message);
+								}
+							}
+				        });
+					});
+					
+				}
+			},{
+				text : '关闭',
+				handler : function() {
+					dlg.dialog('close');
+		    		dlg.remove();
+				}
+			}],
+			onLoad : function(){
+				requirejs(['img-upload'],function(img) {
+					img.init();
+				});
+			}
+		});  
+	}
+	
 		function check(){
 			return true;
 		}
@@ -186,6 +247,10 @@ define(function () {
 				param.childComboTypeJson = {};
 				param.childComboTypeJson = pkg.getAttrArr();
 				if (!param.childComboTypeJson) {
+					return;
+				}
+				if (param.childComboTypeJson == "[]") {
+					$.messager.alert("提示", "请配置套餐组合!");
 					return;
 				}
 				$('#combo_baseform').ajaxSubmit( {
@@ -551,6 +616,7 @@ define(function () {
 	
 	function initForm(){
 		//滚动条
+		$("#comboForm").height($("#mainPanle").height());
 		//图片居中
 		var pHeight = $("#mainPanle").height();
 		$("#combo_packages").height(pHeight);
@@ -558,7 +624,9 @@ define(function () {
 		originalPicture = "images/default_menu.png";
 		$("#combo_mchntCd").val(userInfo.mchntCd);
 		$("#combo_select").click(select);
-		$("#combo_picture").change(upload);
+		//$("#combo_picture").change(upload);
+		$("#combo_picture").click(toUpload);
+		
 		
 		//按钮事件
 		$("#combo_unlimited, #combo_soldout").change({status:0},function(event){

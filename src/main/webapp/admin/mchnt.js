@@ -22,7 +22,7 @@ define(function () {
 				striped: true,
 				singleSelect:true,
 				remoteSort : false,
-				pageList : [ 20, 30 ],
+				pageList : [ 30 ],
 				frozenColumns:[[
 	                {field:'mchntCd',title:'商户号',width:90,sortable:true}
 				]],

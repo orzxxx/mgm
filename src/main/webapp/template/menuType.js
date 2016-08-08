@@ -185,7 +185,7 @@ define(function () {
 			$.messager.confirm('提示', '确定删除该记录?', function(r){
 				if (r){
 					if(row.menuNum != "0"){
-						$.messager.alert('提示', '该分类下存在菜品,不可删除!');
+						$.messager.alert('提示', '该分类下存在单品,不可删除!');
 						return;
 					}
 					var param = {};

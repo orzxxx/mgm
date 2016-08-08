@@ -18,4 +18,8 @@ public interface IMenuServiceImpl {
 	public void add(MenuInf menu, List<ProductAttrTypeInf> productAttrTypes);
 
 	public void setPackingBoxNum(MenuInf menu);
+
+	public void shelve(MenuInf menu) throws Exception;
+
+	public List<MenuInf> queryMenuAndCombo(MenuInf menu, Page page) throws Exception;
 }

@@ -101,7 +101,10 @@
 	<if test="taste != null and taste != ''">
 		AND a.taste = #{taste}
 	</if>
-	<if test="status != null and status != '' or status == 0">
+	<if test="status == 9">
+		AND (a.status = 0 OR a.status = 1)
+	</if>
+	<if test="status == 0 or status == 1">
 		AND a.status = #{status}
 	</if>
 	<if test="priority != null and priority != ''">

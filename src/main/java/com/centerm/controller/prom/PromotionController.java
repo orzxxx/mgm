@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
+import com.centerm.model.menu.Sreenshot;
 import com.centerm.model.prom.PromotionInf;
 import com.centerm.service.prom.IPromotionServiceImpl;
 import com.centerm.utils.ImageUtils;
@@ -61,7 +62,25 @@ public class PromotionController {
 		return null;
 	}
 	
+	/**
+	 * 上传图片
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/upload")
+	@ResponseBody()
+	public Object upload(@ModelAttribute("Sreenshot") Sreenshot ss, HttpServletRequest request) throws Exception {
+        //图片保存截取和压缩
+        File imageFile = ImageUtils.getImageFile(ss.getMchntCd(), ss, ImageUtils.PROMOTION);
+        //保存图片链接
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("pictureLink", imageFile.getName());
+        data.put("pictureAddr", PropertyUtils.getProperties("serverAddress")+"/"+ss.getMchntCd()+"/"+imageFile.getName());
+        return data;
+	}
+	
+	/*@RequestMapping("/upload")
 	@ResponseBody()
 	public Object upload(@ModelAttribute("promotionInf") PromotionInf promotion, HttpServletRequest request) throws Exception {
 		//保存图片
@@ -80,7 +99,7 @@ public class PromotionController {
 		}else{
 			throw new BusinessException("非法的图片格式");
 		}
-	}
+	}*/
 	
 	@RequestMapping("/add")
 	@ResponseBody()

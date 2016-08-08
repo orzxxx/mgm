@@ -1,5 +1,7 @@
 package com.centerm.model.prom;
 
+import com.centerm.model.menu.MenuInf;
+
 public class DiscountRuleInf {
     private Integer id;
 
@@ -15,7 +17,19 @@ public class DiscountRuleInf {
 
     private String param4;
 
-    public Integer getId() {
+    private String param5;
+    
+    private MenuInf product;
+    
+	public MenuInf getProduct() {
+		return product;
+	}
+
+	public void setProduct(MenuInf product) {
+		this.product = product;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -70,4 +84,12 @@ public class DiscountRuleInf {
     public void setParam4(String param4) {
         this.param4 = param4 == null ? null : param4.trim();
     }
+    
+    public String getParam5() {
+		return param5;
+	}
+
+	public void setParam5(String param5) {
+		this.param5 = param5;
+	}
 }

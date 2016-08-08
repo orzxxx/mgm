@@ -49,12 +49,8 @@ define(function () {
 	function changeWeekForm(type){
 		if (type == 1) {
 			$("#discountDate_weekday input:checkbox[name='week']").attr('disabled', 'disabled');
-			$("#discountDate_startTime").attr('disabled', 'disabled');
-			$("#discountDate_endTime").attr('disabled', 'disabled');
 		} else if (type == 0){
 			$("#discountDate_weekday input:checkbox[name='week']").attr('disabled', false);
-			$("#discountDate_startTime").attr('disabled', false);
-			$("#discountDate_endTime").attr('disabled', false);
 		}
 	}
 	
@@ -63,21 +59,21 @@ define(function () {
 		$("#discountDate_endTime").timespinner('setValue', '23:59:59');
 		$("#discountDate_startDate").click(function(){
 			var startDate = $("#discountDate_startDate").val();
-			var curDate = new Date().format('yyyy-MM-dd hh:mm:ss');
+			var curDate = new Date().format('yyyy-MM-dd');
 			if (curDate > startDate) {
 				$("#discountDate_startDate").val(curDate);
-				WdatePicker({startDate:curDate, dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %HH:00:00'}); 
+				WdatePicker({startDate:curDate, dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'}); 
 			} else {
-				WdatePicker({startDate:startDate, dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'%y-%M-%d %HH:00:00'}); 
+				WdatePicker({startDate:startDate, dateFmt: 'yyyy-MM-dd',minDate:'%y-%M-%d'}); 
 			}
 		});
 		$("#discountDate_endDate").click(function(){
 			var endDate = $("#discountDate_endDate").val();
-			var curDate = new Date().format('yyyy-MM-dd hh:mm:ss');
+			var curDate = new Date().format('yyyy-MM-dd');
 			if (curDate > endDate) {
-				WdatePicker({startDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d %HH:%mm:%ss\'}',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d %HH:00:00\'}'});
+				WdatePicker({startDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}',alwaysUseStartDate:true,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'});
 			} else {
-				WdatePicker({startDate:endDate,dateFmt: 'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d %HH:00:00\'}'});
+				WdatePicker({startDate:endDate,dateFmt: 'yyyy-MM-dd',minDate:'#F{$dp.$D(\'discount_startDate\')||\'%y-%M-%d\'}'});
 			}
 		});
 	}
@@ -113,7 +109,12 @@ define(function () {
 				$.messager.alert("提示", "生效日期不得大于失效日期！");
 				return false;
 			}
-			return "1|"+$("#discountDate_startDate").val().replace(/[- :]/g, "")+"|"+$("#discountDate_endDate").val().replace(/[- :]/g, "");
+			if($("#discountDate_startTime").val() > $("#discountDate_endTime").val()){
+				$.messager.alert("提示", "生效时间不得大于失效时间！");
+				return false;
+			}
+			return "1|"+$("#discountDate_startDate").val().replace(/[- :]/g, "")+$("#discountDate_startTime").val().replace(/[- :]/g, "")
+			+"|"+$("#discountDate_endDate").val().replace(/[- :]/g, "")+$("#discountDate_endTime").val().replace(/[- :]/g, "");
 		} else if (mode == 2){
 			var weeks = $("#discountDate_weekday input:checkbox[name='week']:checked");
 			if(weeks.length == 0){
@@ -139,12 +140,14 @@ define(function () {
 		var datas = val.split('|');
 		if (datas.length == 3) {
 			$("#discountDate_setTime").click();
-			var startDate = datas[1].substring(0,4)+"-"+datas[1].substring(4,6)+"-"+datas[1].substring(6,8)+" "+
-				datas[1].substring(8,10)+":"+datas[1].substring(10,12)+":"+datas[1].substring(12,14);
-			var endDate = datas[2].substring(0,4)+"-"+datas[2].substring(4,6)+"-"+datas[2].substring(6,8)+" "+
-				datas[2].substring(8,10)+":"+datas[2].substring(10,12)+":"+datas[2].substring(12,14);
+			var startDate = datas[1].substring(0,4)+"-"+datas[1].substring(4,6)+"-"+datas[1].substring(6,8);
+			var endDate = datas[2].substring(0,4)+"-"+datas[2].substring(4,6)+"-"+datas[2].substring(6,8);
 			$("#discountDate_startDate").val(startDate);
 			$("#discountDate_endDate").val(endDate);
+			var startTime = datas[1].substring(8,10)+":"+datas[1].substring(10,12)+":"+datas[1].substring(12,14);
+			var endTime = datas[2].substring(8,10)+":"+datas[2].substring(10,12)+":"+datas[2].substring(12,14);
+			$("#discountDate_startTime").timespinner('setValue', startTime);
+			$("#discountDate_endTime").timespinner('setValue', endTime);
 		} else if (datas.length == 4){
 			$("#discountDate_setWeek").click();
 			$("#discountDate_weekday input:checkbox[name='week']").each(function(){

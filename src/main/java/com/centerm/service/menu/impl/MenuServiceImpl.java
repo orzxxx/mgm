@@ -1,10 +1,12 @@
 package com.centerm.service.menu.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ import com.centerm.utils.BeanUtil;
 public class MenuServiceImpl implements IMenuServiceImpl{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
-
+	
 	private MenuInfMapper menuMapper;
 	
 	private InventoryInfMapper inventoryMapper;
@@ -213,14 +215,35 @@ public class MenuServiceImpl implements IMenuServiceImpl{
 	}
 	@Override
 	public void setPackingBoxNum(MenuInf menu) {
-		logger.info("=====批量修改打包盒费开始:"+menu.getMchntCd()+" 打包盒数:"+menu.getPackingBoxNum());
+		logger.info("=====批量修改打包盒开始:"+menu.getMchntCd()+" 打包盒数:"+menu.getPackingBoxNum());
 		menuMapper.updatePackingBoxNumByMchntCd(menu);
 		ComboInf combo = new ComboInf();
 		combo.setMchntCd(menu.getMchntCd());
 		combo.setPackingBoxNum(menu.getPackingBoxNum());
 		comboMapper.updatePackingBoxNumByMchntCd(combo);
+		menuVersionMapper.versionIncrement(menu.getMchntCd());//菜单版本自增
 		//日志
 		sysLogService.add("MenuServiceImpl.setPackingBoxNum", new String[]{"tbl_bkms_menu_inf","tbl_bkms_menu_combo_inf"}, menu, SysLogService.UPDATE, "打包盒数:"+menu.getPackingBoxNum());
-		logger.info("=====批量修改打包盒费结束:"+menu.getMchntCd());
+		logger.info("=====批量修改打包盒结束:"+menu.getMchntCd());
+	}
+	@Override
+	public void shelve(MenuInf menu) throws Exception{
+		logger.info("=====单品上架下架开始:"+menu.getProductId());
+		int count = menuMapper.updateByPrimaryKeySelective(menu); // 0说明是套餐
+		if (count == 0) {
+			ComboInf combo = new ComboInf();
+			BeanUtils.copyProperties(combo, menu);
+			comboMapper.updateByPrimaryKeySelective(combo);
+		}
+		menuVersionMapper.versionIncrement(menu.getMchntCd());//菜单版本自增
+		//日志
+		sysLogService.add("MenuServiceImpl.shelve", new String[]{"tbl_bkms_menu_inf"}, menu, SysLogService.UPDATE);
+		logger.info("=====单品上架下架结束:"+menu.getProductId());
+	}
+	@Override
+	public List<MenuInf> queryMenuAndCombo(MenuInf menu, Page page) throws Exception {
+		Map<String,Object> map = BeanUtil.bean2Map(menu);
+		map.put("page", page);
+		return menuMapper.queryMenuAndCombo(map);
 	}
 }
