@@ -1,6 +1,5 @@
 package com.centerm.model.menu;
 
-import java.util.List;
 
 public class ComboDetailInf{
 

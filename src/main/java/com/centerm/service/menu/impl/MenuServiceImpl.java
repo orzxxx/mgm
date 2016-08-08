@@ -1,6 +1,5 @@
 package com.centerm.service.menu.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,13 +23,13 @@ import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
-import com.centerm.service.menu.IMenuServiceImpl;
+import com.centerm.service.menu.IMenuService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 
 @Service("menuService")
 @Transactional
-public class MenuServiceImpl implements IMenuServiceImpl{
+public class MenuServiceImpl implements IMenuService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

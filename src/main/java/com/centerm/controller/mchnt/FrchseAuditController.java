@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.mchnt.FrchseAuditInf;
-import com.centerm.service.mchnt.IFrchseAuditServiceImpl;
+import com.centerm.service.mchnt.IFrchseAuditService;
 
 @Controller
 @RequestMapping("mchnt/assoc")
 public class FrchseAuditController {
 
-	private IFrchseAuditServiceImpl frchseAuditServiceImpl;
+	private IFrchseAuditService frchseAuditServiceImpl;
 
-	public IFrchseAuditServiceImpl getFrchseAuditServiceImpl() {
+	public IFrchseAuditService getFrchseAuditServiceImpl() {
 		return frchseAuditServiceImpl;
 	}
 	@Autowired
-	public void setFrchseAuditServiceImpl(IFrchseAuditServiceImpl frchseAuditServiceImpl) {
+	public void setFrchseAuditServiceImpl(IFrchseAuditService frchseAuditServiceImpl) {
 		this.frchseAuditServiceImpl = frchseAuditServiceImpl;
 	}
 

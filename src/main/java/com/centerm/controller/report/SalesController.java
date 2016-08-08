@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.report.SalesInf;
-import com.centerm.service.report.ISalesServiceImpl;
+import com.centerm.service.report.ISalesService;
 import com.centerm.utils.StringUtils;
 
 @Controller
 @RequestMapping("report/sales")
 public class SalesController {
 
-	private ISalesServiceImpl salesServiceImpl;
+	private ISalesService salesServiceImpl;
 
-	public ISalesServiceImpl getSalesServiceImpl() {
+	public ISalesService getSalesServiceImpl() {
 		return salesServiceImpl;
 	}
 	@Autowired
-	public void setSalesServiceImpl(ISalesServiceImpl salesServiceImpl) {
+	public void setSalesServiceImpl(ISalesService salesServiceImpl) {
 		this.salesServiceImpl = salesServiceImpl;
 	}
 

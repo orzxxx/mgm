@@ -7,7 +7,7 @@ import com.centerm.model.menu.ChildComboTypeInf;
 import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.ComboInf;
 
-public interface IComboServiceImpl {
+public interface IComboService {
 	public List<ComboInf> list(ComboInf combo, Page page) throws Exception;
 	
 	public void del(ComboInf combo);

@@ -5,7 +5,7 @@ import java.util.List;
 import com.centerm.base.Page;
 import com.centerm.model.mchnt.MchntAuditInf;
 
-public interface IMchntAuditServiceImpl {
+public interface IMchntAuditService {
 	public List<MchntAuditInf> list(MchntAuditInf mchntAudit, Page page) throws Exception;
 	
 	public int del(int id);

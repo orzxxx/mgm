@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.mchnt.TerminalBindInf;
-import com.centerm.service.mchnt.ITerminalBindServiceImpl;
+import com.centerm.service.mchnt.ITerminalBindService;
 
 @Controller
 @RequestMapping("mchnt/terminal")
 public class TerminalBindController {
 
-	private ITerminalBindServiceImpl terminalBindServiceImpl;
+	private ITerminalBindService terminalBindServiceImpl;
 
-	public ITerminalBindServiceImpl getTerminalBindServiceImpl() {
+	public ITerminalBindService getTerminalBindServiceImpl() {
 		return terminalBindServiceImpl;
 	}
 	@Autowired
-	public void setTerminalBindServiceImpl(ITerminalBindServiceImpl terminalBindServiceImpl) {
+	public void setTerminalBindServiceImpl(ITerminalBindService terminalBindServiceImpl) {
 		this.terminalBindServiceImpl = terminalBindServiceImpl;
 	}
 

@@ -1,6 +1,5 @@
 package com.centerm.service.menu.impl;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,7 @@ import com.centerm.model.menu.ComboInf;
 import com.centerm.model.menu.MenuTypeInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
-import com.centerm.service.menu.IComboServiceImpl;
+import com.centerm.service.menu.IComboService;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
@@ -35,7 +34,7 @@ import com.centerm.utils.StringUtils;
 
 @Service("comboService")
 @Transactional
-public class ComboServiceImpl implements IComboServiceImpl{
+public class ComboServiceImpl implements IComboService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
@@ -131,6 +130,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 			for (ChildComboTypeInf childComboType : childComboTypes) {
 				childComboType.setProductId(combo.getProductId());
 				childComboType.setPriority(typeCount++);
+				childComboType.setMchntCd(combo.getMchntCd());
 				//判断能否换购
 				childComboType.setExchangeFlag(0);
 				for (ChildComboInf childComboInf :  childComboType.getChildCombos()) {
@@ -204,6 +204,7 @@ public class ComboServiceImpl implements IComboServiceImpl{
 			for (ChildComboTypeInf childComboType : childComboTypes) {
 				childComboType.setProductId(combo.getProductId());
 				childComboType.setPriority(typeCount++);
+				childComboType.setMchntCd(combo.getMchntCd());
 				// 判断能否换购
 				childComboType.setExchangeFlag(0);
 				for (ChildComboInf childComboInf : childComboType

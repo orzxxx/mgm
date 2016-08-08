@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.centerm.base.Page;
 import com.centerm.model.trade.OrderJourInf;
-import com.centerm.service.trade.IOrderServiceImpl;
+import com.centerm.service.trade.IOrderService;
 import com.centerm.utils.DateUtils;
 import com.centerm.utils.DownloadUtils;
 import com.centerm.utils.StringUtils;
@@ -23,13 +23,13 @@ import com.centerm.utils.StringUtils;
 @RequestMapping("trade/order")
 public class OrderController {
 
-	private IOrderServiceImpl orderServiceImpl;
+	private IOrderService orderServiceImpl;
 
-	public IOrderServiceImpl getOrderServiceImpl() {
+	public IOrderService getOrderServiceImpl() {
 		return orderServiceImpl;
 	}
 	@Autowired
-	public void setOrderServiceImpl(IOrderServiceImpl orderServiceImpl) {
+	public void setOrderServiceImpl(IOrderService orderServiceImpl) {
 		this.orderServiceImpl = orderServiceImpl;
 	}
 

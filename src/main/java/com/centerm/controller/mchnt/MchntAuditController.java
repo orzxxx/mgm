@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.centerm.base.Page;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.mchnt.MchntAuditInf;
-import com.centerm.service.mchnt.IMchntAuditServiceImpl;
+import com.centerm.service.mchnt.IMchntAuditService;
 import com.centerm.utils.DateUtils;
 import com.centerm.utils.ImageUtils;
 import com.centerm.utils.PropertyUtils;
@@ -32,13 +32,13 @@ import com.centerm.utils.StringUtils;
 @RequestMapping("/mchnt/audit")
 public class MchntAuditController {
 
-	private IMchntAuditServiceImpl mchntAuditServiceImpl;
+	private IMchntAuditService mchntAuditServiceImpl;
 
-	public IMchntAuditServiceImpl getMchntAuditServiceImpl() {
+	public IMchntAuditService getMchntAuditServiceImpl() {
 		return mchntAuditServiceImpl;
 	}
 	@Autowired
-	public void setMchntAuditServiceImpl(IMchntAuditServiceImpl mchntAuditServiceImpl) {
+	public void setMchntAuditServiceImpl(IMchntAuditService mchntAuditServiceImpl) {
 		this.mchntAuditServiceImpl = mchntAuditServiceImpl;
 	}
 

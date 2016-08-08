@@ -6,7 +6,7 @@ import com.centerm.base.Page;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.template.MenuTemplateInf;
 
-public interface IMenuTemplateServiceImpl {
+public interface IMenuTemplateService {
 	public List<MenuTemplateInf> list(MenuTemplateInf menu, Page page) throws Exception;
 	
 	public void del(MenuTemplateInf menu);

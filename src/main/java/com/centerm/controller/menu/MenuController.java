@@ -22,7 +22,7 @@ import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.menu.Sreenshot;
-import com.centerm.service.menu.IMenuServiceImpl;
+import com.centerm.service.menu.IMenuService;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.utils.ImageUtils;
 import com.centerm.utils.PropertyUtils;
@@ -32,7 +32,7 @@ import com.centerm.utils.StringUtils;
 @RequestMapping("/menu/menu")
 public class MenuController {
 
-	private IMenuServiceImpl menuServiceImpl;
+	private IMenuService menuServiceImpl;
 	
 	private GetSequenceService getSequenceService;
 
@@ -44,11 +44,11 @@ public class MenuController {
 		this.getSequenceService = getSequenceService;
 	}
 
-	public IMenuServiceImpl getMenuServiceImpl() {
+	public IMenuService getMenuServiceImpl() {
 		return menuServiceImpl;
 	}
 	@Autowired
-	public void setMenuServiceImpl(IMenuServiceImpl menuServiceImpl) {
+	public void setMenuServiceImpl(IMenuService menuServiceImpl) {
 		this.menuServiceImpl = menuServiceImpl;
 	}
 

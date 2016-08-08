@@ -1,7 +1,5 @@
 package com.centerm.controller.prom;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,19 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.centerm.base.Page;
 import com.centerm.model.prom.DiscountRuleInf;
 import com.centerm.model.prom.DiscountTimeInf;
-import com.centerm.model.prom.PromotionInf;
 import com.centerm.model.sys.ParamInf;
-import com.centerm.service.prom.IDiscountConfigServiceImpl;
-import com.centerm.utils.PropertyUtils;
+import com.centerm.service.prom.IDiscountConfigService;
 
 @Controller
 @RequestMapping("prom/discount")
 public class DiscountConfigController {
 	@Autowired
-	private IDiscountConfigServiceImpl discountConfigServiceImpl;
+	private IDiscountConfigService discountConfigServiceImpl;
 
 	@RequestMapping("/get")
 	@ResponseBody()

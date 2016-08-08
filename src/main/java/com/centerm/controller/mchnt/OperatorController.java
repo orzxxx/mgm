@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.mchnt.OperatorInf;
-import com.centerm.service.mchnt.IOperatorServiceImpl;
+import com.centerm.service.mchnt.IOperatorService;
 import com.centerm.utils.MD5;
 
 @Controller
 @RequestMapping("/mchnt/oper")
 public class OperatorController {
 
-	private IOperatorServiceImpl operatorServiceImpl;
+	private IOperatorService operatorServiceImpl;
 
-	public IOperatorServiceImpl getOperatorServiceImpl() {
+	public IOperatorService getOperatorServiceImpl() {
 		return operatorServiceImpl;
 	}
 	@Autowired
-	public void setOperatorServiceImpl(IOperatorServiceImpl operatorServiceImpl) {
+	public void setOperatorServiceImpl(IOperatorService operatorServiceImpl) {
 		this.operatorServiceImpl = operatorServiceImpl;
 	}
 

@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.centerm.base.Page;
 import com.centerm.model.menu.MenuTypeInf;
-import com.centerm.service.menu.IMenuTypeServiceImpl;
+import com.centerm.service.menu.IMenuTypeService;
 import com.centerm.service.sys.impl.GetSequenceService;
 
 @Controller
 @RequestMapping("/menu/type")
 public class MenuTypeController {
 
-	private IMenuTypeServiceImpl menuTypeServiceImpl;
+	private IMenuTypeService menuTypeServiceImpl;
 
 	private GetSequenceService getSequenceService;
 
@@ -32,11 +32,11 @@ public class MenuTypeController {
 		this.getSequenceService = getSequenceService;
 	}
 	
-	public IMenuTypeServiceImpl getMenuTypeServiceImpl() {
+	public IMenuTypeService getMenuTypeServiceImpl() {
 		return menuTypeServiceImpl;
 	}
 	@Autowired
-	public void setMenuTypeServiceImpl(IMenuTypeServiceImpl menuTypeServiceImpl) {
+	public void setMenuTypeServiceImpl(IMenuTypeService menuTypeServiceImpl) {
 		this.menuTypeServiceImpl = menuTypeServiceImpl;
 	}
 

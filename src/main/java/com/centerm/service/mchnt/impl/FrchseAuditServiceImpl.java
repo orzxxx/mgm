@@ -16,14 +16,14 @@ import com.centerm.dao.mchnt.FrchseMchntMapInfMapper;
 import com.centerm.model.mchnt.FrchseAuditInf;
 import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.mchnt.FrchseMchntMapInf;
-import com.centerm.service.mchnt.IFrchseAuditServiceImpl;
+import com.centerm.service.mchnt.IFrchseAuditService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.DateUtils;
 
 @Service("frchseAuditService")
 @Transactional
-public class FrchseAuditServiceImpl implements IFrchseAuditServiceImpl{
+public class FrchseAuditServiceImpl implements IFrchseAuditService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

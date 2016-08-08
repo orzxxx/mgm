@@ -179,6 +179,9 @@ define(function () {
 				pkg.init();
 				initForm();
 				$("#combo_add").click(add);
+				if ($("#combo_mchntCd").val() == "") {
+					$("#combo_mchntCd").val(currentMchntCd);
+				}
 			});
 		}).show();
 		$("#combo_list").hide();

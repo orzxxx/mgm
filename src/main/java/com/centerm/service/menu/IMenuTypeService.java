@@ -5,7 +5,7 @@ import java.util.List;
 import com.centerm.base.Page;
 import com.centerm.model.menu.MenuTypeInf;
 
-public interface IMenuTypeServiceImpl {
+public interface IMenuTypeService {
 	public List<MenuTypeInf> list(MenuTypeInf menuType, Page page) throws Exception;
 	
 	public void del(MenuTypeInf menuType);

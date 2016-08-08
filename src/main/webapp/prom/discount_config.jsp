@@ -107,7 +107,7 @@ requirejs(['discount'],function  (discount) {
 			<td class="tdspace">
 			</td>
 			<td>
-				<input id="discount_rate" type="text" name="rate" class="easyui-numberbox" maxlength="3"
+				<input id="discount_rate" value="10" type="text" name="rate" class="easyui-numberbox" maxlength="3"
 				data-options="required:true,precision:1" style="width:180px;"/>
 				<span>折</span>
 			</td>

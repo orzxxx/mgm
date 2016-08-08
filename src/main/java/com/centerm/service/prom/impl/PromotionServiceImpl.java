@@ -13,13 +13,13 @@ import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.prom.PromotionInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.prom.PromotionInf;
-import com.centerm.service.prom.IPromotionServiceImpl;
+import com.centerm.service.prom.IPromotionService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 
 @Service("promotionService")
 @Transactional
-public class PromotionServiceImpl implements IPromotionServiceImpl{
+public class PromotionServiceImpl implements IPromotionService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

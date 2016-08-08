@@ -2,8 +2,6 @@ package com.centerm.model.prom;
 
 import java.math.BigDecimal;
 
-import com.centerm.model.menu.InventoryInf;
-
 /**
  * 促销产品类
  *

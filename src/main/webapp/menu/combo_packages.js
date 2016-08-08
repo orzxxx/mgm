@@ -78,7 +78,7 @@ define(function () {
 		//tag初始化
 		$tagInput = $(div).find("table:eq(0) tr:last td:eq(2) input:eq(2)");
 		$tagInput.tagsInput({
-			'height':'35px',
+			'height':'32px',
 			'width':'100px',
 			'defaultText':'',
 			'interactive':false,
@@ -106,9 +106,9 @@ define(function () {
 		$.parser.parse('#comboPkg_form');
 		$(div).find("table:eq(0) tr:last td:eq(1) input").focus();
 		//tag初始化
-		$tagInput = $(div).find("table:eq(0) tr:last td:eq(2) input:eq(2)");
+		$tagInput = $(div).find("table:eq(0) tr:last td:eq(2) input:eq(0)");
 		$tagInput.tagsInput({
-			'height':'35px',
+			'height':'32px',
 			'width':'100px',
 			'defaultText':'',
 			'interactive':false,
@@ -218,19 +218,19 @@ define(function () {
 	
 	function createNewPurchase(attr, val, price){
 		var $ele = $("<tr>"+
-			"<td style=\"width:400px;text-align: right;\">"+
+			"<td style=\"vertical-align: top;width:600px;text-align: right;\">"+
 			"</td>"+
 			"<td class=\"tdspace\">"+
 			"</td>"+
-			"<td style=\"width:400px;\">"+
-				"<label>价格:</label> "+
+			"<td style=\"vertical-align: top;width:400px;\">"+
+				""+
 			"</td>"+
 			"<td class=\"hintspace\" style='width:70px;'></td>"+				
 			"</tr>"
 		);
 		
 		var $attrVal = $("<input count='"+i+"' type=\"text\" value='"+val+"' maxlength=\"16\" class=\"easyui-validatebox\" data-options=\"required:true,validType:'realLength[16]'\" style=\"width:100px;\"/>");
-		var $priceVal = $("<input count='"+i+"' type=\"text\" value='"+price+"' maxlength=\"8\" class=\"easyui-numberbox\" min='-9999.99' max='9999.99' precision='2' style=\"width:60px;\"/> ");
+		var $priceVal = $("<input count='"+i+"' type=\"text\" value='"+price+"' maxlength=\"8\" class=\"easyui-numberbox\" min='-9999.99' max='9999.99' precision='2' style=\"width:60px;margin-top: 5px;\"/> ");
 		var $delBtn = $("<a href=\"javascript:void(0)\" class=\"easyui-linkbutton ct-rst-btn\" iconCls=\"icon-remove\" plain=\"true\">删除</a>");
 		var n = i;
 		
@@ -290,20 +290,21 @@ define(function () {
 			attrEditForPurchase($attrCfg);
 		});
 		
-		$ele.find("td:eq(0)").append($attrVal);
-		$ele.find("td:eq(2)").append($priceVal).append(" ").append($delBtn)
-			.append($attrCfg).append($attrBtn);
+		$ele.find("td:eq(0)").append($attrVal).append("<br/><label>价格: </label>").append($priceVal);
+		$ele.find("td:eq(2)").append(" ").append($attrBtn).append(" ")
+			.append($delBtn).append("<br/>")
+			.append("<div style='float:left;width:30px;height:1px;'></div>").append($attrCfg);
 		
 		return $ele;
 	}
 	
 	function createNewAttrValue(attr, val, price){
 		var $ele = $("<tr>"+
-			"<td style=\"width:400px;text-align: right;\">"+
+			"<td style=\"vertical-align: top;width:600px;text-align: right;\">"+
 			"</td>"+
 			"<td class=\"tdspace\">"+
 			"</td>"+
-			"<td style=\"width:400px;\">"+
+			"<td style=\"vertical-align: top;width:600px;\">"+
 				"<label style='display:none;'>价格:</label> "+
 			"</td>"+
 			"<td class=\"hintspace\" style='width:70px;'></td>"+				
@@ -368,8 +369,9 @@ define(function () {
 		});
 		
 		$ele.find("td:eq(0)").append($attrVal);
-		$ele.find("td:eq(2)").append($priceVal).append(" ").append($delBtn)
-			.append($attrCfg).append($attrBtn);
+		$ele.find("td:eq(2)").append($priceVal).append(" ")
+			.append($attrBtn).append(" ").append($delBtn).append("<br/>")
+			.append("<div style='float:left;width:30px;height:1px;'></div>").append($attrCfg);
 		
 		return $ele;
 	}
@@ -554,7 +556,7 @@ define(function () {
 					++count;
 					//存在未配置属性值
 					if ($.trim(attrArr[i][j].singleName) == "") {
-						$.messager.alert("提示", "【"+i+"】中存在空属性值");
+						$.messager.alert("提示", "【"+i+"】中存在空组合值");
 						return false;
 					};
 					//长度校验
@@ -570,7 +572,7 @@ define(function () {
 				}
 			}
 			if (count == 0) {
-				$.messager.alert("提示", "【"+i+"】必须至少配置1个属性值");
+				$.messager.alert("提示", "【"+i+"】必须至少配置1个组合值");
 				return false;
 			}
 		}

@@ -13,12 +13,12 @@ import com.centerm.dao.template.MenuTypeTemplateInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.template.MenuTypeTemplateInf;
 import com.centerm.service.sys.impl.SysLogService;
-import com.centerm.service.template.IMenuTypeTemplateServiceImpl;
+import com.centerm.service.template.IMenuTypeTemplateService;
 import com.centerm.utils.BeanUtil;
 
 @Service("menuTypeTemplateService")
 @Transactional
-public class MenuTypeTemplateServiceImpl implements IMenuTypeTemplateServiceImpl{
+public class MenuTypeTemplateServiceImpl implements IMenuTypeTemplateService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 

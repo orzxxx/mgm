@@ -16,17 +16,16 @@ import com.centerm.dao.template.MenuTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTemplateInfMapper;
 import com.centerm.dao.template.ProductAttrTypeTemplateInfMapper;
 import com.centerm.exception.BusinessException;
-import com.centerm.model.menu.MenuInf;
 import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.template.MenuTemplateInf;
 import com.centerm.service.sys.impl.SysLogService;
-import com.centerm.service.template.IMenuTemplateServiceImpl;
+import com.centerm.service.template.IMenuTemplateService;
 import com.centerm.utils.BeanUtil;
 
 @Service("menuTemplateService")
 @Transactional
-public class MenuTemplateServiceImpl implements IMenuTemplateServiceImpl{
+public class MenuTemplateServiceImpl implements IMenuTemplateService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

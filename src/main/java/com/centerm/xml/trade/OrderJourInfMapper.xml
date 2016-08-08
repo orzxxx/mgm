@@ -168,99 +168,101 @@
 	order by mchnt_cd, datetime desc 
 </select>
   <select id="query" resultMap="BaseResultMap" parameterType="java.util.Map">
-	select
-	<include refid="Base_Column_List" />
-	from tbl_bkms_order_oldjour
+	SELECT
+	<include refid="Model_Column_List" />
+	FROM tbl_bkms_order_oldjour a
+	INNER JOIN tbl_bkms_mchnt_inf b
+	ON a.mchnt_cd = b.mchnt_cd
 	<where>
 	<if test="orderNo != null and orderNo != ''">
-		 order_no like #{orderNo}
+		 a.order_no like #{orderNo}
 	</if>
 	<if test="pseq != null and pseq != ''">
-		AND pseq like #{pseq}
+		AND a.pseq like #{pseq}
 	</if>
 	<if test="termTransTrc != null and termTransTrc != ''">
-		AND term_trans_trc = #{termTransTrc}
+		AND a.term_trans_trc = #{termTransTrc}
 	</if>
 	<if test="mchntCd != null and mchntCd != ''">
-		AND mchnt_cd like #{mchntCd}
+		AND a.mchnt_cd like #{mchntCd}
 	</if>
 	<if test="terminalCd != null and terminalCd != ''">
-		AND terminal_cd = #{terminalCd}
+		AND a.terminal_cd = #{terminalCd}
 	</if>
 	<if test="operId != null and operId != ''">
-		AND oper_id = #{operId}
+		AND a.oper_id = #{operId}
 	</if>
 	<if test="termDatetime != null and termDatetime != ''">
-		AND term_datetime = #{termDatetime}
+		AND a.term_datetime = #{termDatetime}
 	</if>
 	<if test="transtime != null and transtime != ''">
-		AND transtime = #{transtime}
+		AND a.transtime = #{transtime}
 	</if>
 	<if test="discount != null and discount != ''" >
-        AND discount = #{discount},
+        AND a.discount = #{discount},
     </if>
 	<if test="transdate != null and transdate != ''">
-		AND transdate = #{transdate}
+		AND a.transdate = #{transdate}
 	</if>
 	<if test="datetime != null and datetime != ''">
-		AND datetime = #{datetime}
+		AND a.datetime = #{datetime}
 	</if>
 	<if test="stdtrnsamt != null and stdtrnsamt != ''">
-		AND stdtrnsamt = #{stdtrnsamt}
+		AND a.stdtrnsamt = #{stdtrnsamt}
 	</if>
 	<if test="totalnum != null and totalnum != ''">
-		AND totalnum = #{totalnum}
+		AND a.totalnum = #{totalnum}
 	</if>
 	<if test="orderDetail != null and orderDetail != ''">
-		AND order_detail = #{orderDetail}
+		AND a.order_detail = #{orderDetail}
 	</if>
 	<if test="payNo != null and payNo != ''">
-		AND pay_no = #{payNo}
+		AND a.pay_no = #{payNo}
 	</if>
 	<if test="payTp != null and payTp != ''">
-		AND pay_tp = #{payTp}
+		AND a.pay_tp = #{payTp}
 	</if>
 	<if test="chnlSeq != null and chnlSeq != ''">
-		AND chnl_seq = #{chnlSeq}
+		AND a.chnl_seq = #{chnlSeq}
 	</if>
 	<if test="trnsflag != null and trnsflag != '' or trnsflag == 0">
-		AND trnsflag = #{trnsflag}
+		AND a.trnsflag = #{trnsflag}
 	</if>
 	<if test="setdate != null and setdate != ''">
-		AND setdate = #{setdate}
+		AND a.setdate = #{setdate}
 	</if>
 	<if test="trnsdatetime != null and trnsdatetime != ''">
-		AND trnsdatetime = #{trnsdatetime}
+		AND a.trnsdatetime = #{trnsdatetime}
 	</if>
 	<if test="stdrspcod != null and stdrspcod != ''">
-		AND stdrspcod = #{stdrspcod}
+		AND a.stdrspcod = #{stdrspcod}
 	</if>
 	<if test="printInfo != null and printInfo != ''">
-		AND print_info = #{printInfo}
+		AND a.print_info = #{printInfo}
 	</if>
 	<if test="chnlMchntcd != null and chnlMchntcd != ''">
-		AND chnl_mchntcd = #{chnlMchntcd}
+		AND a.chnl_mchntcd = #{chnlMchntcd}
 	</if>
 	<if test="chnlTermcd != null and chnlTermcd != ''">
-		AND chnl_termcd = #{chnlTermcd}
+		AND a.chnl_termcd = #{chnlTermcd}
 	</if>
 	<if test="batchno != null and batchno != ''">
-		AND batchno = #{batchno}
+		AND a.batchno = #{batchno}
 	</if>
 	<if test="chnlSystraceno != null and chnlSystraceno != ''">
-		AND chnl_systraceno = #{chnlSystraceno}
+		AND a.chnl_systraceno = #{chnlSystraceno}
 	</if>
 	<if test="authcode != null and authcode != ''">
-		AND authcode = #{authcode}
+		AND a.authcode = #{authcode}
 	</if>
 	<if test="orderidScan != null and orderidScan != ''">
-		AND orderid_scan = #{orderidScan}
+		AND a.orderid_scan = #{orderidScan}
 	</if>
 	<if test="minTransdate != null and minTransdate != ''">
-	    AND transdate >= #{minTransdate}
+	    AND a.transdate >= #{minTransdate}
 	</if>
 	<if test="maxTransdate != null and maxTransdate != ''">
-	    AND transdate &lt;= #{maxTransdate}
+	    AND a.transdate &lt;= #{maxTransdate}
     </if>
 	</where>
 	order by datetime desc 

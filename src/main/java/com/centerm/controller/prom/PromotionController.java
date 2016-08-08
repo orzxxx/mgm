@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.centerm.base.Page;
-import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.Sreenshot;
 import com.centerm.model.prom.PromotionInf;
-import com.centerm.service.prom.IPromotionServiceImpl;
+import com.centerm.service.prom.IPromotionService;
 import com.centerm.utils.ImageUtils;
 import com.centerm.utils.PropertyUtils;
 import com.centerm.utils.StringUtils;
@@ -30,13 +27,13 @@ import com.centerm.utils.StringUtils;
 @RequestMapping("prom/prom")
 public class PromotionController {
 
-	private IPromotionServiceImpl promotionServiceImpl;
+	private IPromotionService promotionServiceImpl;
 
-	public IPromotionServiceImpl getPromotionServiceImpl() {
+	public IPromotionService getPromotionServiceImpl() {
 		return promotionServiceImpl;
 	}
 	@Autowired
-	public void setPromotionServiceImpl(IPromotionServiceImpl promotionServiceImpl) {
+	public void setPromotionServiceImpl(IPromotionService promotionServiceImpl) {
 		this.promotionServiceImpl = promotionServiceImpl;
 	}
 

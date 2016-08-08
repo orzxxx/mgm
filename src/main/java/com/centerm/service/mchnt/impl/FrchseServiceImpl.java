@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.mchnt.FrchseInfMapper;
 import com.centerm.model.mchnt.FrchseInf;
-import com.centerm.service.mchnt.IFrchseServiceImpl;
+import com.centerm.service.mchnt.IFrchseService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 
 @Service("frchseService")
 @Transactional
-public class FrchseServiceImpl implements IFrchseServiceImpl{
+public class FrchseServiceImpl implements IFrchseService{
 
 	private FrchseInfMapper frchseMapper;
 	

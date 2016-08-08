@@ -31,7 +31,7 @@ import com.centerm.model.menu.ProductAttrInf;
 import com.centerm.model.menu.ProductAttrTypeInf;
 import com.centerm.model.template.ProductAttrTemplateInf;
 import com.centerm.model.template.ProductAttrTypeTemplateInf;
-import com.centerm.service.menu.IMenuTypeServiceImpl;
+import com.centerm.service.menu.IMenuTypeService;
 import com.centerm.service.sys.impl.GetSequenceService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
@@ -39,7 +39,7 @@ import com.centerm.utils.PropertyUtils;
 
 @Service("menuTypeService")
 @Transactional
-public class MenuTypeServiceImpl implements IMenuTypeServiceImpl{
+public class MenuTypeServiceImpl implements IMenuTypeService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 

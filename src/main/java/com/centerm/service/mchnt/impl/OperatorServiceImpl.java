@@ -12,14 +12,14 @@ import com.centerm.base.Page;
 import com.centerm.dao.mchnt.OperatorInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.mchnt.OperatorInf;
-import com.centerm.service.mchnt.IOperatorServiceImpl;
+import com.centerm.service.mchnt.IOperatorService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.MD5;
 
 @Service("operatorService")
 @Transactional
-public class OperatorServiceImpl implements IOperatorServiceImpl{
+public class OperatorServiceImpl implements IOperatorService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

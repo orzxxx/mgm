@@ -8,7 +8,7 @@ import com.centerm.base.Page;
 import com.centerm.model.trade.OrderDetailInf;
 import com.centerm.model.trade.OrderJourInf;
 
-public interface IOrderServiceImpl {
+public interface IOrderService {
 	public List<OrderJourInf> list(OrderJourInf order, Page page) throws Exception;
 	
 	public int del(int id);

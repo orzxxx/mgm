@@ -18,12 +18,12 @@ import com.centerm.exception.BusinessException;
 import com.centerm.model.prom.DiscountRuleInf;
 import com.centerm.model.prom.DiscountTimeInf;
 import com.centerm.model.sys.ParamInf;
-import com.centerm.service.prom.IDiscountConfigServiceImpl;
+import com.centerm.service.prom.IDiscountConfigService;
 import com.centerm.service.sys.impl.SysLogService;
 
 @Service("DiscountConfigService")
 @Transactional
-public class DiscountConfigServiceImpl implements IDiscountConfigServiceImpl{
+public class DiscountConfigServiceImpl implements IDiscountConfigService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
@@ -69,7 +69,7 @@ public class DiscountConfigServiceImpl implements IDiscountConfigServiceImpl{
 		menuVersionMapper.versionIncrement(discountTime.getMchntCd());//菜单版本自增
 		sysLogService.add("DiscountConfigServiceImpl.update", 
 				"tbl_bkms_discount_rule_config_inf, tbl_bkms_discount_time_config_inf",
-				discountTime, SysLogService.UPDATE);
+				new Object[]{discountTime, discountRules}, SysLogService.UPDATE);
 		logger.info("====修改优惠结束:"+discountTime.getParam2());
 	}
 
@@ -85,7 +85,7 @@ public class DiscountConfigServiceImpl implements IDiscountConfigServiceImpl{
 		menuVersionMapper.versionIncrement(discountTime.getMchntCd());//菜单版本自增
 		sysLogService.add("DiscountConfigServiceImpl.add", 
 				"tbl_bkms_discount_rule_config_inf, tbl_bkms_discount_time_config_inf",
-				discountTime, SysLogService.INSERT);
+				new Object[]{discountTime, discountRules}, SysLogService.INSERT);
 		logger.info("====添加优惠结束:"+discountTime.getParam2());
 	}
 	

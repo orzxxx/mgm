@@ -28,10 +28,6 @@ define(function () {
 			 discountMode: 2,
 			 param1: "",
 			 rules: []
-		 },{
-			 discountMode: 3,
-			 param1: "",
-			 rules: []
 		 }];
 	}
 	
@@ -153,7 +149,14 @@ define(function () {
         		if (data == null || data.length == 0) {
 					return;
 				}
-        		discountParam = result.data;
+        		for ( var i in result.data) {
+					if (result.data[i].discountMode == 1) {
+						discountParam[0] = result.data[i];
+					} else if (result.data[i].discountMode == 2) {
+						discountParam[1] = result.data[i];
+					}
+				}
+        		//discountParam = result.data;
         		//模式一赋值
 				setDate("discount_allForm", discountParam[0].param1);
 				$("#discount_rate").numberbox('setValue', (discountParam[0].rules[0].param1 || 0));
@@ -179,14 +182,14 @@ define(function () {
 					});
 				}
 				//模式三赋值
-				if (discountParam.length > 2) {
+				/*if (discountParam.length > 2) {
 					var discountMenus = [];
 					//setDate("discount_menuForm", discountParam[2].param1);
 					for ( var i = 2; i < discountParam.length; i++) {
 						discountMenus.push($.extend({}, discountParam[i] ,discountParam[i].rules));
 					}
-					$('#discount_pageList').datagrid('discountMenus',data); 
-				}
+					$('#discount_pageList').datagrid('load',data); 
+				}*/
 				
 			} else {
 				$.messager.alert("提示", result.message);
@@ -379,8 +382,13 @@ define(function () {
 								var discount = $("#discountMenu_form input[name='param3']").val();
 								var num = $("#discountMenu_form input[name='param2']").val();
 								var price = $("#discountMenu_form input[name='price']").val();
+								var maxDiscount = $("#discountMenu_form input[name='param4']").val();
 								if (discount > num*price) {
 									$.messager.alert("提示", "优惠不得大于【"+num*price+"】!(价格X份数)");
+									return;
+								}
+								if (discount > maxDiscount) {
+									$.messager.alert("提示", "最大优惠不得小于优惠【"+discount+"】");
 									return;
 								}
 								
@@ -471,12 +479,7 @@ define(function () {
 		query();
 	}
 	
-	function check(){
-		return true;
-	}
-	
 	function query(){
-		if(check()){
 			var param = {};
 			param.mchntCd = currentMchntCd;
 			
@@ -497,7 +500,6 @@ define(function () {
 					$.messager.alert("提示", result.message);
 				}
 			}, "json");
-		}
 }
 	
 	function toAddReduction(){
@@ -612,8 +614,13 @@ define(function () {
 						var discount = $("#discountMenu_form input[name='param3']").val();
 						var num = $("#discountMenu_form input[name='param2']").val();
 						var price = $("#discountMenu_form input[name='price']").val();
+						var maxDiscount = $("#discountMenu_form input[name='param4']").val();
 						if (discount > num*price) {
 							$.messager.alert("提示", "优惠不得大于【"+num*price+"】!(价格X份数)");
+							return;
+						}
+						if (discount > maxDiscount) {
+							$.messager.alert("提示", "最大优惠不得小于优惠【"+discount+"】");
 							return;
 						}
 						
@@ -819,6 +826,10 @@ define(function () {
 			async:false,
 			success : function(result){
 				if (result.code == 0) {
+					if (result.data == null || result.data.length == 0) {
+						$.messager.alert("提示", "没有单品数据, 请先添加！");
+						return;
+					}
 					setMenuTree(result.data);
 				} else {
 					$.messager.alert("提示", result.message);
@@ -973,8 +984,12 @@ define(function () {
 			param.data = data;
 			param.mchntCd = currentMchntCd;
 			var timeForSave = [];//排除折扣3
-			timeForSave[0] = discountParam[0];
-			timeForSave[1] = discountParam[1];
+			if (discountParam[0] != null) {
+				timeForSave[0] = discountParam[0];
+			}
+			if (discountParam[1] != null) {
+				timeForSave[1] = discountParam[1];
+			}
 			param.discountTimeJson = JSON.stringify(timeForSave);
 			$.post("prom/discount/save", param, function(result){
 				if (result.code == 0) {
@@ -993,6 +1008,10 @@ define(function () {
 				return false;
 			}
 			var rate = $("#discount_rate").val();
+			if ($.trim(rate) == "") {
+				$.messager.alert("提示", "折扣率不得为空!");
+				return false;
+			}
 			if (rate < 0.1) {
 				$.messager.alert("提示", "折扣率不得小于0.1!");
 				return false;

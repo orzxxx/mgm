@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.report.TurnoverInfMapper;
 import com.centerm.model.report.TurnoverInf;
-import com.centerm.service.report.ITurnoverServiceImpl;
+import com.centerm.service.report.ITurnoverService;
 import com.centerm.utils.BeanUtil;
 
 @Service("turnoverService")
 @Transactional
-public class TurnoverServiceImpl implements ITurnoverServiceImpl{
+public class TurnoverServiceImpl implements ITurnoverService{
 
 	private TurnoverInfMapper turnoverMapper;
 

@@ -25,10 +25,11 @@ define(function () {
 				                {field:'orderNo',title:'订单号',width:170,sortable:true}
 							]],
 							columns:[[
-									    {field:'pseq',title:'平台流水',width:80,sortable:true,align:'center'},
+									    //{field:'pseq',title:'平台流水',width:80,sortable:true,align:'center'},
 									    // {field:'mchntNo',title:'商户号',width:90,sortable:true,align:'center'},
 									    // {field:'terminalNo',title:'终端号',width:70,sortable:true,align:'center'},
 										{field:'mchntCd',title:'商户号',width:60,sortable:true,align:'center'},
+										{field:'mchntName',title:'店名',width:80,sortable:true,align:'center'},
 										// {field:'termDatetime',title:'终端交易时间',width:80,sortable:true,align:'center'},
 										{field:'transdate',title:'交易日期',width:80,sortable:true,align:'center',formatter:function(value){
 											return value.substring(0,4)+"/"+value.substring(4,6)+"/"+value.substring(6,8);

@@ -23,22 +23,22 @@
 								</td>
 								<td width="100px">
 									<label for="pseq">
-										平台流水:
+										商户号:
 									</label>
 								</td>
 								<td>
-									<input type="text" name="pseq" id="pseq" maxlength="10" style="width:200px;">
+									<input type="text" name="mchntCd" id="mchntCd" maxlength="11" style="width:200px;">
 								</td>
 								<td style="padding-left: 20px;">
 								</td>
 								<td width="100px">
-									<label for="operId">
+									<label for="operId"><%--
 										 商户号:
-									</label>
+									--%></label>
 								</td>
 								<td width="290px">
-									<input type="text" name="mchntCd" id="mchntCd" maxlength="11" style="width:200px;">
-								</td>
+									<%--<input type="text" name="mchntCd" id="mchntCd" maxlength="11" style="width:200px;">
+								--%></td>
 								<td class="hintspace"></td>
 							</tr>
 							<tr>

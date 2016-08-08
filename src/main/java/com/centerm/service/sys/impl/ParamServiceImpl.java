@@ -14,12 +14,12 @@ import com.centerm.dao.menu.MenuVersionInfMapper;
 import com.centerm.dao.sys.ParamInfMapper;
 import com.centerm.exception.BusinessException;
 import com.centerm.model.sys.ParamInf;
-import com.centerm.service.sys.IParamServiceImpl;
+import com.centerm.service.sys.IParamService;
 import com.centerm.utils.BeanUtil;
 
 @Service("paramService")
 @Transactional
-public class ParamServiceImpl implements IParamServiceImpl{
+public class ParamServiceImpl implements IParamService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

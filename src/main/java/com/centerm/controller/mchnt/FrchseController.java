@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.centerm.base.Constant;
 import com.centerm.model.mchnt.FrchseInf;
 import com.centerm.model.sys.LoginUser;
-import com.centerm.service.mchnt.IFrchseServiceImpl;
+import com.centerm.service.mchnt.IFrchseService;
 
 @Controller
 @RequestMapping("mchnt/frchse")
 public class FrchseController {
 
-	private IFrchseServiceImpl frchseServiceImpl;
+	private IFrchseService frchseServiceImpl;
 
-	public IFrchseServiceImpl getFrchseServiceImpl() {
+	public IFrchseService getFrchseServiceImpl() {
 		return frchseServiceImpl;
 	}
 	@Autowired
-	public void setFrchseServiceImpl(IFrchseServiceImpl frchseServiceImpl) {
+	public void setFrchseServiceImpl(IFrchseService frchseServiceImpl) {
 		this.frchseServiceImpl = frchseServiceImpl;
 	}
 

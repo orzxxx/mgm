@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.report.TurnoverInf;
-import com.centerm.service.report.ITurnoverServiceImpl;
+import com.centerm.service.report.ITurnoverService;
 import com.centerm.utils.StringUtils;
 
 @Controller
 @RequestMapping("report/turnover")
 public class TurnoverController {
 
-	private ITurnoverServiceImpl turnoverServiceImpl;
+	private ITurnoverService turnoverServiceImpl;
 
-	public ITurnoverServiceImpl getTurnoverServiceImpl() {
+	public ITurnoverService getTurnoverServiceImpl() {
 		return turnoverServiceImpl;
 	}
 	@Autowired
-	public void setTurnoverServiceImpl(ITurnoverServiceImpl turnoverServiceImpl) {
+	public void setTurnoverServiceImpl(ITurnoverService turnoverServiceImpl) {
 		this.turnoverServiceImpl = turnoverServiceImpl;
 	}
 

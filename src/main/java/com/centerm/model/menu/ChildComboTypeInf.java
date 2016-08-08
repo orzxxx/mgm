@@ -13,14 +13,8 @@ public class ChildComboTypeInf {
     
     private Integer priority;
     
-    public Integer getPriority() {
-		return priority;
-	}
-
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
-
+    private String mchntCd;
+    
 	private List<ChildComboInf> childCombos;
     
     private List<ProductAttrTypeInf> productAttrTypes;
@@ -72,4 +66,20 @@ public class ChildComboTypeInf {
     public void setExchangeFlag(Integer exchangeFlag) {
         this.exchangeFlag = exchangeFlag;
     }
+    
+    public String getMchntCd() {
+		return mchntCd;
+	}
+
+	public void setMchntCd(String mchntCd) {
+		this.mchntCd = mchntCd;
+	}
+
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
 }

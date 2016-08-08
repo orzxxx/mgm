@@ -8,13 +8,14 @@
 #combo_baseform table tr td:first-child{
 	width:120px;
 }
+<%--
 #combo_packages div.tagsinput{
 	border: 1px solid;
     float: left;
-}
+}--%>
 </style>
 
-<div id="comboForm" style='overflow-y:auto; overflow-x:auto;'>
+<div id="comboForm" style='width:1354px;'>
 	<div id="combo_baseInfo" style="float: left;width:400px;">
 		<br/>
 		<form method="post" id="combo_baseform" class="easyui-form ct-menu-from" data-options="novalidate:true" enctype="multipart/form-data">
@@ -148,7 +149,7 @@
 			</table>
 		</form>
 	</div>
-	<div id="combo_packages" style="float: left;">
+	<div id="combo_packages" style="float: left;overflow-x: scroll;overflow-y: auto;">
 		<form method="post" id="comboPkg_form" class="easyui-form  ct-menu-from" data-options="novalidate:true" >
 		<table class="table_info" border="0" style="width:370px;">
 			<tr>

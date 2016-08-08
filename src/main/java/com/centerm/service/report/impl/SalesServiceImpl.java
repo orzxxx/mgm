@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.report.SalesInfMapper;
 import com.centerm.model.report.SalesInf;
-import com.centerm.service.report.ISalesServiceImpl;
+import com.centerm.service.report.ISalesService;
 import com.centerm.utils.BeanUtil;
 
 @Service("salesService")
 @Transactional
-public class SalesServiceImpl implements ISalesServiceImpl{
+public class SalesServiceImpl implements ISalesService{
 
 	private SalesInfMapper salesMapper;
 

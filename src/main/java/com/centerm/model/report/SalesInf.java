@@ -1,6 +1,5 @@
 package com.centerm.model.report;
 
-import java.math.BigDecimal;
 
 public class SalesInf{
     private String productName;

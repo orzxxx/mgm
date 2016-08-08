@@ -16,14 +16,14 @@ import com.centerm.dao.sys.UserInfMapper;
 import com.centerm.model.mchnt.MchntAuditInf;
 import com.centerm.model.mchnt.MchntInf;
 import com.centerm.model.sys.UserInf;
-import com.centerm.service.mchnt.IMchntAuditServiceImpl;
+import com.centerm.service.mchnt.IMchntAuditService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.HttpClientUtil;
 
 @Service("mchntAuditService")
 @Transactional
-public class MchntAuditServiceImpl implements IMchntAuditServiceImpl{
+public class MchntAuditServiceImpl implements IMchntAuditService{
 	
 	private Logger logger = Logger.getLogger(this.getClass());
 	

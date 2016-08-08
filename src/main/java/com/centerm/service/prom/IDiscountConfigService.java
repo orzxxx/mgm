@@ -7,7 +7,7 @@ import com.centerm.model.prom.DiscountRuleInf;
 import com.centerm.model.prom.DiscountTimeInf;
 import com.centerm.model.sys.ParamInf;
 
-public interface IDiscountConfigServiceImpl {
+public interface IDiscountConfigService {
 	public int del(int id);
 	
 	public void update(DiscountTimeInf DiscountTime, List<DiscountRuleInf> parseArray);

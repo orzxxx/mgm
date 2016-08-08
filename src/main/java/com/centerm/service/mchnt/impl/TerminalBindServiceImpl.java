@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.centerm.base.Page;
 import com.centerm.dao.mchnt.TerminalBindInfMapper;
 import com.centerm.model.mchnt.TerminalBindInf;
-import com.centerm.service.mchnt.ITerminalBindServiceImpl;
+import com.centerm.service.mchnt.ITerminalBindService;
 import com.centerm.service.sys.impl.SysLogService;
 import com.centerm.utils.BeanUtil;
 import com.centerm.utils.StringUtils;
 
 @Service("terminalBindService")
 @Transactional
-public class TerminalBindServiceImpl implements ITerminalBindServiceImpl{
+public class TerminalBindServiceImpl implements ITerminalBindService{
 
 	private Logger logger = Logger.getLogger(this.getClass());
 	

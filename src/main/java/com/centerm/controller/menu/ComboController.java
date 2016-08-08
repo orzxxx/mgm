@@ -1,9 +1,6 @@
 package com.centerm.controller.menu;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,18 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.centerm.base.Page;
-import com.centerm.exception.BusinessException;
 import com.centerm.model.menu.ChildComboTypeInf;
-import com.centerm.model.menu.ComboDetailInf;
 import com.centerm.model.menu.ComboInf;
-import com.centerm.service.menu.IComboServiceImpl;
+import com.centerm.service.menu.IComboService;
 import com.centerm.service.sys.impl.GetSequenceService;
-import com.centerm.utils.ImageUtils;
 import com.centerm.utils.PropertyUtils;
 import com.centerm.utils.StringUtils;
 
@@ -33,7 +25,7 @@ import com.centerm.utils.StringUtils;
 @RequestMapping("/menu/combo")
 public class ComboController {
 
-	private IComboServiceImpl comboServiceImpl;
+	private IComboService comboServiceImpl;
 	
 	private GetSequenceService getSequenceService;
 
@@ -45,11 +37,11 @@ public class ComboController {
 		this.getSequenceService = getSequenceService;
 	}
 
-	public IComboServiceImpl getComboServiceImpl() {
+	public IComboService getComboServiceImpl() {
 		return comboServiceImpl;
 	}
 	@Autowired
-	public void setComboServiceImpl(IComboServiceImpl comboServiceImpl) {
+	public void setComboServiceImpl(IComboService comboServiceImpl) {
 		this.comboServiceImpl = comboServiceImpl;
 	}
 

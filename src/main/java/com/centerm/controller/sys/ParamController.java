@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.centerm.base.Page;
 import com.centerm.model.sys.ParamInf;
-import com.centerm.service.sys.IParamServiceImpl;
+import com.centerm.service.sys.IParamService;
 
 @Controller
 @RequestMapping("sys/param")
 public class ParamController {
 
-	private IParamServiceImpl paramServiceImpl;
+	private IParamService paramServiceImpl;
 
-	public IParamServiceImpl getParamServiceImpl() {
+	public IParamService getParamServiceImpl() {
 		return paramServiceImpl;
 	}
 	@Autowired
-	public void setParamServiceImpl(IParamServiceImpl paramServiceImpl) {
+	public void setParamServiceImpl(IParamService paramServiceImpl) {
 		this.paramServiceImpl = paramServiceImpl;
 	}
 
